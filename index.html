@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mzansi Pathways — South African Opportunity Decision Engine: Results, Careers, Study, TVET, QCTO, Funding, Plan A/B/C, Evidence Vault &amp; Work." />
+  <meta name="theme-color" content="#1d4ed8" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+  <title>Mzansi Pathways v2 — What Can You Do Next?</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      padding-bottom: 78px;
+    }
+    .tab-btn.active { background-color: #eff6ff; color: #1d4ed8; font-weight: 800; }
+    body.easy-mode { font-size: 118%; line-height: 1.55; }
+    body.easy-mode .text-xs { font-size: 0.94rem !important; }
+    body.easy-mode .text-sm { font-size: 1.06rem !important; }
+    body.easy-mode button, body.easy-mode select, body.easy-mode input { min-height: 46px; font-weight: 700; }
+    body.dark-mode { background-color: #0f172a; color: #f1f5f9; }
+    body.dark-mode header, body.dark-mode footer, body.dark-mode .bg-white, body.dark-mode .bg-white\/95 { background-color: #1e293b !important; color: #f1f5f9; border-color: #334155 !important; }
+    body.dark-mode .bg-slate-50, body.dark-mode .bg-slate-100 { background-color: #0f172a !important; color: #e2e8f0; border-color: #334155 !important; }
+    body.dark-mode .text-slate-900, body.dark-mode .text-slate-800 { color: #f8fafc !important; }
+    body.dark-mode .text-slate-700, body.dark-mode .text-slate-600 { color: #cbd5e1 !important; }
+    body.dark-mode .text-slate-500 { color: #94a3b8 !important; }
+    body.dark-mode .border-slate-200, body.dark-mode .border-slate-100 { border-color: #334155 !important; }
+    body.dark-mode input, body.dark-mode select, body.dark-mode textarea { background-color: #0f172a !important; color: #f8fafc !important; border-color: #475569 !important; }
+    body.dark-mode .tab-btn.active { background-color: #1e3a8a !important; color: #93c5fd !important; }
+    @media print {
+      header, footer, nav, #toast, #why-modal, #help-modal, button, .no-print { display: none !important; }
+      body { background: #ffffff !important; color: #000000 !important; padding: 0 !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Top Header -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 min-w-0">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-700 to-teal-600 text-white flex items-center justify-center font-black text-sm shadow-sm shrink-0">MP</div>
+        <div class="min-w-0">
+          <div class="font-extrabold text-slate-900 text-sm sm:text-base truncate leading-tight">Mzansi Pathways</div>
+          <div class="text-[11px] text-blue-700 font-semibold truncate">What can you realistically do next?</div>
+        </div>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center gap-1 shrink-0" aria-label="Primary navigation">
+        <button data-tab="results" class="tab-btn active whitespace-nowrap px-2.5 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">📊 Results</button>
+        <button data-tab="careers" class="tab-btn whitespace-nowrap px-2.5 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">🎯 Careers</button>
+        <button data-tab="study" class="tab-btn whitespace-nowrap px-2.5 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">🎓 All Routes</button>
+        <button data-tab="plan" class="tab-btn whitespace-nowrap px-2.5 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">🗺️ Plan A/B/C</button>
+        <button data-tab="vault" class="tab-btn whitespace-nowrap px-2.5 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">🧰 Evidence &amp; CV</button>
+        <button data-tab="work" class="tab-btn whitespace-nowrap px-2.5 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">💼 Work &amp; Scams</button>
+      </nav>
+
+      <!-- View & Comfort Controls -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button id="parent-btn" aria-label="Toggle Parent or Student View" class="px-2 py-1.5 rounded-lg bg-indigo-50 text-indigo-800 border border-indigo-200 text-xs font-extrabold hover:bg-indigo-100">👨‍👩‍👧 Parent</button>
+        <button id="easy-btn" aria-label="Toggle Easy View" class="px-2 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-extrabold hover:bg-emerald-100">Easy</button>
+        <button id="help-btn" aria-label="How to use Mzansi Pathways" class="px-2 py-1.5 rounded-lg bg-sky-50 text-sky-800 border border-sky-200 text-xs font-black hover:bg-sky-100">?</button>
+        <button id="theme-btn" aria-label="Toggle Dark Mode" class="px-2 py-1.5 rounded-lg bg-slate-100 text-slate-700 border border-slate-200 text-xs font-black hover:bg-slate-200">🌙</button>
+        <select id="prov-select" aria-label="Home Province" class="px-2 py-1.5 rounded-lg bg-slate-100 border border-slate-200 text-xs font-bold text-slate-700 max-w-[116px]">
+          <option value="Mpumalanga">Mpumalanga</option>
+          <option value="Gauteng">Gauteng</option>
+          <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+          <option value="Western Cape">Western Cape</option>
+          <option value="Eastern Cape">Eastern Cape</option>
+          <option value="Limpopo">Limpopo</option>
+          <option value="Free State">Free State</option>
+          <option value="North West">North West</option>
+          <option value="Northern Cape">Northern Cape</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <main id="app-main" class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4"></main>
+
+  <!-- Mobile Bottom Nav -->
+  <nav class="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-slate-200 grid grid-cols-6 text-[10px] font-bold text-slate-600" aria-label="Mobile navigation">
+    <button data-tab="results" class="tab-btn active py-2 flex flex-col items-center"><span>📊</span><span>Results</span></button>
+    <button data-tab="careers" class="tab-btn py-2 flex flex-col items-center"><span>🎯</span><span>Careers</span></button>
+    <button data-tab="study" class="tab-btn py-2 flex flex-col items-center"><span>🎓</span><span>Routes</span></button>
+    <button data-tab="plan" class="tab-btn py-2 flex flex-col items-center"><span>🗺️</span><span>Plan</span></button>
+    <button data-tab="vault" class="tab-btn py-2 flex flex-col items-center"><span>🧰</span><span>Vault</span></button>
+    <button data-tab="work" class="tab-btn py-2 flex flex-col items-center"><span>💼</span><span>Work</span></button>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 mt-8 py-5 px-4 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+      <div>
+        <strong class="text-slate-700">Mzansi Pathways</strong> — Independent South African opportunity decision engine. Official CAS WhatsApp: <strong>081 308 4196</strong> (government service). Always verify admission rules in official prospectuses, and never pay any fee to apply for a job.
+      </div>
+      <div class="flex flex-wrap gap-3 font-semibold text-blue-700">
+        <a href="https://www.dhet.gov.za/" target="_blank" rel="noopener noreferrer" class="hover:underline">DHET ↗</a>
+        <a href="https://www.qcto.org.za/" target="_blank" rel="noopener noreferrer" class="hover:underline">QCTO ↗</a>
+        <a href="https://www.saqa.org.za/" target="_blank" rel="noopener noreferrer" class="hover:underline">SAQA ↗</a>
+        <a href="https://www.nsfas.org.za/" target="_blank" rel="noopener noreferrer" class="hover:underline">NSFAS ↗</a>
+        <a href="https://sayouth.mobi/" target="_blank" rel="noopener noreferrer" class="hover:underline">SA Youth ↗</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div id="toast" class="hidden fixed bottom-20 lg:bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-full bg-slate-900 text-white text-xs font-bold shadow-xl"></div>
+
+  <!-- "Why am I seeing this?" Explainability & Closest Alternatives Modal -->
+  <div id="why-modal" role="dialog" aria-modal="true" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-5 shadow-2xl border border-slate-200 space-y-3">
+      <div class="flex items-start justify-between gap-2">
+        <div>
+          <div class="text-[11px] font-extrabold uppercase text-blue-700">Explainable Eligibility &amp; Source Trail</div>
+          <h2 id="why-title" class="text-base font-extrabold text-slate-900 mt-0.5">Programme</h2>
+        </div>
+        <button id="close-why" aria-label="Close explanation" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold">✕</button>
+      </div>
+      <div id="why-body" class="space-y-3 text-xs text-slate-700"></div>
+    </div>
+  </div>
+
+  <!-- Guided Help Modal -->
+  <div id="help-modal" role="dialog" aria-modal="true" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-5 shadow-2xl border border-slate-200 space-y-3">
+      <div class="flex items-center justify-between">
+        <h2 class="text-base font-extrabold text-slate-900">👋 What Can You Do Next?</h2>
+        <button id="close-help" aria-label="Close help" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold">✕</button>
+      </div>
+      <ol class="space-y-2 text-sm text-slate-700">
+        <li class="p-3 rounded-2xl bg-blue-50 border border-blue-200"><strong>1. Confirm marks &amp; spot bottlenecks:</strong> See your NSC pass level, APS, and which single subject unlocks the most extra options.</li>
+        <li class="p-3 rounded-2xl bg-teal-50 border border-teal-200"><strong>2. Start with a Career or "No University Required":</strong> Tap <strong>❓ Why?</strong> on any route to see exact rule checks and closest alternatives.</li>
+        <li class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200"><strong>3. Build Plan A/B/C &amp; Evidence Vault:</strong> Compare cost, distance, and funding — or toggle <strong>👨‍👩‍👧 Parent</strong> view for a calm family overview.</li>
+      </ol>
+      <button id="help-ok" class="w-full py-2.5 rounded-xl bg-blue-700 text-white text-xs font-extrabold">Got It — Let's Plan</button>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'mzansi_pathways_v2_state';
+
+    const CAREERS = [
+      {
+        id: 'network_eng', family: 'tech', title: 'Network Engineer / IT Technician',
+        summary: 'Designs, configures, secures, and troubleshoots office networks, switches, routers, Wi-Fi, and cloud connectivity.',
+        skills: ['TCP/IP Networking', 'Routing & Switching (VLANs)', 'Windows / Linux Troubleshooting', 'Active Directory / Microsoft 365', 'Security & Documentation'],
+        entryRoles: ['IT Support Technician', 'Help Desk Technician', 'Junior Network Technician', 'Infrastructure Support'],
+        ladder: ['School / NSC', 'Higher Cert / TVET / Diploma / Degree', 'Learnership / Junior IT Support', 'Network Technician', 'Network Engineer', 'Senior / Network Architect'],
+        reality: 'Employers expect practical hands-on lab or troubleshooting proof beyond a certificate — build a Packet Tracer or Windows home lab in the Evidence Vault.'
+      },
+      {
+        id: 'software_dev', family: 'tech', title: 'Software / App Developer',
+        summary: 'Builds and maintains web applications, mobile apps, databases, and business software systems.',
+        skills: ['Python / JavaScript / C#', 'SQL Databases', 'Git Version Control', 'Problem Solving & Debugging', 'Testing & Clean Code'],
+        entryRoles: ['Junior Developer', 'Software Testing Intern', 'Application Support Analyst', 'Web Developer'],
+        ladder: ['School / NSC', 'TVET / Higher Cert / Diploma / BSc', 'Coding Learnership / Internship', 'Junior Developer', 'Mid-Level Engineer', 'Senior / Tech Lead'],
+        reality: 'University is not the only entry route — strong Diploma, QCTO Occupational, and portfolio-backed learnership graduates enter software teams across SA.'
+      },
+      {
+        id: 'diesel_artisan', family: 'artisan', title: 'Diesel Mechanic / Red Seal Artisan',
+        summary: 'Inspects, diagnoses, repairs, and maintains heavy mining machinery, trucks, yellow metal, and hydraulic systems.',
+        skills: ['Diesel Engine Diagnostics', 'Hydraulics & Pneumatics', 'OHS & Mine Safety (Lockout)', 'Job Cards & Preventative Maintenance', 'Trade Test Preparation'],
+        entryRoles: ['Apprentice Mechanic', 'Workshop Assistant', 'Trade Test Candidate', 'Qualified Diesel Artisan'],
+        ladder: ['Grade 12 / N2 Engineering', 'TVET N2–N6 + Practical', 'Employer / merSETA Apprenticeship', 'NAMB Red Seal Trade Test', 'Qualified Artisan', 'Foreman / Maintenance Planner'],
+        reality: 'High demand in Mpumalanga mining & logistics — requires N2 trade subjects plus practical workplace hours to qualify for the Red Seal Trade Test.'
+      },
+      {
+        id: 'public_admin', family: 'admin', title: 'Public Service / Office Administrator',
+        summary: 'Manages records, client enquiries, budgets, procurement support, and compliance in government departments or private companies.',
+        skills: ['Microsoft Excel & Word', 'Record Keeping & POPIA', 'Formal Minutes & Reports', 'Z83 & Public Service Procedures', 'Client Communication'],
+        entryRoles: ['Administration Clerk (Level 5)', 'Data Capturer', 'Reception / Registry Clerk', 'HR / Finance Admin Intern'],
+        ladder: ['Grade 12 / TVET / Diploma', 'Public Service Internship / Level 5 Clerk', 'Senior Admin Officer', 'Assistant Director'],
+        reality: 'Government posts require exact Z83 completion and reference numbers from Friday DPSA circulars; never pay anyone claiming to sell a government job.'
+      }
+    ];
+
+    const SAMPLE_PROGRAMMES = [
+      {
+        id: 'up_bsc_cs', careerFamily: 'tech', institution: 'University of Pretoria (UP)', campus: 'Hatfield, Pretoria (Gauteng)', province: 'Gauteng', distanceKmFromMp: 135,
+        route: 'University', isUniversity: true, name: 'BSc Computer Science', nqf: 'NQF 7', duration: '3 Years Full-Time',
+        estAnnualCost: 'Est. R55k–R70k tuition + R45k+ accomm. (Verify 2027 UP fees)', costLevel: 'High (Relocation)',
+        funding: ['NSFAS (Subject to Criteria)', 'Corporate Tech Bursaries'], deadline: '30 Sep (Verify official portal)',
+        verifiedRules: true, sourceTier: 'Sample — Verify 2027 Prospectus', legitStatus: 'Public University (DHET)',
+        minPassLevel: "Bachelor's Pass", minAps: 30, requiresSelection: true,
+        subjectRequirements: [{ anyOf: ['English Home Language', 'English First Additional Language'], minMark: 60 }, { anyOf: ['Mathematics'], minMark: 60 }],
+        officialUrl: 'https://www.up.ac.za/'
+      },
+      {
+        id: 'ump_dip_ict', careerFamily: 'tech', institution: 'University of Mpumalanga (UMP)', campus: 'Mbombela, Mpumalanga', province: 'Mpumalanga', distanceKmFromMp: 0,
+        route: 'University', isUniversity: true, name: 'Diploma in ICT (Application Development)', nqf: 'NQF 6', duration: '3 Years Full-Time',
+        estAnnualCost: 'Est. R35k–R48k tuition (Verify 2027 UMP fees)', costLevel: 'Moderate (In-Province)',
+        funding: ['NSFAS (Subject to Criteria)', 'MICT SETA'], deadline: '31 Oct (Verify official portal)',
+        verifiedRules: true, sourceTier: 'Sample — Verify 2027 Prospectus', legitStatus: 'Public University (DHET)',
+        minPassLevel: 'Diploma Pass', minAps: 26, requiresSelection: true,
+        subjectRequirements: [{ anyOf: ['English Home Language', 'English First Additional Language'], minMark: 50 }, { anyOf: ['Mathematics', 'Mathematical Literacy'], minMark: 45 }],
+        officialUrl: 'https://www.ump.ac.za/'
+      },
+      {
+        id: 'tut_hc_it', careerFamily: 'tech', institution: 'Tshwane University of Technology (TUT)', campus: 'eMalahleni Campus, Mpumalanga', province: 'Mpumalanga', distanceKmFromMp: 0,
+        route: 'Higher Certificate / UoT', isUniversity: false, name: 'Higher Certificate in IT (Bridging Pathway)', nqf: 'NQF 5', duration: '1 Year Full-Time',
+        estAnnualCost: 'Est. R24k–R34k tuition (Near home, no relocation)', costLevel: 'Lower (Near Home)',
+        funding: ['NSFAS (Subject to Criteria)'], deadline: '30 Sep / Late Intake TBC',
+        verifiedRules: true, sourceTier: 'Sample — Verify 2027 Prospectus', legitStatus: 'Public UoT (DHET)',
+        minPassLevel: 'Higher Certificate Pass', minAps: 20, requiresSelection: false,
+        subjectRequirements: [{ anyOf: ['English Home Language', 'English First Additional Language'], minMark: 40 }, { anyOf: ['Mathematics', 'Mathematical Literacy'], minMark: 40 }],
+        officialUrl: 'https://www.tut.ac.za/'
+      },
+      {
+        id: 'nkangala_tvet_eng', careerFamily: 'artisan', institution: 'Nkangala TVET College', campus: 'Witbank / Middelburg, Mpumalanga', province: 'Mpumalanga', distanceKmFromMp: 0,
+        route: 'Public TVET College', isUniversity: false, name: 'NC(V) / Report 191 Engineering & Diesel Studies', nqf: 'NQF 4–6', duration: '1–3 Years',
+        estAnnualCost: 'Public TVET Fees (NSFAS Bursary Eligible)', costLevel: 'Low (Near Home)',
+        funding: ['NSFAS TVET Bursary', 'merSETA'], deadline: 'Nov / Jan Trimester Intake',
+        verifiedRules: true, sourceTier: 'Sample — Verify Campus Offering', legitStatus: 'Public TVET (DHET)',
+        minPassLevel: 'Higher Certificate Pass', minAps: 16, requiresSelection: false,
+        subjectRequirements: [{ anyOf: ['English Home Language', 'English First Additional Language'], minMark: 40 }],
+        officialUrl: 'https://www.nkangalafet.edu.za/'
+      },
+      {
+        id: 'qcto_occ_tech', careerFamily: 'tech', institution: 'QCTO-Accredited SDP (Verify Site)', campus: 'eMalahleni / Online Hybrid', province: 'Mpumalanga', distanceKmFromMp: 0,
+        route: 'QCTO Occupational', isUniversity: false, name: 'Occupational Certificate: Software / IT Technician', nqf: 'NQF 5', duration: '12–18 Months',
+        estAnnualCost: 'Varies by SDP (Check SETA / DHET Occupational NSFAS)', costLevel: 'Verify with SDP',
+        funding: ['MICT SETA', 'NSFAS Occupational (Approved Only)'], deadline: 'Rolling Intakes (Verify SDP)',
+        verifiedRules: false, sourceTier: 'Needs QCTO SDP Verification', legitStatus: 'Verify Provider on QCTO Register',
+        minPassLevel: 'Higher Certificate Pass', minAps: 0, requiresSelection: false, subjectRequirements: [],
+        officialUrl: 'https://www.qcto.org.za/'
+      },
+      {
+        id: 'work_apprentice', careerFamily: 'artisan', institution: 'SA Youth / merSETA Workplace Route', campus: 'Mpumalanga Mines & Contractors', province: 'Mpumalanga', distanceKmFromMp: 0,
+        route: 'Workplace Learning', isUniversity: false, name: 'Diesel / Electrical Apprenticeship (Earn Stipend)', nqf: 'NQF 4–5', duration: '12–36 Months',
+        estAnnualCost: 'R0 Tuition (Monthly Stipend Paid)', costLevel: 'Earn While Learning',
+        funding: ['Employer Stipend', 'merSETA'], deadline: 'Check SA Youth Live Intakes',
+        verifiedRules: true, sourceTier: 'Sample — Check SA Youth', legitStatus: 'Employer / SETA Route',
+        minPassLevel: 'Higher Certificate Pass', minAps: 15, requiresSelection: true,
+        subjectRequirements: [{ anyOf: ['Mathematics', 'Mathematical Literacy'], minMark: 40 }],
+        officialUrl: 'https://sayouth.mobi/'
+      },
+      {
+        id: 'tvet_admin', careerFamily: 'admin', institution: 'Ehlanzeni / Nkangala TVET College', campus: 'Mpumalanga Campuses', province: 'Mpumalanga', distanceKmFromMp: 0,
+        route: 'Public TVET College', isUniversity: false, name: 'National Diploma / N4–N6 Public Management & Office Admin', nqf: 'NQF 4–6', duration: '18 Months + 18 Months WIL',
+        estAnnualCost: 'Public TVET Fees (NSFAS TVET Bursary)', costLevel: 'Low (Near Home)',
+        funding: ['NSFAS TVET Bursary', 'PSETA'], deadline: 'Nov / Jan Intake',
+        verifiedRules: true, sourceTier: 'Sample — Verify Campus Offering', legitStatus: 'Public TVET (DHET)',
+        minPassLevel: 'Higher Certificate Pass', minAps: 16, requiresSelection: false,
+        subjectRequirements: [{ anyOf: ['English Home Language', 'English First Additional Language'], minMark: 40 }],
+        officialUrl: 'https://www.dhet.gov.za/'
+      }
+    ];
+
+    const STARTER_PROJECTS = [
+      { title: 'Windows Troubleshooting & Backup Lab', tools: 'Windows 11, Event Viewer, File History', prompt: 'Document 3 real PC problems you diagnosed (slow boot, printer spooler, Wi-Fi DNS) and how you verified the fix.' },
+      { title: 'Small Office Network Simulation (Packet Tracer)', tools: 'Cisco Packet Tracer, VLANs, DHCP, Ping', prompt: 'Design a 2-department office network (Admin + Guest Wi-Fi), test connectivity, and record what failed first and how you solved it.' },
+      { title: 'Monthly Household / Tuckshop Excel Tracker', tools: 'Microsoft Excel, SUM/IF Formulas, Charts', prompt: 'Build a real budget or stock sheet with formulas and record how it reduced manual counting mistakes.' }
+    ];
+
+    const SAMPLE_WORK = [
+      { id: 'wk_1', title: 'Junior IT Support Technician [Sample]', employer: 'Highveld Systems (Pty) Ltd', province: 'Mpumalanga', town: 'Middelburg', salary: 'R14,500 – R18,000 pm', closing: '2026-12-12', url: 'https://www.gov.za/about-government/government-jobs', reqSkills: ['Windows', 'Microsoft 365', 'Networking', 'Active Directory'], trust: { id: 'Unverified (Demo)', source: 'Sample Fixture', scam: 'Passed (No Fee)' } },
+      { id: 'wk_2', title: 'Admin Clerk — Level 5 [DPSA Sample]', employer: 'Provincial Department (DPSA Circular)', province: 'Mpumalanga', town: 'Mbombela', salary: 'R216,417 pa', closing: '2026-12-04', url: 'https://www.labour.gov.za/vacancies', reqSkills: ['Excel', 'Filing', 'Z83', 'Client Support'], trust: { id: 'Official Dept. Ref Required', source: 'Sample Fixture', scam: 'Passed (No Fee)' } }
+    ];
+
+    let state = {
+      tab: 'results',
+      province: 'Mpumalanga',
+      parentMode: false,
+      easyMode: false,
+      darkMode: false,
+      gradeStage: 'Grade 12 / Matric',
+      subjects: [
+        { name: 'English Home Language', mark: 64, isHomeLanguage: true, isLifeOrientation: false },
+        { name: 'isiZulu First Additional Language', mark: 70, isHomeLanguage: false, isLifeOrientation: false },
+        { name: 'Mathematics', mark: 48, isHomeLanguage: false, isLifeOrientation: false },
+        { name: 'Physical Sciences', mark: 51, isHomeLanguage: false, isLifeOrientation: false },
+        { name: 'Information Technology', mark: 68, isHomeLanguage: false, isLifeOrientation: false },
+        { name: 'Geography', mark: 59, isHomeLanguage: false, isLifeOrientation: false },
+        { name: 'Life Orientation', mark: 80, isHomeLanguage: false, isLifeOrientation: true }
+      ],
+      whatIfActive: false,
+      whatIfMaths: 60,
+      selectedCareerId: 'network_eng',
+      noUniOnly: false,
+      nearHomeOnly: false,
+      routeFilter: 'All',
+      plans: { A: 'up_bsc_cs', B: 'ump_dip_ict', C: 'tut_hc_it' },
+      incomeBand: 250000,
+      affordA: { tuition: 58000, accomm: 45000, transport: 6000, funding: 0 },
+      affordC: { tuition: 12000, accomm: 0, transport: 7200, funding: 12000 },
+      evidenceVault: [
+        { id: 'ev1', skill: 'Windows Troubleshooting', context: 'School / Home PCs', tools: 'Windows 11, Control Panel', story: 'Reinstalled Windows and fixed printer drivers for family and classmates without losing their files.' }
+      ],
+      cvName: '',
+      cvPhone: '',
+      cvEmail: '',
+      cvTargetRole: 'Junior IT Support Technician'
+    };
+    let scamResult = null;
+    let interviewIdx = 0;
+
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+      if (saved && typeof saved === 'object') state = { ...state, ...saved, plans: { ...state.plans, ...(saved.plans || {}) } };
+    } catch (e) {}
+
+    function saveState() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {} }
+    function escapeHtml(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg; t.classList.remove('hidden');
+      clearTimeout(window._pt2); window._pt2 = setTimeout(() => t.classList.add('hidden'), 2600);
+    }
+
+    function markToLevel(m) {
+      const n = Number(m) || 0;
+      if (n >= 80) return 7; if (n >= 70) return 6; if (n >= 60) return 5;
+      if (n >= 50) return 4; if (n >= 40) return 3; if (n >= 30) return 2; return 1;
+    }
+
+    function getActiveSubjects() {
+      if (!state.whatIfActive) return state.subjects;
+      return state.subjects.map(s => (s.name === 'Mathematics' || s.name === 'Mathematical Literacy') ? { ...s, mark: Number(state.whatIfMaths) || 0 } : s);
+    }
+
+    function evaluateNsc(subs) {
+      const hl = subs.filter(s => s.isHomeLanguage);
+      const nonLo = subs.filter(s => !s.isLifeOrientation);
+      const aps = nonLo.slice(0, 6).reduce((a, s) => a + markToLevel(s.mark), 0);
+      const hlMark = Math.max(0, ...hl.map(s => Number(s.mark) || 0));
+      const o50 = nonLo.filter(s => Number(s.mark) >= 50).length;
+      const o40 = nonLo.filter(s => Number(s.mark) >= 40).length;
+      const o30 = nonLo.filter(s => Number(s.mark) >= 30).length;
+      let passLevel = 'Did Not Meet Minimum NSC Pass';
+      if (hlMark >= 40 && o50 >= 4 && o30 >= 6) passLevel = "Bachelor's Pass";
+      else if (hlMark >= 40 && o40 >= 4 && o30 >= 6) passLevel = 'Diploma Pass';
+      else if (hlMark >= 40 && o40 >= 3 && o30 >= 6) passLevel = 'Higher Certificate Pass';
+      return { passLevel, aps };
+    }
+
+    const PASS_RANK = { 'Did Not Meet Minimum NSC Pass': 0, 'Higher Certificate Pass': 1, 'Diploma Pass': 2, "Bachelor's Pass": 3 };
+
+    function evaluateProgramme(subs, prog) {
+      if (!prog.verifiedRules) return { status: 'Needs Verification', badge: 'bg-slate-100 text-slate-700 border-slate-300', reasons: ['Requirements must be confirmed directly with the accredited provider.'], missing: [] };
+      const nsc = evaluateNsc(subs);
+      const byName = {};
+      subs.forEach(s => { byName[s.name.toLowerCase()] = Number(s.mark) || 0; });
+      const missing = [], reasons = [];
+      let nearGap = true;
+
+      if ((PASS_RANK[nsc.passLevel] || 0) < (PASS_RANK[prog.minPassLevel] || 0)) {
+        missing.push(`Needs ${prog.minPassLevel} (currently ${nsc.passLevel})`);
+        if ((PASS_RANK[prog.minPassLevel] || 0) - (PASS_RANK[nsc.passLevel] || 0) > 1) nearGap = false;
+      }
+      if (prog.minAps > 0) {
+        if (nsc.aps >= prog.minAps) reasons.push(`APS ${nsc.aps} ≥ minimum ${prog.minAps}`);
+        else { const g = prog.minAps - nsc.aps; missing.push(`APS ${nsc.aps} is ${g} pt(s) below minimum ${prog.minAps}`); if (g > 4) nearGap = false; }
+      }
+      (prog.subjectRequirements || []).forEach(req => {
+        let best = null;
+        req.anyOf.forEach(o => { const v = byName[o.toLowerCase()]; if (v !== undefined) best = best === null ? v : Math.max(best, v); });
+        const lbl = req.anyOf.join(' or ');
+        if (best === null) { missing.push(`Missing subject: ${lbl} (${req.minMark}%+)`); nearGap = false; }
+        else if (best < req.minMark) { const d = Math.round(req.minMark - best); missing.push(`${lbl}: ${best}% (need ${req.minMark}%, short by ${d}%)`); if (d > 15) nearGap = false; }
+        else reasons.push(`${lbl}: ${best}% ≥ ${req.minMark}%`);
+      });
+
+      if (!missing.length) {
+        if (prog.requiresSelection) return { status: 'Conditional', badge: 'bg-sky-100 text-sky-900 border-sky-300', reasons: [...reasons, 'Subject to institutional selection & space'], missing: [] };
+        return { status: 'Strong Match', badge: 'bg-emerald-100 text-emerald-900 border-emerald-300', reasons, missing: [] };
+      }
+      if (nearGap && missing.length <= 2) return { status: 'Near Match', badge: 'bg-amber-100 text-amber-950 border-amber-300', reasons, missing };
+      return { status: 'Not Currently Eligible', badge: 'bg-rose-100 text-rose-900 border-rose-300', reasons, missing };
+    }
+
+    function findBottlenecks(subs) {
+      const okSet = new Set(['Strong Match', 'Conditional']);
+      const base = SAMPLE_PROGRAMMES.filter(p => okSet.has(evaluateProgramme(subs, p).status)).length;
+      const out = [];
+      subs.forEach((s, idx) => {
+        if (s.isLifeOrientation || s.mark >= 90) return;
+        const target = Math.min(100, Number(s.mark) + 12);
+        const sim = subs.map((x, i) => i === idx ? { ...x, mark: target } : x);
+        const nowOk = SAMPLE_PROGRAMMES.filter(p => okSet.has(evaluateProgramme(sim, p).status)).length;
+        if (nowOk > base) out.push({ subject: s.name, from: s.mark, to: target, unlocked: nowOk - base });
+      });
+      return out.sort((a, b) => b.unlocked - a.unlocked);
+    }
+
+    function openWhyModal(progId) {
+      const p = SAMPLE_PROGRAMMES.find(x => x.id === progId);
+      if (!p) return;
+      const subs = getActiveSubjects();
+      const ev = evaluateProgramme(subs, p);
+      const alts = SAMPLE_PROGRAMMES.filter(x => x.id !== p.id && x.careerFamily === p.careerFamily)
+        .map(x => ({ x, e: evaluateProgramme(subs, x) }))
+        .filter(o => o.e.status === 'Strong Match' || o.e.status === 'Conditional' || o.e.status === 'Near Match');
+      document.getElementById('why-title').textContent = `${p.name} — ${p.institution}`;
+      document.getElementById('why-body').innerHTML = `
+        <div class="flex flex-wrap gap-1.5">
+          <span class="px-2.5 py-0.5 rounded-full font-extrabold border ${ev.badge}">${escapeHtml(ev.status)}</span>
+          <span class="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 font-bold">${escapeHtml(p.legitStatus)}</span>
+        </div>
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+          <div class="font-extrabold text-slate-900">Deterministic Rule Breakdown:</div>
+          ${ev.reasons.map(r => `<div class="text-emerald-800 font-semibold">✓ ${escapeHtml(r)}</div>`).join('')}
+          ${ev.missing.map(m => `<div class="text-rose-800 font-semibold">✗ ${escapeHtml(m)}</div>`).join('')}
+          <div class="text-[11px] text-slate-500 pt-1"><strong>Source:</strong> ${escapeHtml(p.sourceTier)} · <strong>Est. Cost:</strong> ${escapeHtml(p.estAnnualCost)}</div>
+        </div>
+        ${ev.missing.length ? `
+          <div class="space-y-1.5">
+            <div class="font-extrabold text-slate-900">🧭 Closest Realistic Alternatives (Same Career Family):</div>
+            ${alts.map(o => `<div class="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between gap-2"><div><strong>${escapeHtml(o.x.name)}</strong><div class="text-[11px] text-slate-600">${escapeHtml(o.x.institution)} · ${escapeHtml(o.x.route)}</div></div><span class="px-2 py-0.5 rounded-full bg-white text-emerald-900 font-extrabold text-[10px]">${escapeHtml(o.e.status)}</span></div>`).join('') || '<div class="text-slate-500">Try enabling "No University Required" to view TVET &amp; Workplace routes.</div>'}
+          </div>
+        ` : ''}
+        <div class="flex flex-wrap gap-2 pt-1">
+          <button data-set-plan="A|${escapeHtml(p.id)}" class="px-3 py-2 rounded-xl bg-blue-700 text-white font-extrabold">Set Plan A</button>
+          <button data-set-plan="B|${escapeHtml(p.id)}" class="px-3 py-2 rounded-xl bg-teal-700 text-white font-extrabold">Set Plan B</button>
+          <button data-set-plan="C|${escapeHtml(p.id)}" class="px-3 py-2 rounded-xl bg-emerald-700 text-white font-extrabold">Set Plan C</button>
+          <button data-flag-prog="${escapeHtml(p.name)} (${escapeHtml(p.institution)})" class="px-3 py-2 rounded-xl bg-rose-50 text-rose-800 border border-rose-200 font-bold">🚩 Report Outdated Info</button>
+          <a href="${escapeHtml(p.officialUrl)}" target="_blank" rel="noopener noreferrer" class="ml-auto px-3 py-2 rounded-xl bg-slate-900 text-white font-bold">Official Site ↗</a>
+        </div>
+      `;
+      document.getElementById('why-modal').classList.remove('hidden');
+    }
+
+    function applyModes() {
+      document.body.classList.toggle('easy-mode', !!state.easyMode);
+      document.body.classList.toggle('dark-mode', !!state.darkMode);
+      const pb = document.getElementById('parent-btn');
+      if (pb) { pb.classList.toggle('bg-indigo-700', !!state.parentMode); pb.classList.toggle('text-white', !!state.parentMode); pb.textContent = state.parentMode ? '👨‍👩‍👧 Parent: ON' : '👨‍👩‍👧 Parent'; }
+      const eb = document.getElementById('easy-btn');
+      if (eb) { eb.classList.toggle('bg-emerald-600', !!state.easyMode); eb.classList.toggle('text-white', !!state.easyMode); eb.textContent = state.easyMode ? 'Easy: ON' : 'Easy'; }
+      const tb = document.getElementById('theme-btn');
+      if (tb) tb.textContent = state.darkMode ? '☀️' : '🌙';
+      const ps = document.getElementById('prov-select');
+      if (ps) ps.value = state.province;
+    }
+
+    function renderResults() {
+      const subs = getActiveSubjects();
+      const nsc = evaluateNsc(subs);
+      const bottlenecks = findBottlenecks(state.subjects);
+      const mathSub = state.subjects.find(s => s.name === 'Mathematics' || s.name === 'Mathematical Literacy');
+      return `
+        <div class="space-y-4">
+          <section class="rounded-3xl bg-gradient-to-r from-blue-700 via-indigo-700 to-teal-700 text-white p-5 sm:p-6 shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div class="space-y-1.5">
+              <div class="inline-flex px-3 py-1 rounded-full bg-white/15 text-xs font-bold">${state.parentMode ? '👨‍👩‍👧 Parent / Guardian View' : '🎓 Student Opportunity Engine'} · ${escapeHtml(state.province)}</div>
+              <h1 class="text-xl sm:text-2xl font-black">What Can You Realistically Do Next?</h1>
+              <p class="text-xs sm:text-sm text-blue-100 max-w-2xl">Start from your real marks (Grade 9–12, NSC, or N-courses), explore careers first, see every legitimate route (University, TVET, QCTO, Workplace), and build Plan A, B &amp; C.</p>
+            </div>
+            <div class="bg-white/15 backdrop-blur rounded-2xl p-4 min-w-[230px] border border-white/20">
+              <div class="text-[11px] font-bold uppercase text-blue-100">${state.whatIfActive ? '🧪 HYPOTHETICAL WHAT-IF' : 'Confirmed NSC Summary'}</div>
+              <div class="text-2xl font-black mt-0.5">APS ${nsc.aps} <span class="text-xs font-semibold">(excl. LO)</span></div>
+              <div class="text-xs font-bold text-emerald-200 mt-0.5">${escapeHtml(nsc.passLevel)}</div>
+            </div>
+          </section>
+
+          <!-- Proactive "Don't Miss This" Bar -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
+            <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200 font-bold text-amber-950">
+              📈 <strong>Improve My Options:</strong> ${bottlenecks.length ? `Your biggest bottleneck is <u>${escapeHtml(bottlenecks[0].subject)}</u> (${bottlenecks[0].from}% → ${bottlenecks[0].to}% unlocks +${bottlenecks[0].unlocked} programme).` : 'You already meet minimum subject rules for the loaded pathways.'}
+            </div>
+            <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 font-bold text-emerald-950">
+              🗺️ <strong>Plan A / B / C Active:</strong> Never rely on one competitive university — review your 3-tier backup plan in <strong>Plan A/B/C</strong>.
+            </div>
+            <div class="p-3 rounded-2xl bg-teal-50 border border-teal-200 font-bold text-teal-950">
+              🏛️ <strong>Official CAS (Gov Service):</strong> WhatsApp <span class="font-mono">081 308 4196</span> for post-school placement guidance (replaced CACH from 2026).
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+            <div class="lg:col-span-8 bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <h2 class="text-base font-extrabold text-slate-900">Your Confirmed Academic Profile</h2>
+                <select id="grade-stage" aria-label="Academic stage" class="px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold">
+                  ${['Grade 9 (Subject Choice)', 'Grade 10', 'Grade 11', 'Grade 12 / Matric', 'After Matric / N2–N6'].map(g => `<option ${state.gradeStage === g ? 'selected' : ''}>${g}</option>`).join('')}
+                </select>
+              </div>
+              ${state.gradeStage === 'Grade 9 (Subject Choice)' ? `
+                <div class="p-3.5 rounded-2xl bg-indigo-50 border border-indigo-200 text-xs space-y-1.5">
+                  <div class="font-extrabold text-indigo-950">🧭 Grade 9 Subject-Choice Guide (Keep Your Doors Open)</div>
+                  <div><strong>• Engineering, IT, Medicine &amp; Science:</strong> Take <u>Pure Mathematics</u> + <u>Physical Sciences</u> (and Life Sciences for Health).</div>
+                  <div><strong>• Accounting &amp; BCom:</strong> Take <u>Pure Mathematics</u> + <u>Accounting</u> / Business Studies.</div>
+                  <div><strong>• TVET, Artisans, Hospitality &amp; Social Fields:</strong> Mathematical Literacy still opens many Diplomas, Higher Certificates, TVET NC(V), and QCTO routes.</div>
+                </div>
+              ` : ''}
+              <div class="space-y-2">
+                ${state.subjects.map((s, i) => `
+                  <div class="grid grid-cols-12 gap-2 items-center p-2 rounded-xl bg-slate-50 border border-slate-200">
+                    <input data-sub-name="${i}" type="text" value="${escapeHtml(s.name)}" aria-label="Subject name" class="col-span-7 px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-bold" />
+                    <div class="col-span-3 flex items-center gap-1">
+                      <input data-sub-mark="${i}" type="number" min="0" max="100" value="${s.mark}" aria-label="Mark" class="w-full px-2 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-extrabold text-center" />
+                      <span class="text-xs font-bold text-slate-500">%</span>
+                    </div>
+                    <div class="col-span-2 text-center text-xs font-extrabold text-blue-800 bg-blue-50 py-1.5 rounded-lg">Lvl ${markToLevel(s.mark)}</div>
+                  </div>
+                `).join('')}
+              </div>
+              <div class="flex flex-wrap gap-2 pt-1">
+                <button data-tab="careers" class="flex-1 py-2.5 rounded-xl bg-blue-700 text-white text-xs font-extrabold hover:bg-blue-800">🎯 What Can I Become? →</button>
+                <button data-tab="study" class="flex-1 py-2.5 rounded-xl bg-teal-700 text-white text-xs font-extrabold hover:bg-teal-800">🎓 Explore All Routes →</button>
+              </div>
+            </div>
+
+            <!-- Hypothetical What-If Simulator -->
+            <div class="lg:col-span-4 bg-white rounded-3xl p-5 border ${state.whatIfActive ? 'border-amber-400 ring-2 ring-amber-200' : 'border-slate-200'} shadow-sm space-y-3">
+              <div class="flex items-center justify-between">
+                <h2 class="text-sm font-extrabold text-slate-900">🧪 What-If Rewrite Simulator</h2>
+                <button id="toggle-whatif" class="px-3 py-1 rounded-full text-xs font-extrabold ${state.whatIfActive ? 'bg-amber-500 text-white' : 'bg-slate-100 text-slate-700'}">${state.whatIfActive ? 'Hypothetical ON' : 'Off'}</button>
+              </div>
+              <p class="text-xs text-slate-600">Test improving ${escapeHtml(mathSub ? mathSub.name : 'Mathematics')} without ever changing your real saved marks.</p>
+              <div class="flex justify-between text-xs font-bold">
+                <span>Simulated Mark:</span><span class="text-amber-700">${state.whatIfMaths}% (Real: ${mathSub ? mathSub.mark : 0}%)</span>
+              </div>
+              <input id="whatif-range" type="range" min="30" max="90" value="${state.whatIfMaths}" class="w-full accent-amber-600" />
+              <div class="text-[11px] text-slate-500">Hypothetical marks are always clearly labelled and kept separate from your real record.</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCareers() {
+      const subs = getActiveSubjects();
+      const car = CAREERS.find(c => c.id === state.selectedCareerId) || CAREERS[0];
+      const routes = SAMPLE_PROGRAMMES.filter(p => p.careerFamily === car.family);
+      return `
+        <div class="space-y-4">
+          <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3">
+            <h1 class="text-xl font-extrabold text-slate-900">🎯 "What Can I Become?" — Career Reality &amp; All Routes</h1>
+            <p class="text-xs text-slate-600">Pick a career to see what the work really involves, the progression ladder, and every legitimate South African route evaluated against your marks.</p>
+            <div class="flex flex-wrap gap-2">
+              ${CAREERS.map(c => `<button data-pick-career="${escapeHtml(c.id)}" class="px-3.5 py-2 rounded-xl text-xs font-extrabold border ${c.id === car.id ? 'bg-blue-700 text-white border-blue-700' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-blue-50'}">${escapeHtml(c.title)}</button>`).join('')}
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+            <!-- Career Reality Card -->
+            <div class="lg:col-span-5 bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3 text-xs">
+              <div class="text-[11px] font-extrabold uppercase text-teal-700">Career Reality Page</div>
+              <h2 class="text-lg font-black text-slate-900">${escapeHtml(car.title)}</h2>
+              <p class="text-slate-700 leading-relaxed">${escapeHtml(car.summary)}</p>
+              <div>
+                <div class="font-extrabold text-slate-900 mb-1">Key Skills Employers Look For:</div>
+                <div class="flex flex-wrap gap-1.5">${car.skills.map(s => `<span class="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-800 font-bold">${escapeHtml(s)}</span>`).join('')}</div>
+              </div>
+              <div>
+                <div class="font-extrabold text-slate-900 mb-1">Typical Progression Ladder:</div>
+                <div class="space-y-1">${car.ladder.map((st, idx) => `<div class="px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 font-semibold">${idx + 1}. ${escapeHtml(st)}</div>`).join('')}</div>
+              </div>
+              <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 font-semibold">💡 <strong>Reality Check:</strong> ${escapeHtml(car.reality)}</div>
+            </div>
+
+            <!-- All Legitimate Routes to This Career -->
+            <div class="lg:col-span-7 space-y-3">
+              <h3 class="text-sm font-extrabold text-slate-900 px-1">All Routes to Become a ${escapeHtml(car.title)} (${routes.length} pathways checked)</h3>
+              ${routes.map(p => {
+                const ev = evaluateProgramme(subs, p);
+                return `
+                  <article class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-2">
+                    <div class="flex flex-wrap items-center justify-between gap-1.5">
+                      <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold border ${ev.badge}">${escapeHtml(ev.status)}</span>
+                      <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[11px] font-bold">${escapeHtml(p.route)} · ${escapeHtml(p.nqf)}</span>
+                    </div>
+                    <div class="font-extrabold text-slate-900 text-sm">${escapeHtml(p.name)}</div>
+                    <div class="text-xs font-semibold text-blue-700">${escapeHtml(p.institution)} · ${escapeHtml(p.campus)}</div>
+                    ${ev.missing.length ? `<div class="text-[11px] text-rose-800 font-semibold">Gap: ${ev.missing.map(escapeHtml).join(' | ')}</div>` : `<div class="text-[11px] text-emerald-800 font-semibold">${ev.reasons.map(r => '✓ ' + escapeHtml(r)).join(' · ')}</div>`}
+                    <div class="flex flex-wrap gap-2 pt-1">
+                      <button data-why-prog="${escapeHtml(p.id)}" class="px-3 py-1.5 rounded-xl bg-blue-50 text-blue-800 border border-blue-200 text-xs font-extrabold">❓ Why? / Alternatives</button>
+                      <button data-set-plan="A|${escapeHtml(p.id)}" class="px-2.5 py-1.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold">Plan A</button>
+                      <button data-set-plan="B|${escapeHtml(p.id)}" class="px-2.5 py-1.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold">Plan B</button>
+                      <button data-set-plan="C|${escapeHtml(p.id)}" class="px-2.5 py-1.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold">Plan C</button>
+                    </div>
+                  </article>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderStudy() {
+      const subs = getActiveSubjects();
+      const list = SAMPLE_PROGRAMMES.filter(p => {
+        if (state.noUniOnly && p.isUniversity) return false;
+        if (state.nearHomeOnly && p.province !== state.province) return false;
+        if (state.routeFilter !== 'All' && p.route !== state.routeFilter) return false;
+        return true;
+      });
+      return `
+        <div class="space-y-4">
+          <div class="bg-white rounded-3xl p-4 border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-2.5">
+            <div class="flex flex-wrap gap-2">
+              <button id="toggle-nouni" class="px-3.5 py-2 rounded-xl text-xs font-extrabold border ${state.noUniOnly ? 'bg-teal-700 text-white border-teal-700' : 'bg-teal-50 text-teal-900 border-teal-200'}">${state.noUniOnly ? '✓ No University Required: ON' : '🛠️ No University Required Mode'}</button>
+              <button id="toggle-nearhome" class="px-3.5 py-2 rounded-xl text-xs font-extrabold border ${state.nearHomeOnly ? 'bg-blue-700 text-white border-blue-700' : 'bg-blue-50 text-blue-900 border-blue-200'}">${state.nearHomeOnly ? `✓ Near Home (${escapeHtml(state.province)}): ON` : `📍 I Cannot Relocate (${escapeHtml(state.province)})`}</button>
+            </div>
+            <div class="text-xs font-bold text-slate-500">Showing ${list.length} illustrative pathways</div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            ${list.map(p => {
+              const ev = evaluateProgramme(subs, p);
+              return `
+                <article class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm flex flex-col justify-between gap-2.5">
+                  <div class="space-y-1.5">
+                    <div class="flex flex-wrap items-center justify-between gap-1.5">
+                      <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold border ${ev.badge}">${escapeHtml(ev.status)}</span>
+                      <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[11px] font-bold">${escapeHtml(p.route)} · ${escapeHtml(p.nqf)}</span>
+                    </div>
+                    <h2 class="text-base font-extrabold text-slate-900">${escapeHtml(p.name)}</h2>
+                    <div class="text-xs font-semibold text-blue-700">${escapeHtml(p.institution)} · ${escapeHtml(p.campus)}</div>
+                    <div class="text-xs text-slate-600">💰 ${escapeHtml(p.estAnnualCost)} · 🏛️ ${escapeHtml(p.legitStatus)}</div>
+                    ${ev.missing.length ? `<div class="p-2 rounded-xl bg-rose-50 border border-rose-200 text-[11px] text-rose-900 font-semibold">${ev.missing.map(escapeHtml).join(' | ')}</div>` : ''}
+                  </div>
+                  <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100">
+                    <button data-why-prog="${escapeHtml(p.id)}" class="flex-1 py-2 rounded-xl bg-blue-700 text-white text-xs font-extrabold">❓ Why? &amp; Closest Options</button>
+                    <a href="${escapeHtml(p.officialUrl)}" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold">Portal ↗</a>
+                  </div>
+                </article>
+              `;
+            }).join('')}
+          </div>
+
+          <!-- Legitimacy & Provider Verification Check (Items #12 & #14) -->
+          <section class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-2.5 text-xs">
+            <h2 class="text-sm font-extrabold text-slate-900">🛡️ Check Provider &amp; Qualification Legitimacy (Avoid Bogus Colleges)</h2>
+            <p class="text-slate-600">Before paying any registration fee to a private college or training provider, confirm three separate facts: (1) the qualification is registered on the NQF, (2) the specific campus/delivery site is registered or QCTO-accredited, and (3) the intake is currently open.</p>
+            <div class="flex flex-wrap gap-2 font-bold">
+              <a href="https://www.dhet.gov.za/" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-xl bg-blue-50 text-blue-800 border border-blue-200 hover:bg-blue-100">DHET Private College Registers ↗</a>
+              <a href="https://www.qcto.org.za/" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-xl bg-teal-50 text-teal-800 border border-teal-200 hover:bg-teal-100">QCTO Accredited SDP Search ↗</a>
+              <a href="https://www.saqa.org.za/" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 hover:bg-emerald-100">SAQA NQF Qualification Lookup ↗</a>
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderPlan() {
+      const subs = getActiveSubjects();
+      const slots = ['A', 'B', 'C'].map(k => ({ slot: k, prog: SAMPLE_PROGRAMMES.find(p => p.id === state.plans[k]) }));
+      return `
+        <div class="space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h1 class="text-xl font-extrabold text-slate-900">${state.parentMode ? '👨‍👩‍👧 Parent / Guardian Decision Summary' : '🗺️ Plan A / Plan B / Plan C Decision Board'}</h1>
+              <p class="text-xs text-slate-600">Compare academic eligibility, affordability, distance from ${escapeHtml(state.province)}, funding, and deadlines side-by-side.</p>
+            </div>
+            <button id="print-plan-btn" class="px-3.5 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold">🖨️ Print Family Plan</button>
+          </div>
+
+          <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm overflow-x-auto">
+            <table class="w-full text-xs text-left border-collapse">
+              <thead>
+                <tr class="border-b border-slate-200 text-slate-500">
+                  <th class="py-2 pr-3">Plan</th>
+                  <th class="py-2 px-3">Programme &amp; Institution</th>
+                  <th class="py-2 px-3">Academic</th>
+                  <th class="py-2 px-3">Affordability &amp; Distance</th>
+                  <th class="py-2 px-3">Legitimacy</th>
+                  <th class="py-2 px-3">Deadline</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                ${slots.map(({ slot, prog }) => {
+                  if (!prog) return `<tr><td class="py-3 font-black">Plan ${slot}</td><td colspan="5" class="py-3 text-slate-400">Not selected yet</td></tr>`;
+                  const ev = evaluateProgramme(subs, prog);
+                  return `
+                    <tr>
+                      <td class="py-3 pr-3 font-black text-blue-800">Plan ${slot}</td>
+                      <td class="py-3 px-3"><div class="font-extrabold text-slate-900">${escapeHtml(prog.name)}</div><div class="text-[11px] text-slate-500">${escapeHtml(prog.institution)} (${escapeHtml(prog.route)})</div></td>
+                      <td class="py-3 px-3"><span class="px-2 py-0.5 rounded-full font-bold border ${ev.badge}">${escapeHtml(ev.status)}</span></td>
+                      <td class="py-3 px-3"><div>${escapeHtml(prog.costLevel)}</div><div class="text-[11px] text-slate-500">${prog.province === state.province ? 'Near home (0 relocation)' : `Relocation (${escapeHtml(prog.province)})`}</div></td>
+                      <td class="py-3 px-3 font-semibold">${escapeHtml(prog.legitStatus)}</td>
+                      <td class="py-3 px-3 font-semibold">${escapeHtml(prog.deadline)}</td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+          </div>
+
+          <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-2.5 text-xs">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h2 class="text-sm font-extrabold text-slate-900">📅 Typical South African Application Season Calendar</h2>
+              <span class="text-[11px] text-slate-500 font-semibold">Indicative guide — verify exact dates on official portals</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+              <div class="p-3 rounded-2xl bg-blue-50 border border-blue-200"><div class="font-extrabold text-blue-900">Apr – Sep</div><div class="text-slate-700 mt-0.5">Public Universities &amp; UoTs main intake window (competitive degrees close earliest).</div></div>
+              <div class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200"><div class="font-extrabold text-emerald-900">Sep – Nov</div><div class="text-slate-700 mt-0.5">NSFAS, corporate bursaries &amp; SETA funding cycles.</div></div>
+              <div class="p-3 rounded-2xl bg-teal-50 border border-teal-200"><div class="font-extrabold text-teal-900">Sep – Jan</div><div class="text-slate-700 mt-0.5">Public TVET NC(V) &amp; Report 191 trimester/semester applications.</div></div>
+              <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200"><div class="font-extrabold text-amber-900">Jan – Feb</div><div class="text-slate-700 mt-0.5">Late spaces &amp; official CAS placement support (WhatsApp 081 308 4196).</div></div>
+            </div>
+          </div>
+
+          <!-- Interactive "Can I Afford This?" Annual Cost Comparator (Item #10) -->
+          <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3 text-xs">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <h2 class="text-sm font-extrabold text-slate-900">🧮 "Can I Afford This?" — Annual Out-of-Pocket Comparison</h2>
+              <span class="text-[11px] text-slate-500 font-semibold">Edit with your real estimates — always verify official 2027 fees</span>
+            </div>
+            ${(() => {
+              const a = state.affordA || { tuition: 58000, accomm: 45000, transport: 6000, funding: 0 };
+              const c = state.affordC || { tuition: 12000, accomm: 0, transport: 7200, funding: 12000 };
+              const netA = Math.max(0, (Number(a.tuition)||0) + (Number(a.accomm)||0) + (Number(a.transport)||0) - (Number(a.funding)||0));
+              const netC = Math.max(0, (Number(c.tuition)||0) + (Number(c.accomm)||0) + (Number(c.transport)||0) - (Number(c.funding)||0));
+              const diff = Math.abs(netA - netC);
+              return `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div class="p-3.5 rounded-2xl bg-blue-50 border border-blue-200 space-y-2">
+                    <div class="font-extrabold text-blue-950">Option A (e.g. Away University)</div>
+                    <div class="grid grid-cols-2 gap-2">
+                      <label>Tuition (R/yr)<input data-aff="A|tuition" type="number" min="0" value="${a.tuition}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-blue-200 font-bold" /></label>
+                      <label>Accomm. (R/yr)<input data-aff="A|accomm" type="number" min="0" value="${a.accomm}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-blue-200 font-bold" /></label>
+                      <label>Transport (R/yr)<input data-aff="A|transport" type="number" min="0" value="${a.transport}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-blue-200 font-bold" /></label>
+                      <label>Funding/NSFAS (R)<input data-aff="A|funding" type="number" min="0" value="${a.funding}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-blue-200 font-bold" /></label>
+                    </div>
+                    <div class="font-black text-sm text-blue-950">Est. Family Out-of-Pocket: R${netA.toLocaleString()}/yr</div>
+                  </div>
+                  <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2">
+                    <div class="font-extrabold text-emerald-950">Option C (e.g. Near-Home TVET / Higher Cert)</div>
+                    <div class="grid grid-cols-2 gap-2">
+                      <label>Tuition (R/yr)<input data-aff="C|tuition" type="number" min="0" value="${c.tuition}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-emerald-200 font-bold" /></label>
+                      <label>Accomm. (R/yr)<input data-aff="C|accomm" type="number" min="0" value="${c.accomm}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-emerald-200 font-bold" /></label>
+                      <label>Transport (R/yr)<input data-aff="C|transport" type="number" min="0" value="${c.transport}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-emerald-200 font-bold" /></label>
+                      <label>Funding/NSFAS (R)<input data-aff="C|funding" type="number" min="0" value="${c.funding}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-emerald-200 font-bold" /></label>
+                    </div>
+                    <div class="font-black text-sm text-emerald-950">Est. Family Out-of-Pocket: R${netC.toLocaleString()}/yr</div>
+                  </div>
+                </div>
+                <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 font-extrabold text-slate-800">
+                  Estimated annual family cost difference: <span class="text-emerald-700">R${diff.toLocaleString()}/year</span> (${netC <= netA ? 'Option C is more affordable based on your entries' : 'Option A is more affordable based on your entries'}).
+                </div>
+              `;
+            })()}
+          </div>
+
+          <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-2 text-xs">
+            <h2 class="text-sm font-extrabold text-slate-900">💰 Separate Funding Check (NSFAS &amp; SETA)</h2>
+            <p class="text-slate-600">Academic eligibility and funding are separate. Current household income band: <strong>R${Number(state.incomeBand).toLocaleString()}</strong> — ${state.incomeBand <= 350000 ? 'appears within the published R350,000 NSFAS household income threshold (still requires separate NSFAS application &amp; proof of admission).' : 'above the R350,000 NSFAS threshold — explore SETA bursaries, missing-middle loans, or employer apprenticeships.'}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderVault() {
+      const evList = state.evidenceVault || [];
+      const activeEv = evList[interviewIdx % Math.max(1, evList.length)];
+      const reqSkills = ['Windows', 'Networking', 'Active Directory', 'Microsoft 365', 'Troubleshooting'];
+      const vaultBlob = evList.map(e => `${e.skill} ${e.tools} ${e.story}`).join(' ').toLowerCase();
+      return `
+        <div class="max-w-6xl mx-auto space-y-4">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+            <!-- Career Evidence Vault -->
+            <div class="lg:col-span-7 bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3.5">
+              <div>
+                <h1 class="text-xl font-extrabold text-slate-900">🧰 Career Evidence Vault (Zero Fabricated Claims)</h1>
+                <p class="text-xs text-slate-600">Record real tasks, labs, and projects you actually completed. Your CV and Interview Coach pull directly from these true facts.</p>
+              </div>
+              <form id="ev-form" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 p-3.5 rounded-2xl bg-slate-50 border border-slate-200">
+                <input id="ev-skill" required type="text" placeholder="Skill demonstrated (e.g. Router / VLAN Setup)" class="px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold" />
+                <input id="ev-tools" required type="text" placeholder="Tools used (e.g. Packet Tracer, Excel, Spanners)" class="px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs" />
+                <textarea id="ev-story" required rows="2" placeholder="What did YOU actually do and what was the real result? (Never invent numbers)" class="sm:col-span-2 px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs"></textarea>
+                <button type="submit" class="sm:col-span-2 py-2 rounded-xl bg-blue-700 text-white text-xs font-extrabold">+ Add Real Evidence to Vault</button>
+              </form>
+              <div class="space-y-2">
+                ${evList.map((e, i) => `
+                  <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-2 text-xs">
+                    <label class="flex items-start gap-2.5 flex-1 cursor-pointer">
+                      <input type="checkbox" data-inc-ev="${i}" ${e.includeInCv !== false ? 'checked' : ''} class="mt-1 w-4 h-4 accent-blue-700" />
+                      <div>
+                        <div class="font-extrabold text-slate-900">${escapeHtml(e.skill)} <span class="font-normal text-blue-700">(${escapeHtml(e.tools)})</span></div>
+                        <p class="text-slate-600 mt-0.5">${escapeHtml(e.story)}</p>
+                      </div>
+                    </label>
+                    <button data-del-ev="${i}" aria-label="Remove evidence" class="text-rose-600 font-bold">✕</button>
+                  </div>
+                `).join('')}
+              </div>
+              <div class="flex flex-wrap gap-2 pt-1">
+                <input id="cv-name" type="text" value="${escapeHtml(state.cvName)}" placeholder="Your Full Name for CV Export" class="flex-1 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold" />
+                <button id="dl-cv-doc" class="px-4 py-2 rounded-xl bg-emerald-700 text-white text-xs font-extrabold">📥 Export Single-Column Word CV (.doc)</button>
+              </div>
+            </div>
+
+            <!-- Skills Gap + Evidence-Based Interview Coach + Starter Projects -->
+            <div class="lg:col-span-5 space-y-4">
+              <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-2.5 text-xs">
+                <h2 class="text-sm font-extrabold text-slate-900">📊 Skills Gap Check (Target: IT Support)</h2>
+                <div class="flex flex-wrap gap-1.5">
+                  ${reqSkills.map(sk => {
+                    const has = vaultBlob.includes(sk.toLowerCase());
+                    return `<span class="px-2.5 py-1 rounded-full font-bold ${has ? 'bg-emerald-100 text-emerald-900' : 'bg-amber-50 text-amber-900 border border-amber-200'}">${has ? '✓ ' : '⚠ Missing: '}${escapeHtml(sk)}</span>`;
+                  }).join('')}
+                </div>
+              </div>
+
+              <div class="bg-white rounded-3xl p-5 border border-indigo-200 shadow-sm space-y-2.5 text-xs">
+                <div class="flex items-center justify-between">
+                  <h2 class="text-sm font-extrabold text-indigo-950">🎤 Evidence-Based Interview Coach</h2>
+                  <button id="next-int-q" class="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-800 font-bold">Next Question →</button>
+                </div>
+                ${activeEv ? `
+                  <div class="p-3 rounded-2xl bg-indigo-50 border border-indigo-200 space-y-1">
+                    <div class="font-extrabold text-indigo-950">Based on your real entry ("${escapeHtml(activeEv.skill)}"):</div>
+                    <p class="text-slate-800">"Tell me step-by-step how you used <strong>${escapeHtml(activeEv.tools)}</strong> when handling <strong>${escapeHtml(activeEv.skill)}</strong>. What went wrong first, and how did you confirm it was fixed?"</p>
+                  </div>
+                ` : '<p class="text-slate-500">Add one real evidence item on the left to unlock tailored interview questions.</p>'}
+              </div>
+
+              <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-2 text-xs">
+                <h2 class="text-sm font-extrabold text-slate-900">🛠️ No Experience? Build a Real Starter Project</h2>
+                ${STARTER_PROJECTS.map(pr => `<div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200"><div class="font-bold text-slate-900">${escapeHtml(pr.title)}</div><div class="text-[11px] text-slate-600 mt-0.5">${escapeHtml(pr.prompt)}</div></div>`).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderWork() {
+      return `
+        <div class="space-y-4">
+          <div class="rounded-2xl bg-amber-50 border border-amber-200 px-4 py-3 text-xs font-semibold text-amber-950">
+            ⚠️ <strong>Sample Work Listings Only:</strong> Separate trust indicators are shown for every listing — never pay any application, uniform, or registration fee.
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+            ${SAMPLE_WORK.map(w => `
+              <article class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-2 text-xs">
+                <div class="font-bold text-teal-700">${escapeHtml(w.employer)}</div>
+                <h2 class="text-base font-extrabold text-slate-900">${escapeHtml(w.title)}</h2>
+                <div class="text-slate-600">📍 ${escapeHtml(w.town)}, ${escapeHtml(w.province)} · 💰 ${escapeHtml(w.salary)} · Closes ${escapeHtml(w.closing)}</div>
+                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] space-y-0.5">
+                  <div><strong>Employer Identity:</strong> ${escapeHtml(w.trust.id)}</div>
+                  <div><strong>Source Check:</strong> ${escapeHtml(w.trust.source)}</div>
+                  <div><strong>Scam Check:</strong> ${escapeHtml(w.trust.scam)}</div>
+                </div>
+                <a href="${escapeHtml(w.url)}" target="_blank" rel="noopener noreferrer" class="inline-block px-4 py-2 rounded-xl bg-teal-700 text-white font-extrabold">Official Link ↗</a>
+              </article>
+            `).join('')}
+          </div>
+          <form id="scam-form" class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-2.5">
+            <h2 class="text-base font-extrabold text-slate-900">🛡️ SA Recruitment Scam Indicator Scanner</h2>
+            <textarea id="scam-in" rows="3" required placeholder="Paste any suspicious WhatsApp, Facebook, or SMS job advert..." class="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs"></textarea>
+            <button type="submit" class="px-4 py-2 rounded-xl bg-rose-600 text-white text-xs font-extrabold">Check Risk Indicators</button>
+            ${scamResult ? `<div class="p-3 rounded-2xl border text-xs font-bold ${scamResult.length ? 'bg-rose-50 border-rose-300 text-rose-900' : 'bg-emerald-50 border-emerald-300 text-emerald-900'}">${scamResult.length ? '🚨 Risk indicators detected: ' + scamResult.map(escapeHtml).join(' | ') : '✅ No fee or free-email impersonation indicators detected — still verify on the official company site.'}</div>` : ''}
+          </form>
+        </div>
+      `;
+    }
+
+    function render() {
+      document.querySelectorAll('[data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === state.tab));
+      const m = document.getElementById('app-main');
+      if (state.tab === 'results') m.innerHTML = renderResults();
+      else if (state.tab === 'careers') m.innerHTML = renderCareers();
+      else if (state.tab === 'study') m.innerHTML = renderStudy();
+      else if (state.tab === 'plan') m.innerHTML = renderPlan();
+      else if (state.tab === 'vault') m.innerHTML = renderVault();
+      else m.innerHTML = renderWork();
+      bindEvents();
+    }
+
+    function bindEvents() {
+      document.querySelectorAll('[data-sub-name]').forEach(el => el.addEventListener('change', e => { state.subjects[Number(el.dataset.subName)].name = e.target.value.trim(); saveState(); render(); }));
+      document.querySelectorAll('[data-sub-mark]').forEach(el => el.addEventListener('change', e => { state.subjects[Number(el.dataset.subMark)].mark = Math.max(0, Math.min(100, Number(e.target.value) || 0)); saveState(); render(); }));
+      const gs = document.getElementById('grade-stage');
+      if (gs) gs.addEventListener('change', e => { state.gradeStage = e.target.value; saveState(); render(); });
+      document.querySelectorAll('[data-aff]').forEach(inp => inp.addEventListener('change', e => {
+        const [planKey, field] = inp.dataset.aff.split('|');
+        const target = planKey === 'A' ? state.affordA : state.affordC;
+        if (target) { target[field] = Math.max(0, Number(e.target.value) || 0); saveState(); render(); }
+      }));
+      const tw = document.getElementById('toggle-whatif');
+      if (tw) tw.addEventListener('click', () => { state.whatIfActive = !state.whatIfActive; saveState(); render(); });
+      const wr = document.getElementById('whatif-range');
+      if (wr) wr.addEventListener('input', e => { state.whatIfMaths = Number(e.target.value); state.whatIfActive = true; saveState(); render(); });
+      const tn = document.getElementById('toggle-nouni');
+      if (tn) tn.addEventListener('click', () => { state.noUniOnly = !state.noUniOnly; saveState(); render(); });
+      const th = document.getElementById('toggle-nearhome');
+      if (th) th.addEventListener('click', () => { state.nearHomeOnly = !state.nearHomeOnly; saveState(); render(); });
+      const pp = document.getElementById('print-plan-btn');
+      if (pp) pp.addEventListener('click', () => window.print());
+
+      const ef = document.getElementById('ev-form');
+      if (ef) ef.addEventListener('submit', e => {
+        e.preventDefault();
+        state.evidenceVault.unshift({
+          id: 'ev_' + Date.now(),
+          skill: document.getElementById('ev-skill').value.trim(),
+          tools: document.getElementById('ev-tools').value.trim(),
+          story: document.getElementById('ev-story').value.trim()
+        });
+        saveState(); render(); showToast('Added real evidence to your vault!');
+      });
+      const nq = document.getElementById('next-int-q');
+      if (nq) nq.addEventListener('click', () => { interviewIdx++; render(); });
+      const dcv = document.getElementById('dl-cv-doc');
+      if (dcv) dcv.addEventListener('click', () => {
+        const nameEl = document.getElementById('cv-name');
+        if (nameEl) state.cvName = nameEl.value.trim();
+        saveState();
+        const doc = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{font-family:Arial,sans-serif;font-size:11pt;max-width:740px;margin:20px auto}h2{border-bottom:1px solid #222;text-transform:uppercase;font-size:11pt}</style></head><body><h1>${escapeHtml(state.cvName || 'Your Name')}</h1><p>${escapeHtml(state.province)}, South Africa</p><h2>Demonstrated Skills &amp; Real Evidence</h2><ul>${(state.evidenceVault || []).filter(e => e.includeInCv !== false).map(e => `<li><strong>${escapeHtml(e.skill)} (${escapeHtml(e.tools)}):</strong> ${escapeHtml(e.story)}</li>`).join('')}</ul><h2>Academic Results (${escapeHtml(state.gradeStage)})</h2><ul>${state.subjects.map(s => `<li>${escapeHtml(s.name)}: ${s.mark}%</li>`).join('')}</ul></body></html>`;
+        const blob = new Blob([doc], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a'); a.href = url; a.download = 'Mzansi_Pathways_Evidence_CV.doc'; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        showToast('Exported single-column Evidence CV (.doc)!');
+      });
+      const sf = document.getElementById('scam-form');
+      if (sf) sf.addEventListener('submit', e => {
+        e.preventDefault();
+        const txt = document.getElementById('scam-in').value;
+        const flags = [];
+        if (/(?<!no\s)(?<!zero\s)\b(?:registration|application|admin|processing)\s+fee\b/i.test(txt)) flags.push('Requests application/registration fee');
+        if (/\b(?:pay|deposit|eft|ewallet|cashsend)\s*r?\s*\d+/i.test(txt)) flags.push('Requests upfront payment/deposit');
+        if (/(eskom|transnet|sasol|saps|department of|shoprite|fnb)/i.test(txt) && /@(gmail|yahoo|hotmail|outlook)\.com/i.test(txt)) flags.push('Major SA employer using free webmail');
+        scamResult = flags; render();
+      });
+    }
+
+    document.addEventListener('click', e => {
+      const tb = e.target.closest && e.target.closest('[data-tab]');
+      if (tb) { state.tab = tb.dataset.tab; saveState(); render(); return; }
+      const pc = e.target.closest && e.target.closest('[data-pick-career]');
+      if (pc) { state.selectedCareerId = pc.dataset.pickCareer; saveState(); render(); return; }
+      const wp = e.target.closest && e.target.closest('[data-why-prog]');
+      if (wp) { openWhyModal(wp.dataset.whyProg); return; }
+      const sp = e.target.closest && e.target.closest('[data-set-plan]');
+      if (sp) {
+        const [slot, pid] = sp.dataset.setPlan.split('|');
+        state.plans[slot] = pid; saveState();
+        document.getElementById('why-modal').classList.add('hidden');
+        showToast(`Saved to Plan ${slot}!`);
+        render(); return;
+      }
+      const de = e.target.closest && e.target.closest('[data-del-ev]');
+      if (de) { state.evidenceVault.splice(Number(de.dataset.delEv), 1); saveState(); render(); return; }
+      const fp = e.target.closest && e.target.closest('[data-flag-prog]');
+      if (fp) {
+        const rep = `[Mzansi Pathways Tier-5 Report] ${fp.dataset.flagProg} | Please verify latest prospectus/intake requirements`;
+        const ta = document.createElement('textarea'); ta.value = rep; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (err) {} ta.remove();
+        showToast('Conflict report copied — held for admin verification (never overwrites official rules).');
+        return;
+      }
+      if (e.target.closest && e.target.closest('#close-why')) { document.getElementById('why-modal').classList.add('hidden'); return; }
+      if (e.target.closest && (e.target.closest('#close-help') || e.target.closest('#help-ok'))) { document.getElementById('help-modal').classList.add('hidden'); }
+    });
+
+    document.getElementById('parent-btn').addEventListener('click', () => { state.parentMode = !state.parentMode; saveState(); applyModes(); render(); showToast(state.parentMode ? 'Parent / Guardian View ON' : 'Student View ON'); });
+    document.getElementById('easy-btn').addEventListener('click', () => { state.easyMode = !state.easyMode; saveState(); applyModes(); showToast(state.easyMode ? 'Easy View ON' : 'Standard View'); });
+    document.getElementById('theme-btn').addEventListener('click', () => { state.darkMode = !state.darkMode; saveState(); applyModes(); showToast(state.darkMode ? 'Dark Mode ON' : 'Light Mode ON'); });
+    document.getElementById('help-btn').addEventListener('click', () => document.getElementById('help-modal').classList.remove('hidden'));
+    document.getElementById('prov-select').addEventListener('change', e => { state.province = e.target.value; saveState(); render(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.getElementById('why-modal').classList.add('hidden');
+        document.getElementById('help-modal').classList.add('hidden');
+      }
+    });
+    ['why-modal', 'help-modal'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('click', e => { if (e.target === el) el.classList.add('hidden'); });
+    });
+
+    document.addEventListener('change', e => {
+      if (e.target && e.target.dataset && e.target.dataset.incEv !== undefined) {
+        const idx = Number(e.target.dataset.incEv);
+        if (state.evidenceVault[idx]) { state.evidenceVault[idx].includeInCv = e.target.checked; saveState(); }
+      }
+    });
+    if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+      window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(() => {}); });
+    }
+    applyModes();
+    render();
+  </script>
+</body>
+</html>

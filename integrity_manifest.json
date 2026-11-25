@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "sha256": {
+    "index.html": "dfd73514f7b1b68cdb43cc8943bb9b1df4ad931c70cd73d12365587a4ff091ff",
+    "manifest.json": "90ad869b854627bb36a86a4544dce36a393e59c247dac046cb24638dab106830",
+    "sw.js": "fc113f62a78d763406a5cd8f8109f7442160fbe4facca61abde31efed9610da5",
+    "data/programmes_2027.json": "0ea5613e2710b31f0f242dbb5f13bffbb836388207898e411ff55442efddecc6",
+    "scripts/match_engine.py": "7e841f603c79cf6023527c96fdbf9ede9fc1fbae41fe4504ce12dbe1d96b00ec"
+  }
+}
