@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 def generate_changelog(root: Path) -> Path:
-    gates = sorted((root / "scripts" / "gates").glob("[0-9][0-9]_verify_*.py"))
+    gates = sorted((f for f in (root / "scripts" / "gates").glob("*_verify_*.py") if f.name.split("_", 1)[0].isdigit()), key=lambda f: int(f.name.split("_", 1)[0]))
     docs = sorted((root / "docs").glob("*.md"))
     progs = json.loads((root / "data" / "programmes_2027.json").read_text(encoding="utf-8")).get("programmes") or []
     manifest = json.loads((root / "integrity_manifest.json").read_text(encoding="utf-8"))

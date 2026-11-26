@@ -29,7 +29,7 @@ def _sha256_file(path: Path) -> str:
 
 
 def write_gate_manifest(root: Path) -> Path:
-    gate_files = sorted((root / "scripts" / "gates").glob("[0-9][0-9]_verify_*.py"))
+    gate_files = sorted((f for f in (root / "scripts" / "gates").glob("*_verify_*.py") if f.name.split("_", 1)[0].isdigit()), key=lambda f: int(f.name.split("_", 1)[0]))
     hashes = {gf.name: _sha256_file(gf) for gf in gate_files}
     payload = {
         "schemaVersion": 1,
@@ -71,7 +71,7 @@ def _authenticate_gate(gf: Path, expected_hashes: dict) -> list:
 
 
 def run_release_verification(root: Path, min_gates: int = 68) -> int:
-    gate_files = sorted((root / "scripts" / "gates").glob("[0-9][0-9]_verify_*.py"))
+    gate_files = sorted((f for f in (root / "scripts" / "gates").glob("*_verify_*.py") if f.name.split("_", 1)[0].isdigit()), key=lambda f: int(f.name.split("_", 1)[0]))
     gm_path = root / "gate_integrity_manifest.json"
     expected_hashes = {}
     if gm_path.exists():

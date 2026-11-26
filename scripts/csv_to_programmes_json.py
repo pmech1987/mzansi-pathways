@@ -82,3 +82,34 @@ def main(path, allow_unverify=False):
 if __name__=="__main__":
     a=[x for x in sys.argv[1:] if not x.startswith("--")]
     main(a[0] if a else sys.exit(__doc__), "--allow-unverify" in sys.argv)
+
+
+def validate_csv_text_strict(csv_text: str) -> dict:
+    """Strict v76 validator: enforces valid NSC boundaries (0/30/40/50/60/70/80), HTTPS sourceUrl, and ISO closes date."""
+    import csv as _csv, io as _io, re as _re, datetime as _dt
+    valid_marks = {0, 30, 40, 50, 60, 70, 80}
+    iso_re = _re.compile(r"^\d{4}-\d{2}-\d{2}$")
+    accepted, rejected = [], []
+    for idx, row in enumerate(_csv.DictReader(_io.StringIO(csv_text)), start=2):
+        inst_id = str(row.get("institutionId") or "").strip().lower()
+        name = str(row.get("name") or "").strip()[:140]
+        url = str(row.get("sourceUrl") or row.get("officialUrl") or "").strip()
+        closes = str(row.get("closes") or row.get("deadline") or "").strip()
+        try:
+            min_aps = float(row.get("minAps") or 0)
+            min_eng = int(row.get("minEnglish") or 0)
+            min_math = int(row.get("minMaths") or 0)
+        except ValueError:
+            rejected.append({"row": idx, "name": name, "reason": "Non-numeric mark/APS"})
+            continue
+        if not inst_id or not name or not url.startswith("https://"):
+            rejected.append({"row": idx, "name": name, "reason": "Missing institutionId, name, or HTTPS URL"})
+            continue
+        if closes.lower() != "rolling" and not iso_re.match(closes):
+            rejected.append({"row": idx, "name": name, "reason": f"Non-ISO closing date: {closes}"})
+            continue
+        if min_eng not in valid_marks or min_math not in valid_marks:
+            rejected.append({"row": idx, "name": name, "reason": f"Invalid NSC boundary (eng={min_eng}, math={min_math})"})
+            continue
+        accepted.append({"id": str(row.get("id") or f"{inst_id}_{idx}"), "institutionId": inst_id, "name": name, "minAps": min_aps, "closes": closes, "sourceUrl": url, "checkedAt": str(row.get("checkedAt") or _dt.date.today().isoformat())})
+    return {"accepted": accepted, "rejected": rejected, "count": len(accepted)}

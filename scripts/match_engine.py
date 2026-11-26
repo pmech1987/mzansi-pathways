@@ -38,7 +38,8 @@ def evaluate_nsc_pass(subjects: List[dict]) -> dict:
     clean = [s for s in subjects if isinstance(s, dict)]
     hl = [s for s in clean if s.get("isHomeLanguage")]
     non_lo = [s for s in clean if not s.get("isLifeOrientation")]
-    aps_excl_lo = sum(mark_to_nsc_level(s.get("mark", 0)) for s in non_lo[:6])
+    best_six_levels = sorted((mark_to_nsc_level(s.get("mark", 0)) for s in non_lo), reverse=True)[:6]
+    aps_excl_lo = sum(best_six_levels)
     hl_mark = max((_safe_mark(s.get("mark", 0)) for s in hl), default=0.0)
     over_50 = sum(1 for s in non_lo if _safe_mark(s.get("mark", 0)) >= 50)
     over_40 = sum(1 for s in non_lo if _safe_mark(s.get("mark", 0)) >= 40)
@@ -219,3 +220,34 @@ def audit_profile_integrity(subjects: List[dict]) -> dict:
     if lo_count == 0:
         warnings.append("No Life Orientation flagged (excluded from standard APS).")
     return {"valid": len(warnings) == 0, "warnings": warnings, "subjectCount": len(seen)}
+
+
+def compute_ump_aps(subjects: List[dict]) -> dict:
+    """Official UMP undergraduate PDF method: 4 compulsory (HL, FAL, Maths/MathsLit, LO/2) + best 3 electives (max 45.5)."""
+    if not isinstance(subjects, list):
+        return {"aps": None, "reason": "No subjects provided"}
+    clean = [s for s in subjects if isinstance(s, dict) and s.get("mark") is not None]
+    hl = next((s for s in clean if s.get("isHomeLanguage")), None)
+    fal = next((s for s in clean if "first additional" in str(s.get("name", "")).lower()), None)
+    mth = next((s for s in clean if str(s.get("name", "")).strip().lower() == "mathematics"), None) or next(
+        (s for s in clean if "mathematical literacy" in str(s.get("name", "")).lower()), None
+    )
+    lo = next((s for s in clean if s.get("isLifeOrientation") or str(s.get("name", "")).strip().lower() == "life orientation"), None)
+    if not (hl and fal and mth and lo):
+        return {"aps": None, "reason": "Missing compulsory subject (HL, FAL, Maths/Maths Lit, or LO)"}
+    used_ids = {id(hl), id(fal), id(mth), id(lo)}
+    electives = sorted(
+        (mark_to_nsc_level(s.get("mark", 0)) for s in clean if id(s) not in used_ids),
+        reverse=True,
+    )[:3]
+    if len(electives) < 3:
+        return {"aps": None, "reason": "Need at least 3 elective subjects"}
+    total = (
+        mark_to_nsc_level(hl.get("mark", 0))
+        + mark_to_nsc_level(fal.get("mark", 0))
+        + mark_to_nsc_level(mth.get("mark", 0))
+        + (mark_to_nsc_level(lo.get("mark", 0)) / 2.0)
+        + sum(electives)
+    )
+    used_math_lit = "mathematical literacy" in str(mth.get("name", "")).lower()
+    return {"aps": total, "max": 45.5, "usedMathLit": used_math_lit, "note": "LO level divided by 2 per UMP undergraduate PDF"}

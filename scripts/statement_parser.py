@@ -44,7 +44,12 @@ def _clamp_mark(val: int) -> int:
     return max(0, min(100, int(val)))
 
 
+SA_ID_RE = re.compile(r"\b\d{13}\b")
+
+
 def parse_statement_text(raw_text: str) -> Dict[str, object]:
+    if isinstance(raw_text, str):
+        raw_text = SA_ID_RE.sub("[redacted-id]", raw_text)
     if not isinstance(raw_text, str) or not raw_text.strip():
         return {"subjects": [], "warnings": ["Empty statement text provided."], "needsConfirmation": True}
 
@@ -87,8 +92,8 @@ def parse_statement_text(raw_text: str) -> Dict[str, object]:
                     mark = sym_map[sym_m.group(1)]
                     ambiguous = True
                 else:
-                    warnings.append(f"No valid percentage mark found for {matched_name}; defaulted to 50% for review.")
-                    mark = 50
+                    warnings.append(f"No valid percentage mark found for {matched_name}; left blank for manual entry.")
+                    mark = None
                     ambiguous = True
             else:
                 mark = _clamp_mark(candidates[-1])
