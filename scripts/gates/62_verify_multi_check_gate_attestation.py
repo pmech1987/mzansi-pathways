@@ -19,7 +19,7 @@ def main() -> int:
     else:
         gdata = json.loads(gm.read_text(encoding="utf-8"))
         hashes = gdata.get("sha256") or {}
-        actual_gates = sorted(f.name for f in (ROOT / "scripts" / "gates").glob("[0-9][0-9]_verify_*.py"))
+        actual_gates = sorted((f.name for f in (ROOT / "scripts" / "gates").glob("*_verify_*.py") if f.name.split("_", 1)[0].isdigit()), key=lambda n: int(n.split("_", 1)[0]))
         missing = [g for g in actual_gates if g not in hashes]
         if missing:
             errors.append(f"gate_integrity_manifest.json missing hashes for: {missing[:5]}")
