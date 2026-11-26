@@ -206,3 +206,19 @@ body:not(.mz-screen) nav[aria-label="Primary navigation"] .tab-btn.active{backgr
 /* course cards: long notes and source text sit behind one tap */
 .mz-notes>summary{display:flex;align-items:center;min-height:36px;cursor:pointer;font-size:.72rem;font-weight:800;color:var(--navy)}
 .mz-notes[open]>summary{margin-bottom:2px}
+
+/* v95 Dark Mode Contrast Fixes (eliminates white-on-white pills, Sync, active subtabs, bottom dock, trust bar, and More links) */
+body.dark-mode #civic-trust-bar { background: #0f172a !important; color: #cbd5e1 !important; border-bottom: 1px solid #1e293b; }
+body.dark-mode header #auth-btn,
+body.dark-mode header button.bg-slate-900,
+body.dark-mode header .bg-slate-900 { background: #1d4ed8 !important; color: #ffffff !important; border: 1px solid #3b82f6 !important; }
+body.dark-mode nav .tab-btn.active,
+body.dark-mode .mz-sub button.on,
+body.dark-mode:not(.mz-screen) .mz-d[data-home],
+body.dark-mode.mz-screen .mz-d.tab-btn.active { background: #2563eb !important; color: #ffffff !important; border-color: #3b82f6 !important; }
+body.dark-mode main button.bg-slate-900,
+body.dark-mode main a.bg-slate-900,
+body.dark-mode #dl-dossier { background: #2563eb !important; color: #ffffff !important; border-color: #3b82f6 !important; }
+body.dark-mode .mz-more a,
+body.dark-mode #mz-more a,
+body.dark-mode [role="dialog"] a { color: #93c5fd !important; }

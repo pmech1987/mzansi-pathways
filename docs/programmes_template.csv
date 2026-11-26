@@ -1,2 +1,0 @@
-id,institutionId,campus,province,route,name,nqf,duration,minPassLevel,minAps,subjectRequirements,requiresSelection,closes,feesNote,funding,careerFamily,officialUrl,sourceDoc,sourcePage,intakeYear,lastVerifiedAt,verificationStatus
-example_id,up,Hatfield,Gauteng,University,BSc Example,7,3 Years,Bachelor's Pass,30,Mathematics:60|English Home Language/English First Additional Language:60,yes,2027-09-30,See official fee schedule,NSFAS/Bursaries,tech,https://www.up.ac.za/,UP 2027 prospectus,p.12,2027,2026-11-26,pending_review

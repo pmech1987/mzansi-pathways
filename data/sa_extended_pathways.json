@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-26",
+  "policyUpdates2026": {
+    "casReplacesCach": {
+      "status": "ACTIVE_2026",
+      "service": "Central Application Service (CAS)",
+      "whatsapp": "081 308 4196",
+      "notice": "DHET discontinued CACH from 2026 and transitioned to CAS. Do not follow outdated CACH SMS shortcodes."
+    },
+    "supportLines": [
+      {"name": "Higher Health 24h Free Student Mental Health", "phone": "0800 36 36 36"},
+      {"name": "SA Youth (Zero-Rated Data-Free / YES4Youth)", "phone": "0800 72 72 72", "url": "https://sayouth.mobi/"},
+      {"name": "NYDA Youth Development Support", "phone": "0800 58 58 58", "url": "https://www.nyda.gov.za/"},
+      {"name": "NSFAS Toll-Free Contact Centre", "phone": "0800 067 327", "url": "https://www.nsfas.org.za/"}
+    ]
+  },
+  "publicNursingColleges": {
+    "regulator": "South African Nursing Council (SANC)",
+    "verifyUrl": "https://www.sanc.co.za/",
+    "warning": "Section 42 of the Nursing Act makes unaccredited training illegal. Apply only via Provincial Dept. of Health portals (free; no walk-in or WhatsApp forms).",
+    "colleges": [
+      "Gauteng College of Nursing", "Limpopo College of Nursing", "KwaZulu-Natal College of Nursing",
+      "Lilitha College of Nursing (Eastern Cape)", "Western Cape College of Nursing",
+      "Free State School of Nursing", "Mpumalanga College of Nursing",
+      "North West College of Nursing", "Henrietta Stockdale Nursing College (Northern Cape)",
+      "SA Military Health Service Nursing College"
+    ]
+  },
+  "publicAgriculturalColleges": {
+    "accreditation": "CHE-accredited 3-year Diplomas & B.Agric (Elsenburg); AgriSETA aligned.",
+    "colleges": [
+      "Elsenburg Agricultural Training Institute", "Cedara College of Agriculture",
+      "Fort Cox Agriculture and Forestry Training Institute", "Glen College of Agriculture",
+      "Grootfontein Agricultural Development Institute (GADI)", "Madzivhandila College of Agriculture",
+      "Owen Sithole College of Agriculture", "Potchefstroom College of Agriculture",
+      "Tompi Seleka College of Agriculture", "Tsolo Agriculture and Rural Development Institute",
+      "Taung Agricultural College"
+    ]
+  },
+  "uniformedServices": [
+    {
+      "service": "SAPS Basic Police Development Learning Programme (BPDLP)",
+      "channel": "Free online at saps.gov.za",
+      "officialUrl": "https://www.saps.gov.za/",
+      "rules": "SA citizen, Grade 12, age 18-35, English + 1 language, clean criminal record, no visible tattoos in uniform."
+    },
+    {
+      "service": "SANDF Military Skills Development System (MSDS)",
+      "channel": "Hardcopy / hand-delivered forms ONLY (NOT FOR SALE — no online portal)",
+      "officialUrl": "https://www.dod.mil.za/",
+      "rules": "SA citizen only (no dual citizenship), age 18-22 (Matric) or 18-26 (3-yr tertiary), APS >= 18 excl. LO."
+    }
+  ]
+}

@@ -1,5 +1,0 @@
-# Languages & Institution Pages (V22)
-**Languages:** English plus draft isiZulu, siSwati and Xitsonga for key buttons, status labels and the admission disclaimer (`js/i18n.js`). English is the fallback for everything else.
-**Status: DRAFT.** No fluent-speaker review has happened (`reviewed:false`). The app shows a draft note when these are chosen. To mark a language reviewed, a named fluent reviewer must check every line, add a line `<Language> reviewed by <name>, <date>` to this file, and only then set `reviewed:true`. Gate 86 enforces this.
-**Adding a language:** add its code to `D` with one string per English key (same order). Eligibility wording is legal-sensitive: have a speaker check "Meets Minimums", "Needs Verification" and the disclaimer first.
-**Institution pages:** Study tab > Institutions. Each shows type, province, APS-method status, how many programmes (and how many fully verified) are loaded for the chosen year, official site, and a shortcut to its programmes. No admission rules are stored on these pages.

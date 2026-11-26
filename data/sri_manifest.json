@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "generatedAtSAST": "2026-11-27T00:06:04.173895+02:00",
+  "buildTag": "737fda510fd1",
+  "assetCount": 28,
+  "assets": {
+    "css/civic_mobile_a11y.css": {
+      "sri": "sha384-U7yvFHGK7c6svW5YhIaK8O1SoWRyr8j8nOogPzlmspZcCc7KqGCMh4Ledc3+33Oc",
+      "bytes": 3899
+    },
+    "css/creator_studio.css": {
+      "sri": "sha384-wO6l7vs1wNCYrRRRSWx8wNx15Me1UeQBiW+FvfhRynx36WCzr0mf0b4+uh5BdzTe",
+      "bytes": 3267
+    },
+    "css/legacy_inline.css": {
+      "sri": "sha384-8hbrn26ZmdrptQzh1L9BxV3easGa7RznOhzLEqN7DUkUEo/LFEIpTrn6KQBay0Q0",
+      "bytes": 4671
+    },
+    "css/mzansi_ui.css": {
+      "sri": "sha384-YXfmhvWooUsfVKLMo1pLZNI89U+G8cKaQ4CiAHFzyjBtSeiWYBe5D/hG5hW00vqP",
+      "bytes": 18228
+    },
+    "css/utilities.css": {
+      "sri": "sha384-ksOXA1azRNQVY8+/YUkvf2AbdkQmmEICjmlEYlNn+/A/XtoQdP+558pR0XCG+t94",
+      "bytes": 14536
+    },
+    "js/a11y.js": {
+      "sri": "sha384-0USi8Cr5QonbGQCSKG++WZAfUERwcmFirJQVfLgrmS/+v8SWjsa4Dq5uU46t0xkF",
+      "bytes": 2664
+    },
+    "js/app.js": {
+      "sri": "sha384-+GXkviJM5LUW7jPgh+1BaNKxuvej1C8E2Bm5WXw9bzr7XHpAAmHQyBOnA/WEYi1I",
+      "bytes": 312366
+    },
+    "js/boot.js": {
+      "sri": "sha384-vPwXe/mKR6Iqdjp+LMvl12AHldI5MfaNz9g62XiY+82iTweCqbwTBeQYci7M0ERo",
+      "bytes": 148
+    },
+    "js/catalogue.js": {
+      "sri": "sha384-d/6vZQ47rsWd4MN4Eye4OFITohjeI5SM8+Zw/o1zYVcO1zwBk9BYnoWEDKMBQ77G",
+      "bytes": 31168
+    },
+    "js/catalogue_data.js": {
+      "sri": "sha384-cb5GWOIF2RzlRHJPisdVKVN4qzmfSsOhEzNB1P1Mxhd5S0kZM0iK4d08dF6Zt6ed",
+      "bytes": 232084
+    },
+    "js/core/aps_engine.js": {
+      "sri": "sha384-77GYZvC++Xc1/FeE/gSa1VQBRu/dBcWmmvz0I5B9mqbS9Bh88WYCb9bRBv4uHimV",
+      "bytes": 16186
+    },
+    "js/core/pathways_v2_engines.js": {
+      "sri": "sha384-ykm4zL40WV0HTt9oOIws5TAcA/7FqMZVC1mfB68hLi+HTJcVn9+48fs9Dto+x86x",
+      "bytes": 10052
+    },
+    "js/core/reverse_aps_solver.js": {
+      "sri": "sha384-4qnEPMulSw/o2XROddAyV1pn7BIvh43x5NSkB4u22M/RHzEruUd0rqRliqapuXFl",
+      "bytes": 2320
+    },
+    "js/core/trusted_dom.js": {
+      "sri": "sha384-37eyhoJH9sWgg4DHqgdb6vtNmoXffGRxa7RdwkMGF3GA9tHf25V/tvRY1lrhUqnu",
+      "bytes": 991
+    },
+    "js/core/tts_hardened.js": {
+      "sri": "sha384-f5fF8x7y5PasHn4b1K06ieGY8xexhX9RCgVUuJRQOA3Xn7Sz5XQuMge6CqWHkhq/",
+      "bytes": 2327
+    },
+    "js/creator_studio.js": {
+      "sri": "sha384-WfFTTAElrchOriif+2hauq5XXFKDqR6jH6IpN2PjnN2igQG/7kkcLf7/mwGiZ3WR",
+      "bytes": 16651
+    },
+    "js/crypto_backup.js": {
+      "sri": "sha384-YTenrHGZZ5sYiKsAu1m0fPgvIw6hzHScuwLHR0Sg49RwxtxqpcyaxXukceTmUi0G",
+      "bytes": 2573
+    },
+    "js/data/bm25_shard_search.js": {
+      "sri": "sha384-vrp1ERiQZOYhFK+VjWzmaeynoCh0B0Tr0kvkw5OTEYfQeY0P+S/jyjPG1bZqqPv7",
+      "bytes": 1923
+    },
+    "js/data.js": {
+      "sri": "sha384-aqS9rJz0eZOy77rtI95KLoNXKJ0n7QdeyvDvsWnlOAlnKGqh8oooH32rtGfs1L99",
+      "bytes": 6722
+    },
+    "js/engine.js": {
+      "sri": "sha384-OnPVptfZgK53DpsQHptfXIc6PsHAit6O5OR2cZQ3vWQ6moCM9xVogWMewQT+LqkI",
+      "bytes": 22533
+    },
+    "js/features/trust_guards.js": {
+      "sri": "sha384-thqUh+rHT2bSPQWTFOQ1PPNy5+A3rGWk32Y2MWW4pWlvPAcYb3EfPn1Oggj5QpX5",
+      "bytes": 3623
+    },
+    "js/home.js": {
+      "sri": "sha384-bXNReik8kLVenqriaV4MJkAQFOFhy6gDror/kM+KmT/UB+qhshtTwtcLfUShzBpa",
+      "bytes": 4167
+    },
+    "js/i18n.js": {
+      "sri": "sha384-FDqZh8w/3GEgg/Zl7zVsMvYRiArjncaVLh15Z5nTtkckLZ6fFABAX8znic5tU0TA",
+      "bytes": 7457
+    },
+    "js/ocr.js": {
+      "sri": "sha384-AFAWPVNwH+uEZx05kjGEXggam+pKOyOXOjWOI07vg8s3zevw4W4OJ70VntyLgmA/",
+      "bytes": 18914
+    },
+    "js/screens.js": {
+      "sri": "sha384-GSfVQfZwJQpO+n7Rw3svkVv51Ty2YZxXHvaH/Jp4e8kyzeigzpF6C7DduO52/cNd",
+      "bytes": 4602
+    },
+    "js/ui/civic_badges.js": {
+      "sri": "sha384-dTomyle3ewzCONn1mIsqmLvYq60sAcFJW/jU3cqHRbhtiW8nMkbQyVjRsgh7f8Mh",
+      "bytes": 2138
+    },
+    "js/v94_evolved_ui.js": {
+      "sri": "sha384-liZT1lk4bREa0Gn0Rg5tHcpUaU5GpsEsmBZrpaIaONenTZpZpxhLng3zvKl53eqx",
+      "bytes": 11704
+    },
+    "js/work_tools.js": {
+      "sri": "sha384-E0XF8EDNmGBEDutpy70KqBI9YR+u42SGkF/WL23uY8xCs6+GZEUO8zcPsgq+GHlm",
+      "bytes": 9309
+    }
+  }
+}

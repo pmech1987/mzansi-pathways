@@ -8,6 +8,7 @@
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
   X-Permitted-Cross-Domain-Policies: none
+  Content-Security-Policy-Report-Only: require-trusted-types-for 'script'; trusted-types mz-ui mz-worker mzansi-dom
 
 /vendor/*
   Cache-Control: public, max-age=31536000, immutable

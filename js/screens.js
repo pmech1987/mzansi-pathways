@@ -5,7 +5,7 @@
   var TABS = {
     results: ['Overview', 'My marks'],
     careers: ['Explore', 'Career path'],
-    study: ['Fit', 'Courses', 'Institutions', 'Funding', 'Guide'],
+    study: ['Fit', 'Institutions', 'Funding', 'Guide'],
     plan: ['Board', 'Costs & dates', 'Documents'],
     vault: ['CV builder', 'Skills gap'],
     work: ['Jobs', 'Qualify', 'My CV', 'Sources', 'Verify']
@@ -13,10 +13,10 @@
   var RULES = {
     results: [['My marks', /academic record/i], ['Overview', /./]],
     careers: [['Explore', /career reality/i], ['Career path', /./]],
-    study: [['Fit', /^study path|what can i study|^\d+\s*likely qualify/i], ['Institutions', /^institutions|institutions \(/i], ['Funding', /funding & bursaries/i], ['Guide', /how to read|other route types/i], ['Courses', /./]],
+    study: [['Institutions', /^institutions|institutions \(/i], ['Funding', /funding & bursaries/i], ['Guide', /how to read|other route types/i], ['Fit', /./]],
     plan: [['Board', /decision board|funding pre-check|^plan\b/i], ['Costs & dates', /typical south african|can i afford/i], ['Documents', /./]],
     vault: [['CV builder', /evidence vault|cv builder/i], ['Skills gap', /./]],
-    work: [['My CV', /ats friendly/i], ['Verify', /verify|scam/i], ['Qualify', /what have you completed|your aps/i], ['Jobs', /which jobs|automatic open-job|junior|sample|^free, legal/i], ['Sources', /./]]
+    work: [['My CV', /ats friendly/i], ['Verify', /verify|scam/i], ['Qualify', /what have you completed|your aps/i], ['Jobs', /which jobs|automatic open-job|showing \d+ of \d+|active open job|no active open job|employer identity|official link|junior|sample|^free, legal/i], ['Sources', /./]]
   };
   var cur = {};
   function tabNow() { var a = document.querySelector('nav[aria-label="Primary navigation"] .tab-btn.active'); return a ? a.getAttribute('data-tab') : 'results'; }

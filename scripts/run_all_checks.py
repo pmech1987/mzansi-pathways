@@ -8,7 +8,10 @@ STEPS = [('data files are valid and safe', ['scripts/validate_data.py']),
          ('data scripts', ['scripts/test_scripts.py']),
          ('prospectus pipeline', ['scripts/test_pipeline.py']),
          ('automation', ['scripts/test_automation.py']),
-         ('safety layer', ['scripts/test_hardening.py'])]
+         ('safety layer', ['scripts/test_hardening.py']),
+         ('v93 autonomous ops & pathways', ['scripts/test_v93_ops.py']),
+         ('v94 UI, CSP, SRI & workflow overhaul', ['scripts/test_v94_overhaul.py']),
+         ('v95 screenshot visual & UX regression fixes', ['scripts/test_v95_visual_and_ux_fixes.py'])]
 
 
 def main():
@@ -22,6 +25,9 @@ def main():
         r = subprocess.run(['node', 'tests/run.mjs'], cwd=ROOT, capture_output=True, text=True)
         print('%-4s %s' % ('PASS' if r.returncode == 0 else 'FAIL', 'site tests (' + (r.stdout.strip().split('\n') or [''])[-1].strip() + ')'))
         bad += bool(r.returncode)
+        r2 = subprocess.run(['node', '--test', 'tests/test_v93_evolved.mjs'], cwd=ROOT, capture_output=True, text=True)
+        print('%-4s %s' % ('PASS' if r2.returncode == 0 else 'FAIL', 'v93 evolved JS engines (NCV L4, Reverse-APS, BM25, Trusted Types)'))
+        bad += bool(r2.returncode)
     else:
         print('SKIP site tests (node is not installed)')
     print('\nALL CHECKS PASSED' if not bad else '\n%d STEP(S) FAILED' % bad)

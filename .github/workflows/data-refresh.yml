@@ -67,7 +67,8 @@ jobs:
         run: python scripts/roll_year.py
 
       - name: Refresh event statuses, drop expired jobs, audit programmes
-        run: python scripts/refresh_data.py | tee refresh.log
+        run: python scripts/refresh_data.py
+          python3 scripts/autonomous_ops.py | tee refresh.log
 
       - name: Checks (nothing is committed if these fail)
         run: |
