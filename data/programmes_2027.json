@@ -41,6 +41,32 @@
       "verificationStatus": "pending_review",
       "minAps": 16,
       "minMaths": 40
+    },
+    {
+      "id": "tut_hc_it",
+      "name": "Higher Certificate in IT (Bridging Pathway)",
+      "institution": "Tshwane University of Technology (eMalahleni Campus)",
+      "intakeYear": 2027,
+      "sourceTier": 2,
+      "sourceDoc": "TUT Undergraduate Prospectus (Sample)",
+      "sourcePage": "Verify",
+      "lastVerifiedAt": "2026-11-25",
+      "verificationStatus": "pending_review",
+      "minAps": 20,
+      "minMaths": 40
+    },
+    {
+      "id": "qcto_occ_tech",
+      "name": "Occupational Certificate: Software / IT Technician (NQF 5)",
+      "institution": "QCTO-Accredited SDP (Verify Site)",
+      "intakeYear": 2027,
+      "sourceTier": 1,
+      "sourceDoc": "QCTO Occupational Qualification Register (Sample)",
+      "sourcePage": "NQF 5",
+      "lastVerifiedAt": "2026-11-25",
+      "verificationStatus": "pending_review",
+      "minAps": 18,
+      "minMaths": 40
     }
   ]
 }
