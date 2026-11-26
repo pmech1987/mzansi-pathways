@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "auditedDateSAST": "2026-11-26",
+  "eventsChecked": 6,
+  "openCount": 5,
+  "closedCount": 1,
+  "events": [
+    {
+      "id": "nsc_final_exam_2026",
+      "date": "2026-11-26",
+      "status": "CLOSING_TODAY",
+      "daysLeft": 0
+    },
+    {
+      "id": "ump_2027_closing",
+      "date": "2026-11-30",
+      "status": "CLOSING_SOON",
+      "daysLeft": 4
+    },
+    {
+      "id": "nsfas_2027_closed",
+      "date": "2026-10-31",
+      "status": "CLOSED",
+      "daysLeft": -26
+    },
+    {
+      "id": "nsc_results_2027",
+      "date": "2027-01-12",
+      "status": "OPEN",
+      "daysLeft": 47
+    },
+    {
+      "id": "nsc_remark_closing_2027",
+      "date": "2027-01-25",
+      "status": "OPEN",
+      "daysLeft": 60
+    },
+    {
+      "id": "nsc_may_june_2027_reg",
+      "date": "2027-02-05",
+      "status": "OPEN",
+      "daysLeft": 71
+    }
+  ]
+}

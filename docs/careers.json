@@ -1,0 +1,1131 @@
+{
+  "schemaVersion": 1,
+  "note": "Descriptions only. No salaries or guarantees until each is sourced and verified.",
+  "families": {
+    "tech": "Tech & IT",
+    "eng": "Engineering",
+    "artisan": "Artisan & Trades",
+    "health": "Health",
+    "business": "Business & Finance",
+    "edu": "Education",
+    "public": "Public Service & Safety",
+    "agri": "Agriculture & Environment",
+    "hosp": "Hospitality & Tourism",
+    "creative": "Creative & Media",
+    "law": "Law"
+  },
+  "careers": [
+    {
+      "id": "cyber_analyst",
+      "family": "tech",
+      "familyLabel": "Tech & IT",
+      "title": "Cybersecurity Analyst",
+      "summary": "Protects systems and data from attacks and monitors for threats.",
+      "skills": [
+        "Networking",
+        "Linux",
+        "Security tools",
+        "Reporting"
+      ],
+      "entryRoles": [
+        "IT Support Technician",
+        "Junior SOC Analyst"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "data_analyst",
+      "family": "tech",
+      "familyLabel": "Tech & IT",
+      "title": "Data Analyst",
+      "summary": "Turns data into tables, charts and recommendations for decisions.",
+      "skills": [
+        "Excel",
+        "SQL",
+        "Statistics",
+        "Communication"
+      ],
+      "entryRoles": [
+        "Data Capturer",
+        "Junior Analyst"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "cloud_devops",
+      "family": "tech",
+      "familyLabel": "Tech & IT",
+      "title": "Cloud / DevOps Engineer",
+      "summary": "Builds and runs the servers and pipelines that keep apps online.",
+      "skills": [
+        "Linux",
+        "Scripting",
+        "Cloud platforms",
+        "Networking"
+      ],
+      "entryRoles": [
+        "IT Support",
+        "Junior Systems Administrator"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "tech_support",
+      "family": "tech",
+      "familyLabel": "Tech & IT",
+      "title": "Technical Support Specialist",
+      "summary": "Fixes users' computer, network and software problems.",
+      "skills": [
+        "Troubleshooting",
+        "Windows",
+        "Customer service"
+      ],
+      "entryRoles": [
+        "Help Desk Agent",
+        "Field Technician"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "ux_designer",
+      "family": "tech",
+      "familyLabel": "Tech & IT",
+      "title": "UX / UI Designer",
+      "summary": "Designs how apps and websites look and feel to use.",
+      "skills": [
+        "Design tools",
+        "User research",
+        "Visual design"
+      ],
+      "entryRoles": [
+        "Junior Designer",
+        "Intern"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "electrical_eng",
+      "family": "eng",
+      "familyLabel": "Engineering",
+      "title": "Electrical Engineer",
+      "summary": "Designs and maintains electrical power and control systems.",
+      "skills": [
+        "Maths",
+        "Physics",
+        "Design",
+        "Safety"
+      ],
+      "entryRoles": [
+        "Engineering Technician",
+        "Graduate-in-training"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-215101",
+      "minQualDHET": "NQF 7",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.76,
+        "year": 2024,
+        "oversupplyFlag": true,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "mechanical_eng",
+      "family": "eng",
+      "familyLabel": "Engineering",
+      "title": "Mechanical Engineer",
+      "summary": "Designs machines and mechanical systems.",
+      "skills": [
+        "Maths",
+        "Physics",
+        "CAD",
+        "Problem solving"
+      ],
+      "entryRoles": [
+        "Engineering Technician",
+        "Graduate-in-training"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-214401",
+      "minQualDHET": "NQF 7",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.72,
+        "year": 2024,
+        "oversupplyFlag": false,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "civil_eng",
+      "family": "eng",
+      "familyLabel": "Engineering",
+      "title": "Civil Engineer",
+      "summary": "Designs roads, bridges, water and buildings.",
+      "skills": [
+        "Maths",
+        "Physics",
+        "CAD",
+        "Project management"
+      ],
+      "entryRoles": [
+        "Technician",
+        "Site Assistant"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-214201",
+      "minQualDHET": "NQF 7",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.7,
+        "year": 2024,
+        "oversupplyFlag": false,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "chemical_eng",
+      "family": "eng",
+      "familyLabel": "Engineering",
+      "title": "Chemical Engineer",
+      "summary": "Designs processes that turn raw materials into products.",
+      "skills": [
+        "Maths",
+        "Physical Sciences",
+        "Process control"
+      ],
+      "entryRoles": [
+        "Process Technician",
+        "Graduate-in-training"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-214501",
+      "minQualDHET": "NQF 7",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.68,
+        "year": 2024,
+        "oversupplyFlag": false,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "mechatronics",
+      "family": "eng",
+      "familyLabel": "Engineering",
+      "title": "Mechatronics Technician",
+      "summary": "Maintains machines that combine mechanics, electronics and software.",
+      "skills": [
+        "Electronics",
+        "PLC programming",
+        "Mechanics"
+      ],
+      "entryRoles": [
+        "Apprentice",
+        "Technician Trainee"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "electrician",
+      "family": "artisan",
+      "familyLabel": "Artisan & Trades",
+      "title": "Electrician",
+      "summary": "Installs, tests and repairs electrical wiring and equipment.",
+      "skills": [
+        "Electrical theory",
+        "Safety",
+        "Testing"
+      ],
+      "entryRoles": [
+        "Apprentice Electrician",
+        "Electrical Assistant"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-671101",
+      "minQualDHET": "NQF 4",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.85,
+        "year": 2024,
+        "oversupplyFlag": true,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "plumber",
+      "family": "artisan",
+      "familyLabel": "Artisan & Trades",
+      "title": "Plumber",
+      "summary": "Installs and repairs water, drainage and gas pipework.",
+      "skills": [
+        "Pipe fitting",
+        "Reading plans",
+        "Safety"
+      ],
+      "entryRoles": [
+        "Plumbing Apprentice",
+        "Assistant"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-642601",
+      "minQualDHET": "NQF 4",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.72,
+        "year": 2024,
+        "oversupplyFlag": true,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "welder",
+      "family": "artisan",
+      "familyLabel": "Artisan & Trades",
+      "title": "Welder / Boilermaker",
+      "summary": "Joins and fabricates metal structures.",
+      "skills": [
+        "Welding processes",
+        "Reading drawings",
+        "Safety"
+      ],
+      "entryRoles": [
+        "Welding Apprentice",
+        "Fabrication Assistant"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-651202",
+      "minQualDHET": "NQF 4",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.69,
+        "year": 2024,
+        "oversupplyFlag": true,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "fitter_turner",
+      "family": "artisan",
+      "familyLabel": "Artisan & Trades",
+      "title": "Fitter and Turner / Millwright",
+      "summary": "Makes and maintains machine parts and plant equipment.",
+      "skills": [
+        "Machining",
+        "Measuring",
+        "Maintenance"
+      ],
+      "entryRoles": [
+        "Apprentice",
+        "Machine Operator"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-652302",
+      "minQualDHET": "NQF 4",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.62,
+        "year": 2024,
+        "oversupplyFlag": true,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "motor_mechanic",
+      "family": "artisan",
+      "familyLabel": "Artisan & Trades",
+      "title": "Motor Mechanic",
+      "summary": "Diagnoses and repairs cars and light vehicles.",
+      "skills": [
+        "Diagnostics",
+        "Engines",
+        "Electrical systems"
+      ],
+      "entryRoles": [
+        "Apprentice",
+        "Workshop Assistant"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "carpenter_bricklayer",
+      "family": "artisan",
+      "familyLabel": "Artisan & Trades",
+      "title": "Carpenter / Bricklayer",
+      "summary": "Builds and finishes structures on construction sites.",
+      "skills": [
+        "Measuring",
+        "Reading plans",
+        "Safety"
+      ],
+      "entryRoles": [
+        "Building Assistant",
+        "Apprentice"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-641201",
+      "minQualDHET": "NQF 4",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.61,
+        "year": 2024,
+        "oversupplyFlag": true,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "nurse",
+      "family": "health",
+      "familyLabel": "Health",
+      "title": "Professional / Enrolled Nurse",
+      "summary": "Cares for patients in clinics and hospitals.",
+      "skills": [
+        "Patient care",
+        "Communication",
+        "Sciences"
+      ],
+      "entryRoles": [
+        "Nursing Auxiliary",
+        "Student Nurse"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-222108",
+      "minQualDHET": "NQF 7",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.75,
+        "year": 2024,
+        "oversupplyFlag": false,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "pharmacy_assistant",
+      "family": "health",
+      "familyLabel": "Health",
+      "title": "Pharmacist's Assistant",
+      "summary": "Helps dispense medicines under a pharmacist.",
+      "skills": [
+        "Accuracy",
+        "Customer care",
+        "Pharmacology basics"
+      ],
+      "entryRoles": [
+        "Pharmacy Assistant trainee"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "doctor",
+      "family": "health",
+      "familyLabel": "Health",
+      "title": "Medical Doctor",
+      "summary": "Diagnoses and treats patients; very competitive entry.",
+      "skills": [
+        "Life Sciences",
+        "Physical Sciences",
+        "Maths",
+        "Resilience"
+      ],
+      "entryRoles": [
+        "Years of study then supervised internship"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "physio_radiography",
+      "family": "health",
+      "familyLabel": "Health",
+      "title": "Physiotherapist / Radiographer",
+      "summary": "Rehabilitation or medical imaging professionals.",
+      "skills": [
+        "Sciences",
+        "Patient care",
+        "Technology"
+      ],
+      "entryRoles": [
+        "Allied health degree"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "ems",
+      "family": "health",
+      "familyLabel": "Health",
+      "title": "Emergency Care Practitioner (EMS)",
+      "summary": "Responds to emergencies and gives pre-hospital care.",
+      "skills": [
+        "First aid",
+        "Driving",
+        "Calm under pressure"
+      ],
+      "entryRoles": [
+        "Basic Ambulance Assistant course"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-325802",
+      "minQualDHET": "NQF 5",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.65,
+        "year": 2024,
+        "oversupplyFlag": false,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "accountant",
+      "family": "business",
+      "familyLabel": "Business & Finance",
+      "title": "Accountant / Auditor",
+      "summary": "Records, checks and reports on money for organisations.",
+      "skills": [
+        "Accounting",
+        "Excel",
+        "Attention to detail"
+      ],
+      "entryRoles": [
+        "Bookkeeper",
+        "Accounting Clerk",
+        "Audit Clerk"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "banking",
+      "family": "business",
+      "familyLabel": "Business & Finance",
+      "title": "Banking Consultant",
+      "summary": "Serves customers with accounts, loans and advice.",
+      "skills": [
+        "Numeracy",
+        "Customer service",
+        "Compliance"
+      ],
+      "entryRoles": [
+        "Bank Teller",
+        "Contact Centre Agent"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "hr_officer",
+      "family": "business",
+      "familyLabel": "Business & Finance",
+      "title": "Human Resources Officer",
+      "summary": "Handles hiring, contracts and staff records.",
+      "skills": [
+        "Communication",
+        "Labour law basics",
+        "Admin"
+      ],
+      "entryRoles": [
+        "HR Clerk",
+        "Admin Assistant"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "marketing",
+      "family": "business",
+      "familyLabel": "Business & Finance",
+      "title": "Marketing Coordinator",
+      "summary": "Promotes products and manages social media and campaigns.",
+      "skills": [
+        "Writing",
+        "Social media",
+        "Design basics"
+      ],
+      "entryRoles": [
+        "Marketing Assistant",
+        "Intern"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "logistics",
+      "family": "business",
+      "familyLabel": "Business & Finance",
+      "title": "Logistics / Supply Chain Officer",
+      "summary": "Plans storage and movement of goods.",
+      "skills": [
+        "Planning",
+        "Excel",
+        "Systems"
+      ],
+      "entryRoles": [
+        "Warehouse Clerk",
+        "Dispatch Clerk"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "entrepreneur",
+      "family": "business",
+      "familyLabel": "Business & Finance",
+      "title": "Small Business Owner",
+      "summary": "Starts and runs own business.",
+      "skills": [
+        "Money skills",
+        "Selling",
+        "Persistence"
+      ],
+      "entryRoles": [
+        "Part-time or informal trading first"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "foundation_teacher",
+      "family": "edu",
+      "familyLabel": "Education",
+      "title": "Foundation Phase Teacher",
+      "summary": "Teaches Grade R to 3, including reading and number skills.",
+      "skills": [
+        "Patience",
+        "Home language skills",
+        "Planning"
+      ],
+      "entryRoles": [
+        "Teacher Assistant",
+        "BEd student"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-234101",
+      "minQualDHET": "NQF 7",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.8,
+        "year": 2024,
+        "oversupplyFlag": true,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "senior_teacher",
+      "family": "edu",
+      "familyLabel": "Education",
+      "title": "Intermediate / Senior Phase Teacher",
+      "summary": "Teaches specialist subjects in Grades 4-12.",
+      "skills": [
+        "Subject knowledge",
+        "Classroom management"
+      ],
+      "entryRoles": [
+        "BEd or degree plus PGCE"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-233108",
+      "minQualDHET": "NQF 7",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.85,
+        "year": 2024,
+        "oversupplyFlag": false,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "saps_sandf",
+      "family": "public",
+      "familyLabel": "Public Service & Safety",
+      "title": "Police / Defence Force Member",
+      "summary": "Serves in SAPS or the SANDF after selection and training.",
+      "skills": [
+        "Fitness",
+        "Discipline",
+        "Integrity"
+      ],
+      "entryRoles": [
+        "Official recruitment drives only"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "social_worker",
+      "family": "public",
+      "familyLabel": "Public Service & Safety",
+      "title": "Social Worker",
+      "summary": "Supports individuals and families in crisis.",
+      "skills": [
+        "Empathy",
+        "Case notes",
+        "Ethics"
+      ],
+      "entryRoles": [
+        "Social Auxiliary Worker"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "correctional",
+      "family": "public",
+      "familyLabel": "Public Service & Safety",
+      "title": "Correctional Services Officer",
+      "summary": "Works in prisons and rehabilitation.",
+      "skills": [
+        "Discipline",
+        "Safety",
+        "Communication"
+      ],
+      "entryRoles": [
+        "Official recruitment only"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "conservation",
+      "family": "agri",
+      "familyLabel": "Agriculture & Environment",
+      "title": "Nature Conservation / Environmental Officer",
+      "summary": "Protects wildlife and manages natural areas.",
+      "skills": [
+        "Sciences",
+        "Fieldwork",
+        "Reporting"
+      ],
+      "entryRoles": [
+        "Field Ranger",
+        "Environmental Assistant"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "farmer_agri",
+      "family": "agri",
+      "familyLabel": "Agriculture & Environment",
+      "title": "Agricultural Technician / Farm Manager",
+      "summary": "Runs crop or livestock production.",
+      "skills": [
+        "Agriculture",
+        "Machinery",
+        "Planning"
+      ],
+      "entryRoles": [
+        "Farm Worker",
+        "Learnership"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "chef",
+      "family": "hosp",
+      "familyLabel": "Hospitality & Tourism",
+      "title": "Chef / Cook",
+      "summary": "Prepares food in restaurants, hotels and catering.",
+      "skills": [
+        "Cooking",
+        "Hygiene",
+        "Teamwork"
+      ],
+      "entryRoles": [
+        "Kitchen Assistant",
+        "Commis Chef"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review",
+      "ofo": "2021-343401",
+      "minQualDHET": "NQF 4",
+      "demand": {
+        "scope": "Mpumalanga",
+        "score": 0.68,
+        "year": 2024,
+        "oversupplyFlag": true,
+        "source": "DHET LMI Mpumalanga OIHD 2024",
+        "sourceUrl": "https://lmi-research.org.za/",
+        "disclaimer": "Not a guarantee of a job; main list order is not a priority ranking."
+      }
+    },
+    {
+      "id": "hotel_manager",
+      "family": "hosp",
+      "familyLabel": "Hospitality & Tourism",
+      "title": "Hotel / Lodge Manager",
+      "summary": "Runs accommodation and guest services.",
+      "skills": [
+        "Customer care",
+        "Management",
+        "Budgets"
+      ],
+      "entryRoles": [
+        "Front Desk Receptionist",
+        "Waiter"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "tour_guide",
+      "family": "hosp",
+      "familyLabel": "Hospitality & Tourism",
+      "title": "Tour Guide",
+      "summary": "Guides visitors; registration required.",
+      "skills": [
+        "Communication",
+        "Local knowledge",
+        "Languages"
+      ],
+      "entryRoles": [
+        "FGASA / provincial guide courses"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "graphic_designer",
+      "family": "creative",
+      "familyLabel": "Creative & Media",
+      "title": "Graphic Designer",
+      "summary": "Creates visual material for print and screens.",
+      "skills": [
+        "Design tools",
+        "Creativity",
+        "Client communication"
+      ],
+      "entryRoles": [
+        "Junior Designer",
+        "Intern"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "journalist_media",
+      "family": "creative",
+      "familyLabel": "Creative & Media",
+      "title": "Journalist / Media Producer",
+      "summary": "Researches, writes and produces news and content.",
+      "skills": [
+        "Writing",
+        "Research",
+        "Ethics"
+      ],
+      "entryRoles": [
+        "Intern",
+        "Community Radio Volunteer"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    },
+    {
+      "id": "paralegal_lawyer",
+      "family": "law",
+      "familyLabel": "Law",
+      "title": "Paralegal / Lawyer",
+      "summary": "Supports or practises law; LLB needed to practise.",
+      "skills": [
+        "Reading",
+        "Writing",
+        "Argument",
+        "Ethics"
+      ],
+      "entryRoles": [
+        "Legal Clerk",
+        "Paralegal"
+      ],
+      "ladder": [
+        "Matric / entry qualification",
+        "Entry role or training",
+        "Experienced practitioner",
+        "Senior or specialist"
+      ],
+      "reality": "Entry rules, pay and demand change by employer, province and year. Check official sources before you decide. Never pay anyone for a job.",
+      "verificationStatus": "pending_review"
+    }
+  ]
+}

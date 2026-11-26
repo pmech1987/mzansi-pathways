@@ -1,0 +1,1 @@
+{"schemaVersion":1,"note":"Public reviewer registry. NO secrets here. Enrol with: python scripts/mz_verify.py enroll <id> <name>","reviewers":[]}

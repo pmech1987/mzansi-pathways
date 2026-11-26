@@ -1,0 +1,571 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-26",
+  "notice": "Complete statutory South African PSET registry: 26 Public Universities, 50 Public TVET Colleges, 9 Provincial CET Colleges, and 21 Official SETAs. Always confirm live prospectuses on official domains.",
+  "universities": [
+    {
+      "id": "up",
+      "name": "University of Pretoria",
+      "short": "UP",
+      "province": "Gauteng",
+      "apsMethod": "nsc_best6_42",
+      "domain": "up.ac.za"
+    },
+    {
+      "id": "uj",
+      "name": "University of Johannesburg",
+      "short": "UJ",
+      "province": "Gauteng",
+      "apsMethod": "nsc_best6_42",
+      "domain": "uj.ac.za"
+    },
+    {
+      "id": "wits",
+      "name": "University of the Witwatersrand",
+      "short": "Wits",
+      "province": "Gauteng",
+      "apsMethod": "wits_weighted_56",
+      "domain": "wits.ac.za"
+    },
+    {
+      "id": "uct",
+      "name": "University of Cape Town",
+      "short": "UCT",
+      "province": "Western Cape",
+      "apsMethod": "uct_fps_600",
+      "domain": "uct.ac.za"
+    },
+    {
+      "id": "su",
+      "name": "Stellenbosch University",
+      "short": "SU",
+      "province": "Western Cape",
+      "apsMethod": "stellenbosch_avg_100",
+      "domain": "sun.ac.za"
+    },
+    {
+      "id": "uwc",
+      "name": "University of the Western Cape",
+      "short": "UWC",
+      "province": "Western Cape",
+      "apsMethod": "uwc_weighted_65",
+      "domain": "uwc.ac.za"
+    },
+    {
+      "id": "ukzn",
+      "name": "University of KwaZulu-Natal",
+      "short": "UKZN",
+      "province": "KwaZulu-Natal",
+      "apsMethod": "eight_pt_best6_48",
+      "domain": "ukzn.ac.za"
+    },
+    {
+      "id": "nwu",
+      "name": "North-West University",
+      "short": "NWU",
+      "province": "North West",
+      "apsMethod": "eight_pt_best6_48",
+      "domain": "nwu.ac.za"
+    },
+    {
+      "id": "ufs",
+      "name": "University of the Free State",
+      "short": "UFS",
+      "province": "Free State",
+      "apsMethod": "ufs_ap_49",
+      "domain": "ufs.ac.za"
+    },
+    {
+      "id": "ru",
+      "name": "Rhodes University",
+      "short": "RU",
+      "province": "Eastern Cape",
+      "apsMethod": "pct_div10_60",
+      "domain": "ru.ac.za"
+    },
+    {
+      "id": "nmu",
+      "name": "Nelson Mandela University",
+      "short": "NMU",
+      "province": "Eastern Cape",
+      "apsMethod": "nmu_as_600",
+      "domain": "mandela.ac.za"
+    },
+    {
+      "id": "unisa",
+      "name": "University of South Africa",
+      "short": "UNISA",
+      "province": "Gauteng",
+      "apsMethod": "nsc_best6_42",
+      "domain": "unisa.ac.za"
+    },
+    {
+      "id": "tut",
+      "name": "Tshwane University of Technology",
+      "short": "TUT",
+      "province": "Gauteng",
+      "apsMethod": "tut_best6_42",
+      "domain": "tut.ac.za"
+    },
+    {
+      "id": "cput",
+      "name": "Cape Peninsula University of Technology",
+      "short": "CPUT",
+      "province": "Western Cape",
+      "apsMethod": "cput_methods",
+      "domain": "cput.ac.za"
+    },
+    {
+      "id": "dut",
+      "name": "Durban University of Technology",
+      "short": "DUT",
+      "province": "KwaZulu-Natal",
+      "apsMethod": "nsc_best6_42",
+      "domain": "dut.ac.za"
+    },
+    {
+      "id": "cut",
+      "name": "Central University of Technology",
+      "short": "CUT",
+      "province": "Free State",
+      "apsMethod": "cut_ap_49",
+      "domain": "cut.ac.za"
+    },
+    {
+      "id": "vut",
+      "name": "Vaal University of Technology",
+      "short": "VUT",
+      "province": "Gauteng",
+      "apsMethod": "eight_pt_best6_48",
+      "domain": "vut.ac.za"
+    },
+    {
+      "id": "mut",
+      "name": "Mangosuthu University of Technology",
+      "short": "MUT",
+      "province": "KwaZulu-Natal",
+      "apsMethod": "mut_best5_40",
+      "domain": "mut.ac.za"
+    },
+    {
+      "id": "ump",
+      "name": "University of Mpumalanga",
+      "short": "UMP",
+      "province": "Mpumalanga",
+      "apsMethod": "ump_lo_half_45_5",
+      "domain": "ump.ac.za"
+    },
+    {
+      "id": "spu",
+      "name": "Sol Plaatje University",
+      "short": "SPU",
+      "province": "Northern Cape",
+      "apsMethod": "spu_bonus_56",
+      "domain": "spu.ac.za"
+    },
+    {
+      "id": "smu",
+      "name": "Sefako Makgatho Health Sciences University",
+      "short": "SMU",
+      "province": "Gauteng",
+      "apsMethod": "smu_full7_49",
+      "domain": "smu.ac.za"
+    },
+    {
+      "id": "ul",
+      "name": "University of Limpopo",
+      "short": "UL",
+      "province": "Limpopo",
+      "apsMethod": "nsc_best6_42",
+      "domain": "ul.ac.za"
+    },
+    {
+      "id": "univen",
+      "name": "University of Venda",
+      "short": "UNIVEN",
+      "province": "Limpopo",
+      "apsMethod": "pct_div10_60",
+      "domain": "univen.ac.za"
+    },
+    {
+      "id": "unizulu",
+      "name": "University of Zululand",
+      "short": "UNIZULU",
+      "province": "KwaZulu-Natal",
+      "apsMethod": "eight_pt_best6_48",
+      "domain": "unizulu.ac.za"
+    },
+    {
+      "id": "ufh",
+      "name": "University of Fort Hare",
+      "short": "UFH",
+      "province": "Eastern Cape",
+      "apsMethod": "ufh_conflict_guard",
+      "domain": "ufh.ac.za"
+    },
+    {
+      "id": "wsu",
+      "name": "Walter Sisulu University",
+      "short": "WSU",
+      "province": "Eastern Cape",
+      "apsMethod": "eight_pt_best6_48",
+      "domain": "wsu.ac.za"
+    }
+  ],
+  "tvetColleges": [
+    {
+      "name": "Coastal KZN TVET College",
+      "province": "KwaZulu-Natal"
+    },
+    {
+      "name": "Elangeni TVET College",
+      "province": "KwaZulu-Natal"
+    },
+    {
+      "name": "Esayidi TVET College",
+      "province": "KwaZulu-Natal"
+    },
+    {
+      "name": "Majuba TVET College",
+      "province": "KwaZulu-Natal"
+    },
+    {
+      "name": "Mnambithi TVET College",
+      "province": "KwaZulu-Natal"
+    },
+    {
+      "name": "Mthashana TVET College",
+      "province": "KwaZulu-Natal"
+    },
+    {
+      "name": "Thekwini TVET College",
+      "province": "KwaZulu-Natal"
+    },
+    {
+      "name": "uMfolozi TVET College",
+      "province": "KwaZulu-Natal"
+    },
+    {
+      "name": "Umgungundlovu TVET College",
+      "province": "KwaZulu-Natal"
+    },
+    {
+      "name": "Central Johannesburg TVET College",
+      "province": "Gauteng"
+    },
+    {
+      "name": "Ekurhuleni East TVET College",
+      "province": "Gauteng"
+    },
+    {
+      "name": "Ekurhuleni West TVET College",
+      "province": "Gauteng"
+    },
+    {
+      "name": "Sedibeng TVET College",
+      "province": "Gauteng"
+    },
+    {
+      "name": "South West Gauteng TVET College",
+      "province": "Gauteng"
+    },
+    {
+      "name": "Tshwane North TVET College",
+      "province": "Gauteng"
+    },
+    {
+      "name": "Tshwane South TVET College",
+      "province": "Gauteng"
+    },
+    {
+      "name": "Western TVET College",
+      "province": "Gauteng"
+    },
+    {
+      "name": "Buffalo City TVET College",
+      "province": "Eastern Cape"
+    },
+    {
+      "name": "Eastcape Midlands TVET College",
+      "province": "Eastern Cape"
+    },
+    {
+      "name": "Ikhala TVET College",
+      "province": "Eastern Cape"
+    },
+    {
+      "name": "Ingwe TVET College",
+      "province": "Eastern Cape"
+    },
+    {
+      "name": "King Hintsa TVET College",
+      "province": "Eastern Cape"
+    },
+    {
+      "name": "King Sabata Dalindyebo TVET College",
+      "province": "Eastern Cape"
+    },
+    {
+      "name": "Lovedale TVET College",
+      "province": "Eastern Cape"
+    },
+    {
+      "name": "Port Elizabeth TVET College",
+      "province": "Eastern Cape"
+    },
+    {
+      "name": "Capricorn TVET College",
+      "province": "Limpopo"
+    },
+    {
+      "name": "Lephalale TVET College",
+      "province": "Limpopo"
+    },
+    {
+      "name": "Letaba TVET College",
+      "province": "Limpopo"
+    },
+    {
+      "name": "Mopani South East TVET College",
+      "province": "Limpopo"
+    },
+    {
+      "name": "Sekhukhune TVET College",
+      "province": "Limpopo"
+    },
+    {
+      "name": "Vhembe TVET College",
+      "province": "Limpopo"
+    },
+    {
+      "name": "Waterberg TVET College",
+      "province": "Limpopo"
+    },
+    {
+      "name": "Boland TVET College",
+      "province": "Western Cape"
+    },
+    {
+      "name": "College of Cape Town for TVET",
+      "province": "Western Cape"
+    },
+    {
+      "name": "False Bay TVET College",
+      "province": "Western Cape"
+    },
+    {
+      "name": "Northlink TVET College",
+      "province": "Western Cape"
+    },
+    {
+      "name": "South Cape TVET College",
+      "province": "Western Cape"
+    },
+    {
+      "name": "West Coast TVET College",
+      "province": "Western Cape"
+    },
+    {
+      "name": "Flavius Mareka TVET College",
+      "province": "Free State"
+    },
+    {
+      "name": "Goldfields TVET College",
+      "province": "Free State"
+    },
+    {
+      "name": "Maluti TVET College",
+      "province": "Free State"
+    },
+    {
+      "name": "Motheo TVET College",
+      "province": "Free State"
+    },
+    {
+      "name": "Ehlanzeni TVET College",
+      "province": "Mpumalanga"
+    },
+    {
+      "name": "Gert Sibande TVET College",
+      "province": "Mpumalanga"
+    },
+    {
+      "name": "Nkangala TVET College",
+      "province": "Mpumalanga"
+    },
+    {
+      "name": "ORBIT TVET College",
+      "province": "North West"
+    },
+    {
+      "name": "Taletso TVET College",
+      "province": "North West"
+    },
+    {
+      "name": "Vuselela TVET College",
+      "province": "North West"
+    },
+    {
+      "name": "Northern Cape Rural TVET College",
+      "province": "Northern Cape"
+    },
+    {
+      "name": "Northern Cape Urban TVET College",
+      "province": "Northern Cape"
+    }
+  ],
+  "cetColleges": [
+    {
+      "name": "Eastern Cape CET College",
+      "province": "Eastern Cape",
+      "headOffice": "Zwelitsha"
+    },
+    {
+      "name": "Free State CET College",
+      "province": "Free State",
+      "headOffice": "Bloemfontein"
+    },
+    {
+      "name": "Gauteng CET College",
+      "province": "Gauteng",
+      "headOffice": "Johannesburg"
+    },
+    {
+      "name": "KwaZulu-Natal CET College",
+      "province": "KwaZulu-Natal",
+      "headOffice": "Pietermaritzburg"
+    },
+    {
+      "name": "Limpopo CET College",
+      "province": "Limpopo",
+      "headOffice": "Polokwane"
+    },
+    {
+      "name": "Mpumalanga CET College",
+      "province": "Mpumalanga",
+      "headOffice": "Mbombela"
+    },
+    {
+      "name": "North West CET College",
+      "province": "North West",
+      "headOffice": "Mahikeng"
+    },
+    {
+      "name": "Northern Cape CET College",
+      "province": "Northern Cape",
+      "headOffice": "Kimberley"
+    },
+    {
+      "name": "Western Cape CET College",
+      "province": "Western Cape",
+      "headOffice": "Cape Town"
+    }
+  ],
+  "setas": [
+    {
+      "acronym": "AgriSETA",
+      "sector": "Agriculture, farming, forestry, fisheries",
+      "domain": "agriseta.co.za"
+    },
+    {
+      "acronym": "BANKSETA",
+      "sector": "Banking & microfinance",
+      "domain": "bankseta.org.za"
+    },
+    {
+      "acronym": "CATHSSETA",
+      "sector": "Culture, arts, tourism, hospitality, sport",
+      "domain": "cathsseta.org.za"
+    },
+    {
+      "acronym": "CETA",
+      "sector": "Construction & built environment",
+      "domain": "ceta.org.za"
+    },
+    {
+      "acronym": "CHIETA",
+      "sector": "Chemical industries & pharmaceuticals",
+      "domain": "chieta.org.za"
+    },
+    {
+      "acronym": "ETDP SETA",
+      "sector": "Education, training & development",
+      "domain": "etdpseta.org.za"
+    },
+    {
+      "acronym": "EWSETA",
+      "sector": "Energy & water sector",
+      "domain": "ewseta.org.za"
+    },
+    {
+      "acronym": "FASSET",
+      "sector": "Finance, accounting & tax",
+      "domain": "fasset.org.za"
+    },
+    {
+      "acronym": "FoodBev SETA",
+      "sector": "Food & beverage manufacturing",
+      "domain": "foodbev.co.za"
+    },
+    {
+      "acronym": "FP&M SETA",
+      "sector": "Fibre processing & manufacturing",
+      "domain": "fpmseta.org.za"
+    },
+    {
+      "acronym": "HWSETA",
+      "sector": "Health & welfare",
+      "domain": "hwseta.org.za"
+    },
+    {
+      "acronym": "INSETA",
+      "sector": "Insurance sector",
+      "domain": "inseta.org.za"
+    },
+    {
+      "acronym": "LGSETA",
+      "sector": "Local government (257 municipalities)",
+      "domain": "lgseta.org.za"
+    },
+    {
+      "acronym": "merSETA",
+      "sector": "Manufacturing, engineering & motor",
+      "domain": "merseta.org.za"
+    },
+    {
+      "acronym": "MICT SETA",
+      "sector": "Media, ICT, software & telecoms",
+      "domain": "mict.org.za"
+    },
+    {
+      "acronym": "MQA",
+      "sector": "Mining & minerals",
+      "domain": "mqa.org.za"
+    },
+    {
+      "acronym": "PSETA",
+      "sector": "Public service",
+      "domain": "pseta.org.za"
+    },
+    {
+      "acronym": "SASSETA",
+      "sector": "Safety & security",
+      "domain": "sasseta.org.za"
+    },
+    {
+      "acronym": "Services SETA",
+      "sector": "Business services, HR & marketing",
+      "domain": "servicesseta.org.za"
+    },
+    {
+      "acronym": "TETA",
+      "sector": "Transport & logistics",
+      "domain": "teta.org.za"
+    },
+    {
+      "acronym": "W&RSETA",
+      "sector": "Wholesale & retail",
+      "domain": "wrseta.org.za"
+    }
+  ]
+}
