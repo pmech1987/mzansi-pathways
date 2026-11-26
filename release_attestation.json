@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "all_passed": true,
+  "gate_count": 84,
+  "verification_stages_per_gate": 3,
+  "integrity_manifest_sha256": "809c8bdf51ed02c9b5c805cccbaf6cbf02f93d142113132569a35037a8ad3e26",
+  "gate_integrity_manifest_sha256": "ae258c91401e072f898f1d6007090e8023e5a2de491c63ab28d6a9ff874e3c8e",
+  "attestation_sha256": "3f66695e4189b17eca2e83986d8efea22f71d6f901226d6f06c4029cf7311bcd"
+}
