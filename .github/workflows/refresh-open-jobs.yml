@@ -8,6 +8,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: refresh-open-jobs
+  cancel-in-progress: true
+
 jobs:
   refresh-open-jobs:
     runs-on: ubuntu-latest

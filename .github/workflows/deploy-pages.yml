@@ -18,11 +18,14 @@ concurrency:
 
 jobs:
   verify-and-deploy:
+    if: github.ref == 'refs/heads/main'   # a manual run from any other branch can never publish
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -36,16 +39,74 @@ jobs:
       - name: Independent Stage 4 cryptographic attestation check
         run: python3 scripts/verify_attestation_seal.py
       - name: Refresh live legal open-jobs feed before Pages publish
+        continue-on-error: true   # a job-feed outage must never block publishing the site; the script keeps the previous feed
         env:
           ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
         run: python3 scripts/fetch_legal_public_jobs.py
+      - name: Validate the refreshed job feed (a damaged feed is replaced by the last committed one, never published)
+        run: |
+          python3 - <<'PY'
+          import json, subprocess, sys
+          p = "data/open_jobs_live.json"
+          try:
+              d = json.load(open(p, encoding="utf-8"))
+              assert isinstance(d, dict) and isinstance(d.get("jobs"), list), "no jobs list"
+              assert all(isinstance(j, dict) and j.get("title") and j.get("employer") for j in d["jobs"]), "a job has no title or employer"
+              print("Feed OK:", len(d["jobs"]), "job(s)")
+          except Exception as e:
+              print("::warning::Job feed was unusable (" + str(e) + "); using the last committed copy")
+              subprocess.run(["git", "checkout", "--", p], check=True)
+          PY
+      - name: Stage ONLY the files the live app needs (no scripts, tests, docs, reviewer data tools or secrets-adjacent files)
+        run: |
+          set -euo pipefail
+          rm -rf _site && mkdir _site
+          cp index.html sw.js manifest.json icon-192.png icon-512.png _site/
+          cp -r js data _site/
+          if [ -d vendor ]; then cp -r vendor _site/; fi
+          # Cache stamp: the service worker serves scripts from its saved copy, so it must get a NEW name on every deploy or
+          # visitors would keep the old version. The stamp is the commit id (staged copy only; the repository file is unchanged).
+          sed -i "s/^const CACHE = 'mzansi-pathways-[^']*';/const CACHE = 'mzansi-pathways-${GITHUB_SHA::10}';/" _site/sw.js
+          grep -q "mzansi-pathways-${GITHUB_SHA::10}" _site/sw.js || { echo "::error::cache stamp failed"; exit 1; }
+          node --check _site/sw.js
+          touch _site/.nojekyll
+          test -s _site/index.html && test -s _site/data/index.json && test -s _site/sw.js   # refuse to publish an empty or broken site
+          echo "Staged $(find _site -type f | wc -l) files, $(du -sk _site | cut -f1) KB"
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload static site artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: '_site'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  smoke-test:
+    # After the deploy: ask the live website for its key files. A failure here turns the run red, which makes GitHub email you.
+    needs: verify-and-deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - name: Live site answers and serves the app, data and service worker
+        env:
+          SITE: ${{ needs.verify-and-deploy.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          test -n "$SITE" || { echo "::error::no site address from the deploy step"; exit 1; }
+          SITE="${SITE%/}"
+          for path in "/" "/sw.js" "/data/index.json" "/js/engine.js" "/manifest.json"; do
+            ok=0
+            for try in 1 2 3 4 5 6; do
+              code=$(curl -s -o /tmp/body -w '%{http_code}' -L --max-time 20 "$SITE$path" || echo 000)
+              if [ "$code" = "200" ] && [ -s /tmp/body ]; then ok=1; break; fi
+              echo "$path -> $code (try $try), waiting for the CDN"; sleep 10
+            done
+            [ "$ok" = 1 ] || { echo "::error::$SITE$path did not answer 200 with content"; exit 1; }
+            echo "OK $path"
+          done
+          curl -fsSL --max-time 20 "$SITE/data/index.json" | python3 -c "import json,sys; d=json.load(sys.stdin); assert d.get('files'), 'index.json has no files'"
+          echo "Smoke test passed for $SITE"

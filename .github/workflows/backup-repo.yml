@@ -1,0 +1,42 @@
+name: Weekly repository backup
+
+on:
+  schedule:
+    - cron: '0 3 * * 0'   # every Sunday 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # the whole history, not just the latest files
+      - name: Create and verify a single-file copy of the whole repository
+        run: |
+          set -euo pipefail
+          git bundle create mzansi-pathways-$(date -u +%Y%m%d).bundle --all
+          git bundle verify mzansi-pathways-*.bundle
+          sha256sum mzansi-pathways-*.bundle > mzansi-pathways.bundle.sha256
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Restore drill (clone the bundle into an empty folder and run every gate, so the backup is PROVEN restorable)
+        run: python3 scripts/restore_drill.py mzansi-pathways-*.bundle
+      - name: Summary
+        if: always()
+        run: echo "Weekly backup bundle $(ls mzansi-pathways-*.bundle) ($(du -k mzansi-pathways-*.bundle | cut -f1) KB). Download it from the Artifacts section of this run." >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: repo-bundle
+          path: |
+            mzansi-pathways-*.bundle
+            mzansi-pathways.bundle.sha256
+          retention-days: 90
