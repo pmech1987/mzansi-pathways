@@ -421,5 +421,53 @@ class PathwaysV2EngineTests(unittest.TestCase):
         self.assertEqual(res.get("phone", ""), "")
 
 
+
+    def test_v69_best_six_ump_and_no_50_guess(self):
+        from match_engine import evaluate_nsc_pass, compute_ump_aps
+        from statement_parser import parse_statement_text
+        # T1: best six picks 7th non-LO subject when highest
+        subs = [
+            {"name": "English Home Language", "mark": 50, "isHomeLanguage": True, "isLifeOrientation": False},
+            {"name": "isiZulu First Additional Language", "mark": 50, "isHomeLanguage": False, "isLifeOrientation": False},
+            {"name": "Mathematics", "mark": 50, "isHomeLanguage": False, "isLifeOrientation": False},
+            {"name": "Geography", "mark": 50, "isHomeLanguage": False, "isLifeOrientation": False},
+            {"name": "History", "mark": 50, "isHomeLanguage": False, "isLifeOrientation": False},
+            {"name": "Business Studies", "mark": 30, "isHomeLanguage": False, "isLifeOrientation": False},
+            {"name": "Information Technology", "mark": 90, "isHomeLanguage": False, "isLifeOrientation": False},
+        ]
+        self.assertEqual(evaluate_nsc_pass(subs)["apsExclLO"], 27)
+        # T2: UMP LO halved
+        ump_subs = subs[:3] + [
+            {"name": "Life Orientation", "mark": 80, "isHomeLanguage": False, "isLifeOrientation": True},
+            {"name": "Geography", "mark": 50, "isHomeLanguage": False, "isLifeOrientation": False},
+            {"name": "History", "mark": 50, "isHomeLanguage": False, "isLifeOrientation": False},
+            {"name": "Information Technology", "mark": 70, "isHomeLanguage": False, "isLifeOrientation": False},
+        ]
+        self.assertEqual(compute_ump_aps(ump_subs)["aps"], 29.5)
+        # T7: no silent mark=50 guess
+        parsed = parse_statement_text("Mathematics\nEnglish Home Language 64%")
+        m_row = next((s for s in parsed["subjects"] if s["name"] == "Mathematics"), None)
+        self.assertIsNotNone(m_row)
+        self.assertIsNone(m_row["mark"])
+
+
+
+    def test_v71_statement_parser_strips_sa_id_number(self):
+        import json
+        from statement_parser import parse_statement_text
+        res = parse_statement_text("Candidate ID 0602025800081\nMathematics 71%\nEnglish Home Language 65%")
+        self.assertNotIn("0602025800081", json.dumps(res))
+        self.assertEqual(len(res["subjects"]), 2)
+
+
+
+    def test_v72_all_core_data_json_valid(self):
+        import json
+        base = Path(__file__).resolve().parent.parent
+        for rel in ("data/events.json", "data/careers.json", "data/institutions.json", "data/open_jobs_live.json"):
+            data = json.loads((base / rel).read_text(encoding="utf-8"))
+            self.assertIsInstance(data, dict)
+
+
 if __name__ == "__main__":
     unittest.main()
