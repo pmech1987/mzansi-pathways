@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /creator_studio.html
+Disallow: /data/

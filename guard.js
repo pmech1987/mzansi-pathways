@@ -6,7 +6,7 @@
   var shown = false;
   function css(el, o) { for (var k in o) el.style[k] = o[k]; return el; }
 
-  function banner(missing) {
+  function banner(missing, custom) {
     if (shown) return; shown = true;
     var b = document.createElement('div');
     b.setAttribute('role', 'alert');
@@ -14,7 +14,7 @@
       padding: '14px 16px', font: '15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif', boxShadow: '0 8px 24px rgba(0,0,0,.35)' });
     var h = document.createElement('strong'); h.textContent = 'Part of Mzansi Pathways did not load.';
     var p = document.createElement('div'); css(p, { margin: '4px 0 10px', opacity: '.9' });
-    p.textContent = missing.length
+    p.textContent = custom ? custom : missing.length
       ? 'Missing: ' + missing.join(', ') + '. If you just updated the site, make sure the css, js and data folders were published too.'
       : 'Check your connection, then try again.';
     var go = document.createElement('button'); go.type = 'button'; go.textContent = 'Reload fresh copy';
@@ -52,6 +52,15 @@
   }
 
   window.addEventListener('load', function () { setTimeout(check, 2500); });
+  // A SyntaxError means this browser is too old for the app's code (not a missing file), so say that plainly.
+  window.addEventListener('error', function (e) {
+    if (e && !e.target || (e && e.target === window)) {
+      var msg = String((e && e.message) || '');
+      if (/SyntaxError|Unexpected token|Invalid regular expression/i.test(msg)) {
+        banner([], 'This browser looks too old to run Mzansi Pathways. Please update Chrome, Safari or Firefox (or open this link in a newer browser), then reload.');
+      }
+    }
+  });
   window.addEventListener('error', function (e) {
     if (e && e.target && e.target !== window && (e.target.tagName === 'SCRIPT' || e.target.tagName === 'LINK')) {
       setTimeout(function () { banner([(e.target.getAttribute('src') || e.target.getAttribute('href') || 'a file')]); }, 300);

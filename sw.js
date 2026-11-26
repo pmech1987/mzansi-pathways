@@ -1,8 +1,8 @@
-const CACHE = 'mzansi-pathways-v78';
+const CACHE = 'mzansi-pathways-v91';
 // CORE: the app cannot work offline without these. If one cannot be fetched the install fails and the old worker keeps running.
-const CORE = ['./', './index.html', './guard.js', './css/utilities.css', './css/legacy_inline.css', './css/mzansi_ui.css', './css/civic_mobile_a11y.css', './js/boot.js', './js/app.js', './js/home.js', './js/engine.js', './js/data.js', './js/i18n.js', './js/ocr.js', './js/catalogue.js', './js/catalogue_data.js'];
+const CORE = ['./', './index.html', './guard.js', './css/utilities.css', './css/legacy_inline.css', './css/mzansi_ui.css', './css/civic_mobile_a11y.css', './js/work_tools.js', './js/boot.js', './js/features/trust_guards.js', './js/app.js', './js/home.js', './js/a11y.js', './js/screens.js', './js/engine.js', './js/data.js', './js/i18n.js', './js/ocr.js', './js/catalogue.js', './js/catalogue_data.js'];
 // NICE: saved if reachable, never blocks the install (a missing icon or data file must not break offline mode for everyone).
-const NICE = ['./manifest.json', './icon-192.png', './icon-512.png', './data/index.json', './data/institutions.json', './data/careers.json', './data/bursaries.json', './data/events.json', './data/pset_national_registry.json'];
+const NICE = ['./creator_studio.html', './css/creator_studio.css', './js/creator_studio.js', './manifest.json', './icon-192.png', './icon-512.png', './data/index.json', './data/institutions.json', './data/careers.json', './data/bursaries.json', './data/events.json', './data/pset_national_registry.json'];
 const OPTIONAL = ['./vendor/tesseract/tesseract.min.js', './vendor/tesseract/worker.min.js', './vendor/tesseract/eng.traineddata.gz'];
 
 function offlineJson() { return new Response('{}', { status: 503, headers: { 'Content-Type': 'application/json' } }); }
@@ -37,9 +37,9 @@ self.addEventListener('fetch', e => {
   if (isNav) {
     e.respondWith(
       fetch(e.request).then(res => {
-        if (res && res.ok) { const clone = res.clone(); caches.open(CACHE).then(c => c.put(e.request, clone)).catch(() => {}); }
+        if (res && res.ok && res.type === 'basic') { const clone = res.clone(); caches.open(CACHE).then(c => c.put(e.request, clone)).catch(() => {}); }
         return res;
-      }).catch(() => caches.match(e.request).then(h => h || caches.match('./index.html')).then(h => h || new Response('<!doctype html><meta charset="utf-8"><title>Offline</title><p>You are offline and this page was not saved yet. Reconnect once to save it.</p>', { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8' } })))
+      }).catch(() => caches.match(e.request, { ignoreSearch: true }).then(h => h || caches.match('./index.html')).then(h => h || new Response('<!doctype html><meta charset="utf-8"><title>Offline</title><p>You are offline and this page was not saved yet. Reconnect once to save it.</p>', { status: 503, headers: { 'Content-Type': 'text/html; charset=utf-8' } })))
     );
     return;
   }
@@ -66,3 +66,4 @@ self.addEventListener('fetch', e => {
 });
 
 self.addEventListener('message', e => { if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting(); });
+self.addEventListener('message', e => { if (e.data && e.data.type === 'GET_VERSION' && e.source) e.source.postMessage({ type: 'VERSION', cache: CACHE }); });

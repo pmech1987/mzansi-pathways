@@ -4,54 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mzansi Pathways — Creator Studio (Prospectus &amp; Legal Data Builder)</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; min-width: 0; }
-    body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: #f8fafc; color: #0f172a; line-height: 1.5; overflow-x: clip; }
-    header { background: #0f172a; color: #fff; padding: 18px 20px; border-bottom: 3px solid #1d4ed8; }
-    header h1 { margin: 0; font-size: 1.25rem; }
-    header p { margin: 4px 0 0; font-size: 0.85rem; color: #cbd5e1; }
-    main { max-width: 960px; margin: 18px auto; padding: 0 14px 48px; display: grid; gap: 16px; }
-    .card { background: #fff; border: 1px solid #cbd5e1; border-radius: 16px; padding: 16px; box-shadow: 0 1px 2px rgba(15,23,42,.04); }
-    h2 { margin: 0 0 8px; font-size: 1.02rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
-    label { display: block; font-size: 0.78rem; font-weight: 700; color: #334155; margin-bottom: 4px; }
-    input, select, textarea { width: 100%; min-height: 44px; padding: 9px 11px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 0.9rem; background: #f8fafc; color: #0f172a; }
-    button { min-height: 44px; padding: 10px 14px; border-radius: 10px; border: 1px solid #0f172a; background: #0f172a; color: #fff; font-weight: 700; font-size: 0.88rem; cursor: pointer; }
-    button.sec { background: #f1f5f9; color: #0f172a; border-color: #cbd5e1; }
-    button.good { background: #047857; border-color: #047857; }
-    .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; }
-    .badge { display: inline-block; padding: 3px 8px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; }
-    .b-ok { background: #d1fae5; color: #065f46; }
-    .b-warn { background: #fef3c7; color: #92400e; }
-    .b-err { background: #ffe4e6; color: #9f1239; }
-    .item { padding: 10px 12px; border: 1px solid #e2e8f0; border-radius: 12px; background: #f8fafc; margin-top: 8px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; align-items: center; }
-    pre { background: #0f172a; color: #e2e8f0; padding: 12px; border-radius: 12px; overflow-x: auto; font-size: 0.78rem; max-height: 260px; }
-    .tabs { display: flex; flex-wrap: wrap; gap: 8px; }
-    .tabs button.active { background: #1d4ed8; border-color: #1d4ed8; color: #fff; }
-    .toast { position: fixed; bottom: 16px; right: 16px; background: #0f172a; color: #fff; padding: 10px 14px; border-radius: 10px; font-size: 0.85rem; display: none; z-index: 50; }
-  </style>
+  <link rel="stylesheet" href="./css/creator_studio.css" />
 </head>
 <body>
   <header>
-    <h1>Mzansi Pathways — Creator Studio (v76)</h1>
-    <p>Add &amp; verify university prospectuses, faculties, programmes, and POPIA-scrubbed legal job metadata on your phone — export ready-to-commit JSON without editing raw code on GitHub.</p>
+    <h1>Mzansi Pathways — Creator Studio (v90)</h1>
+    <p>Add &amp; verify university prospectuses, faculties, programmes, and POPIA-scrubbed legal job metadata on your phone — export a file you upload to the inbox/ folder on GitHub. A nightly job checks it and adds it for you.</p>
   </header>
 
   <main>
-    <div class="tabs" role="tablist">
-      <button type="button" id="tab-prog" class="active">1. University Prospectus &amp; Programmes</button>
-      <button type="button" id="tab-job" class="sec">2. Legal Job / DPSA Metadata</button>
-      <button type="button" id="tab-export" class="sec">3. Validate &amp; Export JSON</button>
+    <div class="tabs" role="tablist" aria-label="Creator Studio sections">
+      <button type="button" id="tab-prog" class="active" role="tab" aria-selected="true">1. Programmes (0)</button>
+      <button type="button" id="tab-job" class="sec" role="tab" aria-selected="false">2. Jobs (0)</button>
+      <button type="button" id="tab-export" class="sec" role="tab" aria-selected="false">3. Check &amp; Export</button>
     </div>
 
     <section id="panel-prog" class="card">
       <h2>Add Official Programme Entry (Zero-Copyright Facts Only)</h2>
-      <p style="font-size:.82rem;color:#475569;margin-top:0;">Capture factual admission rules only (APS, NSC level boundaries 30/40/50/60/70/80%, ISO closing date, official URL). Never paste copyrighted prospectus paragraphs.</p>
+      <p class="note">Capture factual admission rules only (APS, NSC level boundaries 30/40/50/60/70/80%, ISO closing date, official URL). Never paste copyrighted prospectus paragraphs.</p>
       <form id="prog-form">
         <div class="grid">
           <div>
             <label for="p-inst">SA Public University (26 Pre-Mapped)</label>
             <select id="p-inst" required></select>
+          </div>
+          <div>
+            <label for="p-year">Intake Year</label>
+            <input id="p-year" type="number" min="2024" max="2040" step="1" required />
+          </div>
+          <div>
+            <label for="p-route">Route</label>
+            <select id="p-route"><option>University</option><option>Diploma / UoT (Extended)</option><option>Public TVET College</option><option>QCTO Occupational</option><option>Workplace Learning</option></select>
           </div>
           <div>
             <label for="p-faculty">Faculty / School</label>
@@ -70,8 +53,8 @@
             <select id="p-nqf"><option value="5">NQF 5 (Higher Certificate)</option><option value="6" selected>NQF 6 (Diploma)</option><option value="7">NQF 7 (Bachelor's Degree)</option><option value="8">NQF 8 (Honours / Professional)</option></select>
           </div>
           <div>
-            <label for="p-aps">Minimum APS (Institution Scale)</label>
-            <input id="p-aps" type="number" min="10" max="600" step="0.5" value="26" required />
+            <label for="p-aps">Minimum APS (the institution's own scale, e.g. 30 or UCT 520)</label>
+            <input id="p-aps" type="number" min="0" max="600" step="0.5" value="26" required />
           </div>
           <div>
             <label for="p-eng">English Min % (Valid NSC Boundary)</label>
@@ -87,33 +70,33 @@
           </div>
           <div>
             <label for="p-status">Verification Status</label>
-            <select id="p-status"><option value="verified">Verified from Official Prospectus</option><option value="pending_review" selected>Pending Review (Amber)</option><option value="conflict">Conflict Between Sources</option></select>
+            <select id="p-status"><option value="pending_review" selected>Pending Review (a second person must confirm)</option><option value="conflict">Conflict Between Sources</option></select>
           </div>
           <div>
             <label for="p-url">Official Prospectus / Programme HTTPS URL</label>
             <input id="p-url" type="url" placeholder="https://www.ump.ac.za/..." required />
           </div>
           <div>
-            <label for="p-doc">Source Document &amp; Page</label>
+            <label for="p-doc">Source Document &amp; Page (you will be asked for this again, so be exact)</label>
             <input id="p-doc" type="text" placeholder="e.g. UMP 2027 Prospectus p. 42" required />
           </div>
         </div>
         <div class="row">
-          <button type="submit" class="good">Add Verified Programme to Queue</button>
+          <button type="submit" class="good">Add to Queue</button>
           <span id="p-civic-badge" aria-label="Civic monogram preview"></span><span id="p-aps-hint" class="badge b-warn"></span>
         </div>
       </form>
-      <div id="prog-list" style="margin-top:12px;"></div>
+      <div id="prog-list" class="mt12"></div>
     </section>
 
-    <section id="panel-job" class="card" style="display:none;">
+    <section id="panel-job" class="card is-hidden">
       <h2>Add Legal Opt-In Job / DPSA Circular Entry (POPIA Scrubbed)</h2>
-      <div style="margin:10px 0 14px;padding:12px;border:1px solid #cbd5e1;border-radius:12px;background:#f8fafc;">
+      <div class="box-tip">
         <label for="dpsa-paste">Quick DPSA Circular Factual Extractor (Paste Official Post Header — Zero Prose Stored)</label>
         <textarea id="dpsa-paste" rows="3" placeholder="POST 42/10 : ADMIN CLERK&#10;REF NO : MP/2026/01&#10;CLOSING DATE : 11 December 2026"></textarea>
-        <div class="row" style="margin-top:8px;"><button type="button" id="dpsa-extract-btn" class="sec">Auto-Fill Title &amp; Ref from DPSA Text</button></div>
+        <div class="row mt8"><button type="button" id="dpsa-extract-btn" class="sec">Auto-Fill Title &amp; Ref from DPSA Text</button></div>
       </div>
-      <p style="font-size:.82rem;color:#475569;margin-top:0;">Automatically strips SA ID numbers, personal cell numbers, and personal free-webmail addresses, and blocks scraping-restricted or URL-shortener domains.</p>
+      <p class="note">Automatically strips SA ID numbers, personal cell numbers, and personal free-webmail addresses, and blocks scraping-restricted or URL-shortener domains.</p>
       <form id="job-form">
         <div class="grid">
           <div><label for="j-title">Job Title</label><input id="j-title" type="text" placeholder="e.g. Junior IT Support Technician" required /></div>
@@ -122,186 +105,33 @@
           <div><label for="j-prov">Province</label><select id="j-prov"><option>Mpumalanga</option><option>Gauteng</option><option>KwaZulu-Natal</option><option>Western Cape</option><option>Eastern Cape</option><option>Limpopo</option><option>Free State</option><option>North West</option><option>Northern Cape</option><option>South Africa</option></select></div>
           <div><label for="j-close">Closing Date (YYYY-MM-DD)</label><input id="j-close" type="date" value="2026-12-15" required /></div>
           <div><label for="j-src">Legal Source Type</label><select id="j-src"><option value="dpsa_circular">DPSA Weekly Circular</option><option value="gov_portal">Official .gov.za Portal</option><option value="direct_employer">Direct Employer Permission</option><option value="public_ats_api">Public ATS API</option></select></div>
-          <div style="grid-column: 1 / -1;"><label for="j-url">Official HTTPS Apply URL (No Facebook/WhatsApp/bit.ly)</label><input id="j-url" type="url" placeholder="https://www.gov.za/about-government/government-jobs" required /></div>
+          <div class="span-all"><label for="j-url">Official HTTPS Apply URL (No Facebook/WhatsApp/bit.ly)</label><input id="j-url" type="url" placeholder="https://www.gov.za/about-government/government-jobs" required /></div>
         </div>
         <div class="row"><button type="submit" class="good">Validate &amp; Add Legal Job</button></div>
       </form>
-      <div id="job-list" style="margin-top:12px;"></div>
+      <div id="job-list" class="mt12"></div>
     </section>
 
-    <section id="panel-export" class="card" style="display:none;">
-      <h2>Export Ready-to-Commit JSON Files</h2>
-      <p style="font-size:.82rem;color:#475569;margin-top:0;">Download or copy validated JSON directly on your phone, then upload into <code>data/</code> in your repository.</p>
+    <section id="panel-export" class="card is-hidden">
+      <h2>Check &amp; Export</h2>
+      <p class="note">1. Fix anything marked red. 2. Download the programmes file. 3. On GitHub open the <code>inbox</code> folder, choose Add file, Upload files, and commit. The nightly job (or Actions, Run workflow) checks it and adds the rows. Rows always arrive as pending review.</p>
+      <div id="export-status" class="mt8"></div>
       <div class="row">
-        <button type="button" id="dl-prog-json" class="good">Download programmes_creator_batch.json</button>
+        <button type="button" id="dl-prog-json" class="good">Download programmes file</button>
         <button type="button" id="copy-prog-json" class="sec">Copy Programmes JSON</button>
         <button type="button" id="dl-job-json" class="good">Download community_jobs_submissions.json</button>
         <button type="button" id="copy-job-json" class="sec">Copy Jobs JSON</button>
       </div>
-      <h3 style="font-size:.88rem;margin:14px 0 6px;">Live Preview</h3>
+      <div class="row">
+        <label for="load-batch" class="filebtn">Load a saved file to keep editing</label><input id="load-batch" type="file" accept=".json,application/json" class="visually-hidden" />
+        <button type="button" id="clear-queue" class="sec">Clear queue</button>
+      </div>
+      <h3 class="h-preview">Live Preview</h3>
       <pre id="json-preview"></pre>
     </section>
   </main>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <script>
-    const SA_26_UNIS = [
-      ['ump','University of Mpumalanga (UMP)','ump_lo_half_45_5 (LO ÷ 2, max 45.5)'],
-      ['up','University of Pretoria (UP)','nsc_best6_42 (Best 6 excl. LO, max 42)'],
-      ['tut','Tshwane University of Technology (TUT)','tut_best6_42 (Best 6, Level 1 discarded)'],
-      ['uj','University of Johannesburg (UJ)','nsc_best6_42 (Best 6 excl. LO, max 42)'],
-      ['wits','University of the Witwatersrand (Wits)','wits_weighted_56 (Eng/Maths +2, LO 0–4)'],
-      ['uct','University of Cape Town (UCT)','uct_fps_600 (Raw % sum + WPS)'],
-      ['su','Stellenbosch University (SU)','stellenbosch_avg_100 (Best 6 average %)'],
-      ['uwc','University of the Western Cape (UWC)','uwc_weighted_65 (Weighted 7 subjects)'],
-      ['ukzn','University of KwaZulu-Natal (UKZN)','eight_pt_best6_48 (8-pt ladder, CAO)'],
-      ['nwu','North-West University (NWU)','eight_pt_best6_48 (8-pt ladder, max 48)'],
-      ['ufs','University of the Free State (UFS)','ufs_ap_49 (8-pt + 1 LO >=60%)'],
-      ['ru','Rhodes University (RU)','pct_div10_60 (Raw % ÷ 10, LO >=50%)'],
-      ['nmu','Nelson Mandela University (NMU)','nmu_as_600 (Raw % + 7 Q1-3 bonus)'],
-      ['unisa','University of South Africa (UNISA)','nsc_best6_42 (Best 6 excl. LO)'],
-      ['cput','Cape Peninsula University of Technology (CPUT)','cput_methods (Methods 1–3, % ÷ 10)'],
-      ['dut','Durban University of Technology (DUT)','nsc_best6_42 (Best 6, CAO)'],
-      ['cut','Central University of Technology (CUT)','cut_ap_49 (8-pt + 1 LO >=50%)'],
-      ['vut','Vaal University of Technology (VUT)','eight_pt_best6_48 (8-pt ladder)'],
-      ['mut','Mangosuthu University of Technology (MUT)','mut_best5_40 (Verify Best 5 vs 6 CAO)'],
-      ['spu','Sol Plaatje University (SPU)','spu_bonus_56 (8-pt + HL/Maths bonus)'],
-      ['smu','Sefako Makgatho Health Sciences Univ. (SMU)','smu_full7_49 (All 7 incl. LO full)'],
-      ['ul','University of Limpopo (UL)','nsc_best6_42 (Best 6 + Level 3 gates)'],
-      ['univen','University of Venda (UNIVEN)','pct_div10_60 (Raw % ÷ 10)'],
-      ['unizulu','University of Zululand (UNIZULU)','eight_pt_best6_48 (8-pt ladder, CAO)'],
-      ['ufh','University of Fort Hare (UFH)','ufh_conflict_guard (Verify on ufh.ac.za)'],
-      ['wsu','Walter Sisulu University (WSU)','eight_pt_best6_48 (Excl. LO except Educ.)']
-    ];
-    const BLOCKED_DOMAINS = ['facebook.com','fb.com','whatsapp.com','chat.whatsapp.com','bit.ly','tinyurl.com','t.co','rb.gy','graduates24.com','pnet.co.za','indeed.com','linkedin.com'];
-    const STORAGE_KEY = 'mzansi_creator_studio_v73';
-    let store = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"programmes":[],"jobs":[]}');
-
-    const instSel = document.getElementById('p-inst');
-    SA_26_UNIS.forEach(([id, name, method]) => {
-      const opt = document.createElement('option');
-      opt.value = id; opt.textContent = name; opt.dataset.method = method;
-      instSel.appendChild(opt);
-    });
-    function updateApsHint() {
-      const opt = instSel.options[instSel.selectedIndex];
-      document.getElementById('p-aps-hint').textContent = 'APS Method: ' + (opt ? opt.dataset.method : '');
-      const code = (opt ? opt.value : 'SA').toUpperCase().slice(0, 6);
-      const bEl = document.getElementById('p-civic-badge');
-      if (bEl) bEl.innerHTML = `<svg viewBox="0 0 56 56" width="38" height="38" role="img" aria-label="${code} Civic Monogram" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="52" height="52" rx="12" fill="#1A4B8C"/><rect x="2" y="38" width="52" height="16" fill="#000" fill-opacity="0.2"/><text x="28" y="29" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="800" font-size="${code.length<=4?15:11}" fill="#fff">${code}</text><text x="28" y="49" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="700" font-size="9" fill="#E8F0FE">SA PSET</text></svg>`;
-    }
-    instSel.addEventListener('change', updateApsHint); updateApsHint();
-
-    function toast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg; t.style.display = 'block';
-      setTimeout(() => { t.style.display = 'none'; }, 2800);
-    }
-    function scrubPii(s) {
-      return String(s || '').replace(/\b\d{13}\b/g, '[ID-REDACTED]').replace(/(?:\+27|0)\s*[6-8]\d[\s-]?\d{3}[\s-]?\d{4}/g, '[PHONE-REDACTED]').replace(/\b[\w.+-]+@(?:gmail|yahoo|hotmail|outlook)\.com\b/gi, '[EMAIL-REDACTED]').trim();
-    }
-    function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(store)); render(); }
-
-    function render() {
-      const pl = document.getElementById('prog-list');
-      pl.innerHTML = store.programmes.length ? store.programmes.map((p, i) =>
-        `<div class="item"><div><strong>${p.institutionId.toUpperCase()} — ${p.name}</strong><div style="font-size:.78rem;color:#475569;">${p.faculty} · Min APS ${p.minAps} · Closes ${p.closes} · <span class="badge ${p.verificationStatus==='verified'?'b-ok':'b-warn'}">${p.verificationStatus}</span></div></div><button type="button" class="sec" data-del-p="${i}">Remove</button></div>`
-      ).join('') : '<p style="font-size:.82rem;color:#64748b;">No programmes queued yet.</p>';
-      pl.querySelectorAll('[data-del-p]').forEach(b => b.addEventListener('click', () => { store.programmes.splice(Number(b.dataset.delP), 1); save(); }));
-
-      const jl = document.getElementById('job-list');
-      jl.innerHTML = store.jobs.length ? store.jobs.map((j, i) =>
-        `<div class="item"><div><strong>${j.title}</strong> — ${j.employer}<div style="font-size:.78rem;color:#475569;">${j.town}, ${j.province} · Closes ${j.closingDate} · ${j.sourceType}</div></div><button type="button" class="sec" data-del-j="${i}">Remove</button></div>`
-      ).join('') : '<p style="font-size:.82rem;color:#64748b;">No legal jobs queued yet.</p>';
-      jl.querySelectorAll('[data-del-j]').forEach(b => b.addEventListener('click', () => { store.jobs.splice(Number(b.dataset.delJ), 1); save(); }));
-
-      document.getElementById('json-preview').textContent = JSON.stringify({
-        schemaVersion: 2,
-        generatedBy: 'Mzansi Pathways Creator Studio v76',
-        checkedAt: new Date().toISOString().slice(0, 10),
-        programmes: store.programmes,
-        jobs: store.jobs
-      }, null, 2);
-    }
-
-    document.getElementById('prog-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const url = document.getElementById('p-url').value.trim();
-      if (!url.startsWith('https://')) { toast('Official URL must start with https://'); return; }
-      const eng = Number(document.getElementById('p-eng').value);
-      const math = Number(document.getElementById('p-math').value);
-      const reqs = [{ anyOf: ['English Home Language', 'English First Additional Language'], minMark: eng }];
-      if (math > 0) reqs.push({ anyOf: ['Mathematics'], minMark: math });
-      store.programmes.push({
-        id: `${instSel.value}_${Date.now().toString(36)}`,
-        institutionId: instSel.value,
-        faculty: scrubPii(document.getElementById('p-faculty').value),
-        department: scrubPii(document.getElementById('p-dept').value),
-        name: scrubPii(document.getElementById('p-name').value),
-        nqf: Number(document.getElementById('p-nqf').value),
-        minAps: Number(document.getElementById('p-aps').value),
-        requiredSubjects: reqs,
-        closes: document.getElementById('p-closes').value,
-        verificationStatus: document.getElementById('p-status').value,
-        sourceUrl: url,
-        sourceDoc: scrubPii(document.getElementById('p-doc').value),
-        checkedAt: new Date().toISOString().slice(0, 10)
-      });
-      e.target.reset(); updateApsHint(); save(); toast('Added programme to Creator Studio queue!');
-    });
-
-    document.getElementById('job-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const url = document.getElementById('j-url').value.trim();
-      if (!url.startsWith('https://')) { toast('Official apply URL must start with https://'); return; }
-      const host = url.toLowerCase().split('://')[1].split('/')[0];
-      if (BLOCKED_DOMAINS.some(d => host === d || host.endsWith('.' + d))) {
-        toast(`Blocked domain (${host}) — use official employer or .gov.za URL only.`); return;
-      }
-      store.jobs.push({
-        title: scrubPii(document.getElementById('j-title').value),
-        employer: scrubPii(document.getElementById('j-emp').value),
-        town: scrubPii(document.getElementById('j-town').value),
-        province: document.getElementById('j-prov').value,
-        closingDate: document.getElementById('j-close').value,
-        sourceType: document.getElementById('j-src').value,
-        officialUrl: url
-      });
-      e.target.reset(); save(); toast('Validated & added POPIA-scrubbed job!');
-    });
-
-    function switchTab(id) {
-      ['prog','job','export'].forEach(k => {
-        document.getElementById('panel-' + k).style.display = k === id ? 'block' : 'none';
-        const b = document.getElementById('tab-' + k);
-        b.className = k === id ? 'active' : 'sec';
-      });
-    }
-    document.getElementById('tab-prog').onclick = () => switchTab('prog');
-    document.getElementById('tab-job').onclick = () => switchTab('job');
-    document.getElementById('tab-export').onclick = () => switchTab('export');
-
-    function downloadJson(filename, obj) {
-      const blob = new Blob([JSON.stringify(obj, null, 2) + '\n'], { type: 'application/json' });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; a.click();
-      setTimeout(() => URL.revokeObjectURL(a.href), 1500);
-      toast(`Downloaded ${filename}!`);
-    }
-    document.getElementById('dl-prog-json').onclick = () => downloadJson('programmes_creator_batch.json', { schemaVersion: 2, checkedAt: new Date().toISOString().slice(0,10), programmes: store.programmes });
-    document.getElementById('dl-job-json').onclick = () => downloadJson('community_jobs_submissions.json', { schemaVersion: 1, jobs: store.jobs });
-    document.getElementById('copy-prog-json').onclick = () => navigator.clipboard?.writeText(JSON.stringify({ schemaVersion: 2, programmes: store.programmes }, null, 2)).then(() => toast('Copied Programmes JSON!'));
-    document.getElementById('copy-job-json').onclick = () => navigator.clipboard?.writeText(JSON.stringify({ schemaVersion: 1, jobs: store.jobs }, null, 2)).then(() => toast('Copied Jobs JSON!'));
-    
-    document.getElementById('dpsa-extract-btn').addEventListener('click', () => {
-      const txt = document.getElementById('dpsa-paste').value || '';
-      const pm = txt.match(/POST\s+\d{1,2}\/\d{1,4}\s*[:\-]\s*(.+)/i);
-      const rm = txt.match(/REF\s*NO\s*[:\-]\s*([A-Z0-9\/\-]{3,40})/i);
-      if (pm) document.getElementById('j-title').value = scrubPii(pm[1]) + (rm ? ` (Ref: ${rm[1]})` : '');
-      document.getElementById('j-src').value = 'dpsa_circular';
-      document.getElementById('j-url').value = 'https://www.gov.za/about-government/government-jobs';
-      toast(pm ? 'Extracted factual DPSA post title & reference!' : 'Paste a line starting with POST XX/YY : TITLE');
-    });
-    render();
-  </script>
+  <script src="./js/creator_studio.js"></script>
 </body>
 </html>

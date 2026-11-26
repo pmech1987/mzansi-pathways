@@ -1,31 +1,10 @@
-# Python / tools
+.cache/
 __pycache__/
-*.py[cod]
-.pytest_cache/
-node_modules/
-# Operating system
-.DS_Store
-Thumbs.db
-desktop.ini
-# SECRETS: never commit these (github_publish.py also refuses them)
+backups/
+.restore_tmp/
 .env
 .env.*
-*.pem
 *.key
-*.pfx
-*.p12
-*.kdbx
-id_rsa*
-id_ed25519*
-secrets*.json
-*.mzansi
-# Temporary and generated (made for you, never edit)
-*.bak
+*.pem
 *.tmp
-dist/
-backups/
-_site/
-.maintain.lock
-.doctor.tmp
-.mz_write_test
-.restore-*/
+*.part

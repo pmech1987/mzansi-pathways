@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Mzansi Pathways — South African Opportunity Decision Engine: Results, Careers, Study, TVET, QCTO, Funding, Plan A/B/C, Evidence Vault &amp; Work." />
   <meta name="theme-color" content="#0e1b3d" />
+  <meta name="color-scheme" content="light" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Mzansi Pathways — See where you can realistically go" />
+  <meta property="og:description" content="Free, private South African guide: enter your Matric marks and compare university, TVET, QCTO, funding and work options." />
+  <meta property="og:image" content="./icon-512.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Pathways" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
   <title>Mzansi Pathways — See where you can realistically go</title>
@@ -16,7 +25,8 @@
   <link rel="stylesheet" href="./css/civic_mobile_a11y.css" />
 </head>
 <body class="min-h-screen flex flex-col">
-  <noscript><p style="padding:16px;font:16px system-ui">Mzansi Pathways needs JavaScript. Please turn it on in your browser settings and reload.</p></noscript>
+  <a href="#app-main" class="mz-skip">Skip to main content</a>
+  <noscript><p>Mzansi Pathways needs JavaScript. Please turn it on in your browser settings and reload.</p></noscript>
 
   <!-- Official-Grade Institutional Notice Bar -->
   <div id="civic-trust-bar" class="bg-slate-950 text-slate-300 text-[11px] border-b border-slate-800 px-3 sm:px-6 py-1.5">
@@ -29,7 +39,7 @@
   <!-- Top Header -->
   <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
-      <div class="flex items-center gap-2.5 min-w-0">
+      <div class="flex items-center gap-2.5 min-w-0 mz-brand" data-home role="button" tabindex="0" aria-label="Home">
         <div class="w-9 h-9 rounded-lg bg-slate-900 text-white flex items-center justify-center font-black text-xs tracking-wider shadow-sm shrink-0">MP</div>
         <div class="min-w-0">
           <div class="font-extrabold text-slate-900 text-sm sm:text-base truncate leading-tight tracking-tight">Mzansi Pathways</div>
@@ -53,6 +63,7 @@
         <button id="install-pwa-btn" class="hidden px-2.5 py-1.5 rounded-lg bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 shadow-sm">Install App</button>
         <button id="auth-btn" aria-label="Account and Cross-Device Sync" class="px-2.5 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-bold hover:bg-slate-800">Sync</button>
         <button id="help-btn" aria-label="How to use Mzansi Pathways" class="px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-800 border border-slate-200 text-xs font-bold hover:bg-slate-200">Tour</button>
+        <button id="more-btn" type="button" data-more aria-haspopup="dialog" class="mz-hd-more px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-800 border border-slate-200 text-xs font-bold hover:bg-slate-200">More</button>
         <button id="settings-btn" aria-label="Open Settings" class="px-2.5 py-1.5 rounded-lg bg-blue-50 text-blue-900 border border-blue-200 text-xs font-bold hover:bg-blue-100">Settings</button>
       </div>
     </div>
@@ -81,51 +92,63 @@
         <li><b>D</b><div><strong>Learn and earn</strong><small>Learnerships and entry jobs while you study</small></div></li>
       </ol>
     </div>
-    <ol class="mzh-steps" aria-label="How it works"><li><b>1</b><span>Add your marks</span></li><li><b>2</b><span>See what fits</span></li><li><b>3</b><span>Get your Plan A, B and C</span></li></ol>
     <h2 class="mzh-ask">What do you want to figure out?</h2>
     <div class="mzh-cards">
       <button type="button" class="mzh-card" data-tab="study" data-k="study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><strong>Study</strong><span>Courses and institutions you realistically qualify for.</span></button>
       <button type="button" class="mzh-card" data-tab="work" data-k="work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><strong>Work</strong><span>Jobs and careers that match where you are now.</span></button>
       <button type="button" class="mzh-card" data-tab="study" data-k="fund"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.2c-.6-.8-1.4-1.2-2.5-1.2-1.4 0-2.5.8-2.5 1.9 0 2.6 5 1.4 5 4 0 1.1-1.1 2-2.5 2-1.1 0-2-.5-2.6-1.3M12 6v2M12 16v2"/></svg><strong>Funding</strong><span>Bursaries and what each route will cost you.</span></button>
-      <button type="button" class="mzh-card" data-tab="plan" data-k="plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg><strong>My pathway</strong><span>Build a Plan A, B and C you can act on.</span></button>
+      <button type="button" class="mzh-card" data-tab="plan" data-k="plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg><strong>My pathway</strong><span>Build a Plan A, B and C you can act on.</span></button><button type="button" class="mzh-card" data-tab="results" data-k="marks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><strong>My marks</strong><span>Enter your results and see where you stand.</span></button><button type="button" class="mzh-card" data-tab="careers" data-k="careers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg><strong>Careers</strong><span>What each career needs and where it leads.</span></button><button type="button" class="mzh-card" data-tab="vault" data-k="vault"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><strong>Evidence &amp; CV</strong><span>Keep your proof and build a CV.</span></button><button type="button" class="mzh-card" data-more data-k="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg><strong>More</strong><span>Settings, sync, tour and official links.</span></button></div>
+      <button type="button" class="mzh-card" data-tab="results" data-k="marks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><strong>My marks</strong><span>Enter your results and see where you stand.</span></button>
+      <button type="button" class="mzh-card" data-tab="careers" data-k="careers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg><strong>Careers</strong><span>What each career needs and where it leads.</span></button>
+      <button type="button" class="mzh-card" data-tab="vault" data-k="vault"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><strong>Evidence &amp; CV</strong><span>Keep your proof and build a CV.</span></button>
+      <button type="button" class="mzh-card" data-more data-k="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg><strong>More</strong><span>Settings, sync, tour and official links.</span></button>
     </div>
-    <p class="mzh-legend"><span><i class="g"></i>Strong match</span><span><i class="m"></i>Possible with conditions</span><span><i class="s"></i>Not eligible yet</span></p>
   </section>
 
-  <main id="app-main" class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4"></main>
+  <main id="app-main" tabindex="-1" class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4"></main>
 
-  <!-- Mobile Bottom Nav -->
-  <nav class="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-slate-200 grid grid-cols-6 text-[11px] font-bold text-slate-600" aria-label="Mobile navigation">
-    <button data-tab="results" class="tab-btn active py-2.5 text-center">Results</button>
-    <button data-tab="careers" class="tab-btn py-2.5 text-center">Careers</button>
-    <button data-tab="study" class="tab-btn py-2.5 text-center">Study</button>
-    <button data-tab="plan" class="tab-btn py-2.5 text-center">Plan</button>
-    <button data-tab="vault" class="tab-btn py-2.5 text-center">Vault</button>
-    <button data-tab="work" class="tab-btn py-2.5 text-center">Work</button>
+  <!-- Floating bottom bar (phones) -->
+  <nav id="mz-dock" class="mz-dock" aria-label="Main">
+    <button type="button" data-home class="mz-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Home</span></button>
+    <button type="button" data-tab="study" class="tab-btn mz-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><span>Study</span></button>
+    <button type="button" data-tab="work" class="tab-btn mz-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg><span>Work</span></button>
+    <button type="button" data-tab="plan" class="tab-btn mz-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg><span>Plan</span></button>
+    <button type="button" data-more aria-haspopup="dialog" class="mz-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg><span>More</span></button>
   </nav>
 
-  <!-- Footer -->
-  <footer class="bg-white border-t border-slate-200 mt-8 py-5 px-4 text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-      <div>
-        <strong class="text-slate-700">Mzansi Pathways</strong> — Independent South African opportunity decision engine. Official CAS WhatsApp: <strong>081 308 4196</strong> (government service). Always verify admission rules in official prospectuses, and never pay any fee to apply for a job.
+  <!-- More sheet: everything that used to sit in the footer, plus the tools that are not on the dock -->
+  <div id="mz-more" class="mz-more" hidden>
+    <div class="mz-more-back" data-more-close></div>
+    <div class="mz-more-sheet" role="dialog" aria-modal="true" aria-labelledby="mz-more-t">
+      <div class="mz-more-head"><h2 id="mz-more-t">More</h2><button type="button" id="mz-more-x" data-more-close aria-label="Close">✕</button></div>
+      <div class="mz-more-grid">
+        <button type="button" data-tab="results" data-k="marks">My marks</button>
+        <button type="button" data-tab="careers">Careers</button>
+        <button type="button" data-tab="vault">Evidence &amp; CV</button>
       </div>
-      <div class="flex flex-wrap gap-3 font-semibold text-blue-700">
-        <a href="https://www.dhet.gov.za/" target="_blank" rel="noopener noreferrer" class="hover:underline">DHET ↗</a>
-        <a href="https://www.qcto.org.za/" target="_blank" rel="noopener noreferrer" class="hover:underline">QCTO ↗</a>
-        <a href="https://www.saqa.org.za/" target="_blank" rel="noopener noreferrer" class="hover:underline">SAQA ↗</a>
-        <a href="https://www.nsfas.org.za/" target="_blank" rel="noopener noreferrer" class="hover:underline">NSFAS ↗</a>
-        <a href="https://sayouth.mobi/" target="_blank" rel="noopener noreferrer" class="hover:underline">SA Youth ↗</a>
-        <a href="https://github.com/pmech1987/mzansi-pathways" target="_blank" rel="noopener noreferrer" class="hover:underline text-slate-700">Source code ↗</a>
+      <div class="mz-more-list">
+        <button type="button" data-proxy="settings-btn">Settings and accessibility</button>
+        <button type="button" data-proxy="auth-btn">Sync and backup</button>
+        <button type="button" data-proxy="help-btn">Take the tour</button>
+        <button type="button" data-proxy="install-pwa-btn" id="mz-more-install" hidden>Install the app</button>
+      </div>
+      <p class="mz-more-note"><strong>Mzansi Pathways</strong> is an independent South African opportunity guide, not a government service. Official CAS WhatsApp: <strong>081 308 4196</strong>. Always verify admission rules in official prospectuses, and never pay a fee to apply for a job.</p>
+      <div class="mz-more-links">
+        <a href="https://www.dhet.gov.za/" target="_blank" rel="noopener noreferrer">DHET ↗</a>
+        <a href="https://www.qcto.org.za/" target="_blank" rel="noopener noreferrer">QCTO ↗</a>
+        <a href="https://www.saqa.org.za/" target="_blank" rel="noopener noreferrer">SAQA ↗</a>
+        <a href="https://www.nsfas.org.za/" target="_blank" rel="noopener noreferrer">NSFAS ↗</a>
+        <a href="https://sayouth.mobi/" target="_blank" rel="noopener noreferrer">SA Youth ↗</a>
+        <a href="https://github.com/pmech1987/mzansi-pathways" target="_blank" rel="noopener noreferrer">Source code ↗</a>
       </div>
     </div>
-  </footer>
+  </div>
 
   <!-- Toast -->
   <div id="toast" role="status" aria-live="polite" class="hidden fixed bottom-20 lg:bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-full bg-slate-900 text-white text-xs font-bold shadow-xl"></div>
 
   <!-- "Why am I seeing this?" Explainability & Closest Alternatives Modal -->
-  <div id="why-modal" role="dialog" aria-modal="true" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+  <div id="why-modal" role="dialog" aria-modal="true" aria-labelledby="why-title" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-5 shadow-2xl border border-slate-200 space-y-3">
       <div class="flex items-start justify-between gap-2">
         <div>
@@ -173,6 +196,8 @@
                 <option value="en">English (EN)</option>
                 <option value="zu">isiZulu</option>
                 <option value="af">Afrikaans</option>
+                <option value="ss">siSwati</option>
+                <option value="ts">Xitsonga</option>
               </select>
             </div>
           </div>
@@ -230,7 +255,7 @@
         <button type="button" id="tut-skip-btn" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold shrink-0">Skip Tutorial ✕</button>
       </div>
       <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-        <div id="tut-progress-bar" class="h-full bg-slate-900 transition-all duration-200" style="width: 14%"></div>
+        <div id="tut-progress-bar" class="h-full bg-slate-900 transition-all duration-200"></div>
       </div>
       <div id="tut-body" class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-2 leading-relaxed"></div>
       <div id="tut-example" class="p-3.5 rounded-xl bg-white border border-slate-200 border-l-4 border-l-blue-700 text-xs text-slate-700 space-y-1"></div>
@@ -293,6 +318,7 @@
   </div>
 
 
+  <script src="./js/work_tools.js"></script>
   <script src="./js/engine.js"></script>
   <script src="./js/ocr.js"></script>
   <script src="./js/data.js"></script>
@@ -300,7 +326,10 @@
   <script src="./js/catalogue.js"></script>
   <script src="./js/i18n.js"></script>
   <script src="./js/boot.js"></script>
+  <script src="./js/features/trust_guards.js"></script>
   <script src="./js/app.js"></script>
+  <script src="./js/screens.js"></script>
   <script src="./js/home.js"></script>
+  <script src="./js/a11y.js"></script>
 </body>
 </html>
