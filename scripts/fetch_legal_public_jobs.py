@@ -20,6 +20,9 @@ import urllib.request
 from pathlib import Path
 from typing import List
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import safe_io
 from ingest_free_open_jobs import filter_legal_open_jobs
 
 
@@ -127,10 +130,27 @@ def refresh_open_jobs(root: Path, offline: bool = False) -> dict:
         except Exception:
             pass
 
+    net_jobs: List[dict] = []
     if not offline:
-        raw_jobs.extend(fetch_greenhouse_boards(root))
-        raw_jobs.extend(fetch_lever_boards(root))
-        raw_jobs.extend(fetch_adzuna_sa_jobs())
+        for fn in (lambda: fetch_greenhouse_boards(root), lambda: fetch_lever_boards(root), fetch_adzuna_sa_jobs):
+            try:
+                net_jobs.extend(fn())
+            except Exception:  # one broken source must never stop the others or the refresh
+                pass
+    raw_jobs.extend(net_jobs)
+
+    out_path = root / "data" / "open_jobs_live.json"
+    fetch_status = "ok" if (net_jobs or offline) else "network_unavailable"
+    # Failsafe: if every live source returned nothing (outage, rate limit, no internet), keep the previous live jobs instead of wiping them.
+    # Kept jobs go back through the same legality/expiry filter, so expired ones still drop out.
+    if fetch_status == "network_unavailable" and out_path.exists():
+        try:
+            prev = json.loads(out_path.read_text(encoding="utf-8")).get("jobs") or []
+            kept = [j for j in prev if isinstance(j, dict) and j.get("sourceType") in ("public_ats_api", "open_api", "direct_employer")]
+            if kept:
+                raw_jobs.extend(kept); fetch_status = "network_unavailable_kept_previous"
+        except Exception:
+            pass
 
     filtered = filter_legal_open_jobs(raw_jobs)
     payload = {
@@ -140,11 +160,10 @@ def refresh_open_jobs(root: Path, offline: bool = False) -> dict:
         "openCount": filtered["openCount"],
         "bySourceType": filtered.get("bySourceType", {}),
         "jobs": filtered["accepted"],
+        "fetchStatus": fetch_status,
     }
-    out_path = root / "data" / "open_jobs_live.json"
-    tmp_path = out_path.with_suffix(".json.tmp")
-    tmp_path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    tmp_path.replace(out_path)
+    safe_io.file_backup(root, out_path, keep=7)       # yesterday's feed is kept in backups/files/
+    safe_io.write_json(out_path, payload, indent=2)   # atomic and validated: a crash can never leave a half-written feed
     return payload
 
 
