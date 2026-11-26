@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""Gate 14: Checks Easy View, Parent Mode, Dark Mode, ARIA roles, and print stylesheet."""
+"""Gate 14: Checks Easy View, Parent Mode, Dark Mode, Language Toggle, Read Aloud, ARIA roles & print stylesheet."""
 import json
 from pathlib import Path
 
-MARKERS = ['id="easy-btn"', 'id="parent-btn"', 'id="theme-btn"', 'role="dialog"', 'aria-modal="true"', '@media print']
+MARKERS = [
+    'id="easy-btn"', 'id="parent-btn"', 'id="theme-btn"',
+    'id="lang-select"', 'speakPathwaysSummary',
+    'role="dialog"', 'aria-modal="true"', '@media print',
+]
 
 def run(root: Path = Path(".")) -> dict:
     errors = []
