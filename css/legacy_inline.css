@@ -1,0 +1,52 @@
+
+    html, body { max-width: 100%; overflow-x: hidden; }
+    *, *::before, *::after { box-sizing: border-box; min-width: 0; }
+    img, canvas, video, svg { max-width: 100%; }
+    table { max-width: 100%; }
+    button, select, input:not([type=checkbox]):not([type=radio]) { min-height: 44px; }
+    .hidden { display: none !important; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      padding-bottom: 78px;
+    }
+    .tab-btn.active { background-color: #eff6ff; color: #1d4ed8; font-weight: 800; }
+    :focus-visible { outline: 3px solid #1d4ed8; outline-offset: 2px; }
+    body.high-contrast { background-color: #ffffff !important; color: #000000 !important; }
+    body.high-contrast .border-slate-200, body.high-contrast .border-slate-100 { border-color: #000000 !important; border-width: 2px !important; }
+    body.large-text { font-size: 112%; }
+    body.easy-mode { font-size: 118%; line-height: 1.55; }
+    body.easy-mode .text-xs { font-size: 0.94rem !important; }
+    body.easy-mode .text-sm { font-size: 1.06rem !important; }
+    body.easy-mode button, body.easy-mode select, body.easy-mode input { min-height: 46px; font-weight: 700; }
+    body.dark-mode { background-color: #0f172a; color: #f1f5f9; }
+    body.dark-mode header, body.dark-mode footer, body.dark-mode .bg-white, body.dark-mode .bg-white\/95 { background-color: #1e293b !important; color: #f1f5f9; border-color: #334155 !important; }
+    body.dark-mode .bg-slate-50, body.dark-mode .bg-slate-100 { background-color: #0f172a !important; color: #e2e8f0; border-color: #334155 !important; }
+    body.dark-mode .text-slate-900, body.dark-mode .text-slate-800 { color: #f8fafc !important; }
+    body.dark-mode .text-slate-700, body.dark-mode .text-slate-600 { color: #cbd5e1 !important; }
+    body.dark-mode .text-slate-500 { color: #94a3b8 !important; }
+    body.dark-mode .border-slate-200, body.dark-mode .border-slate-100 { border-color: #334155 !important; }
+    body.dark-mode input, body.dark-mode select, body.dark-mode textarea { background-color: #0f172a !important; color: #f8fafc !important; border-color: #475569 !important; }
+    body.dark-mode .tab-btn.active { background-color: #1e3a8a !important; color: #93c5fd !important; }
+    body.dark-mode .bg-blue-50, body.dark-mode .bg-indigo-50, body.dark-mode .bg-indigo-50\/80, body.dark-mode .bg-sky-50 { background-color: #172554 !important; color: #dbeafe !important; border-color: #1e40af !important; }
+    body.dark-mode .bg-emerald-50, body.dark-mode .bg-teal-50 { background-color: #064e3b !important; color: #d1fae5 !important; border-color: #047857 !important; }
+    body.dark-mode .bg-amber-50, body.dark-mode .bg-amber-100 { background-color: #451a03 !important; color: #fef3c7 !important; border-color: #92400e !important; }
+    body.dark-mode .bg-rose-50, body.dark-mode .bg-rose-100 { background-color: #4c0519 !important; color: #ffe4e6 !important; border-color: #9f1239 !important; }
+    body.dark-mode .text-blue-950, body.dark-mode .text-blue-900, body.dark-mode .text-blue-800, body.dark-mode .text-indigo-950, body.dark-mode .text-indigo-900 { color: #bfdbfe !important; }
+    body.dark-mode .text-emerald-950, body.dark-mode .text-emerald-900, body.dark-mode .text-emerald-800, body.dark-mode .text-teal-900, body.dark-mode .text-teal-800 { color: #a7f3d0 !important; }
+    body.dark-mode .text-amber-950, body.dark-mode .text-amber-900, body.dark-mode .text-amber-800 { color: #fde68a !important; }
+    body.dark-mode .text-rose-900, body.dark-mode .text-rose-800, body.dark-mode .text-rose-700 { color: #fecdd3 !important; }
+    body.dark-mode pre { background-color: #0f172a !important; color: #e2e8f0 !important; border-color: #334155 !important; }
+    body.dark-mode table, body.dark-mode thead, body.dark-mode tbody, body.dark-mode tr, body.dark-mode th, body.dark-mode td { border-color: #334155 !important; color: #e2e8f0 !important; }
+    body.dark-mode details, body.dark-mode summary { color: #e2e8f0 !important; }
+    body.dark-mode canvas { background-color: #0f172a !important; border: 1px solid #334155; }
+    body.dark-mode a.text-blue-700, body.dark-mode .text-blue-700 { color: #60a5fa !important; }
+    body.dark-mode .text-teal-700 { color: #5eead4 !important; }
+    .print-only { display: none; }
+    @media print {
+      .print-only { display: block !important; }
+      header, footer, nav, #toast, #why-modal, #tutorial-modal, #settings-modal, button, .no-print { display: none !important; }
+      body { background: #ffffff !important; color: #000000 !important; padding: 0 !important; }
+    }
+  

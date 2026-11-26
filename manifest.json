@@ -6,8 +6,8 @@
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f8fafc",
-  "theme_color": "#0f172a",
+  "background_color": "#f5f6fa",
+  "theme_color": "#0e1b3d",
   "icons": [
     {
       "src": "./icon-192.png",
@@ -33,5 +33,11 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "lang": "en-ZA",
+  "orientation": "portrait-primary",
+  "categories": [
+    "education",
+    "productivity"
   ]
 }

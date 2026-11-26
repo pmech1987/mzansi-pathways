@@ -13,3 +13,18 @@
 
 /data/*
   Cache-Control: public, max-age=300, stale-while-revalidate=86400
+
+/sw.js
+  Cache-Control: no-cache
+
+/index.html
+  Cache-Control: no-cache
+
+/guard.js
+  Cache-Control: no-cache
+
+/css/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/js/*
+  Cache-Control: public, max-age=0, must-revalidate

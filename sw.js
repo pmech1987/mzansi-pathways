@@ -1,6 +1,6 @@
-const CACHE = 'mzansi-pathways-v76';
+const CACHE = 'mzansi-pathways-v78';
 // CORE: the app cannot work offline without these. If one cannot be fetched the install fails and the old worker keeps running.
-const CORE = ['./', './index.html', './js/engine.js', './js/data.js', './js/i18n.js', './js/ocr.js', './js/catalogue.js', './js/catalogue_data.js'];
+const CORE = ['./', './index.html', './guard.js', './css/utilities.css', './css/legacy_inline.css', './css/mzansi_ui.css', './css/civic_mobile_a11y.css', './js/boot.js', './js/app.js', './js/home.js', './js/engine.js', './js/data.js', './js/i18n.js', './js/ocr.js', './js/catalogue.js', './js/catalogue_data.js'];
 // NICE: saved if reachable, never blocks the install (a missing icon or data file must not break offline mode for everyone).
 const NICE = ['./manifest.json', './icon-192.png', './icon-512.png', './data/index.json', './data/institutions.json', './data/careers.json', './data/bursaries.json', './data/events.json', './data/pset_national_registry.json'];
 const OPTIONAL = ['./vendor/tesseract/tesseract.min.js', './vendor/tesseract/worker.min.js', './vendor/tesseract/eng.traineddata.gz'];
@@ -51,6 +51,14 @@ self.addEventListener('fetch', e => {
       if (res && res.ok) { const clone = res.clone(); caches.open(CACHE).then(c => c.put(e.request, clone)).catch(() => {}); return res; }
       return caches.match(e.request).then(h => h || res);
     }).catch(() => caches.match(e.request).then(h => h || offlineJson())));
+    return;
+  }
+  if (u.origin === self.location.origin && /\.(css|js)$/.test(u.pathname)) {
+    // Code and styles: saved copy shows instantly, a fresh copy is fetched behind it (a new release arrives on the next visit).
+    e.respondWith(caches.open(CACHE).then(c => c.match(e.request).then(hit => {
+      const net = fetch(e.request).then(res => { if (res && res.ok) c.put(e.request, res.clone()).catch(() => {}); return res; }).catch(() => null);
+      return hit || net.then(r => r || new Response('', { status: 503 }));
+    })));
     return;
   }
   // Everything else: saved copy first. A failed request gets a clean error, never the home page pretending to be a script or image.
