@@ -8,3 +8,13 @@ img, canvas, svg { max-width: 100%; height: auto; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
+
+/* v84: skip link, visible focus, tap-highlight */
+.mz-skip{position:absolute;left:8px;top:-60px;z-index:100000;background:#0e1b3d;color:#fff;padding:10px 16px;border-radius:999px;font-weight:800;font-size:14px;text-decoration:none;transition:top .15s}
+.mz-skip:focus{top:8px;outline:3px solid #f2a516;outline-offset:2px}
+#app-main:focus{outline:none}
+:focus-visible{outline:3px solid #2563eb;outline-offset:2px}
+button,a,[role="button"]{-webkit-tap-highlight-color:rgba(37,99,235,.18)}
+
+/* v88: comfortable touch targets on phones and tablets */
+@media (pointer:coarse){#app-main button,#app-main select,#app-main a.px-3,#app-main a.px-4{min-height:40px}}

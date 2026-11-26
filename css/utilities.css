@@ -174,7 +174,7 @@ input,select,textarea{font:inherit}
 .mb-1{margin-bottom:0.25rem}
 .mb-4{margin-bottom:1rem}
 .min-h-\[44px\]{min-height:44px}
-.min-h-screen{min-height:100vh}
+.min-h-screen{min-height:100vh;min-height:100dvh}
 .min-w-0{min-width:0}
 .min-w-\[160px\]{min-width:160px}
 .min-w-\[200px\]{min-width:200px}

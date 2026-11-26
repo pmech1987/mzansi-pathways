@@ -101,3 +101,108 @@ body.dark-mode main .bg-white,body.dark-mode footer.bg-white{background:var(--ca
 /* clear tap feedback on phones */
 @media(hover:none){.mzh-card:active,.mzh-ghost:active{transform:scale(.98)}}
 @media print{#mz-home,#civic-trust-bar{display:none!important}}
+
+/* ---------- v79: qualification split + ATS check ---------- */
+.wq-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px;box-shadow:0 8px 24px rgb(14 27 61 / .06);color:var(--ink);display:grid;gap:12px}
+.wq-h{font-size:1.15rem;font-weight:900;letter-spacing:-.02em;margin:0}
+.wq-p,.wq-note{font-size:.85rem;color:var(--ink-2);margin:0;line-height:1.45}
+.wq-row{display:grid;gap:10px}@media(min-width:640px){.wq-row{grid-template-columns:1fr 1fr}}
+.wq-lab{display:grid;gap:5px;font-size:.78rem;font-weight:800}
+.wq-in{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font-size:.95rem;font-weight:500}
+.wq-chips{display:flex;flex-wrap:wrap;gap:8px}
+.wq-chip{min-height:44px;padding:0 14px;border-radius:999px;border:2px solid var(--line);background:var(--card);color:var(--ink);font-weight:800;font-size:.82rem;text-align:left}
+.wq-chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+body.dark-mode .wq-chip.on{background:var(--sun);color:var(--ink);border-color:var(--sun)}
+.wq-boards{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;align-items:center}
+.wq-boards a{color:var(--navy);font-weight:800;text-decoration:underline;min-height:32px;display:inline-flex;align-items:center}
+body.dark-mode .wq-boards a{color:#9db6ee}
+.wq-actions{display:flex;flex-wrap:wrap;gap:8px}
+.wq-btn{min-height:48px;padding:0 20px;border-radius:999px;background:var(--sun);color:var(--ink);font-weight:900;border:0}
+.wq-btn.ghost{background:var(--card);border:2px solid var(--line)}
+.wq-out:empty{display:none}
+.wq-score{font-size:2.6rem;font-weight:900;line-height:1}.wq-score small{font-size:1rem;color:var(--ink-2)}
+.wq-list{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:6px;font-size:.86rem}
+.wq-list li{display:flex;gap:8px;padding:8px 10px;border-radius:12px;background:var(--paper)}
+.wq-list li span{font-weight:900;flex:none;width:20px}
+.wq-list .ok span{color:#0f8a5f}.wq-list .no span{color:#c8374b}
+.wq-kw{margin-top:8px;font-size:.84rem;line-height:1.5}
+.wq-badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:800;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.wq-badge.r0{background:#e3f6ee;color:#0b6a49;border-color:#b6e3d0}
+.wq-badge.r1,.wq-badge.r2,.wq-badge.r3{background:#fdf1d8;color:#6b4300;border-color:#f0d9a0}
+.wq-badge.you{background:#e3f6ee;color:#0b6a49;border-color:#b6e3d0}
+.wq-badge.no{background:#fbe6e9;color:#8c2233;border-color:#f0b9c2}
+.wq-score.good{color:#0f8a5f}.wq-score.mid{color:#c77d0a}.wq-score.bad{color:#c8374b}
+
+/* ---------- Launcher, screen tabs, floating bar, More sheet ---------- */
+[hidden]{display:none!important}
+body:not(.mz-screen) #app-main{display:none}
+body.mz-screen #mz-home{display:none}
+body.mz-lock{overflow:hidden}
+.mz-brand{cursor:pointer}
+.mz-hd-more{display:none}
+@media(min-width:1024px){.mz-hd-more{display:inline-flex}}
+.mzh-lede{max-width:30rem}
+@media(max-width:959px){.mzh-ladder{display:none}.mzh-grid{gap:0}}
+.mzh-ask{margin-top:24px}
+.mzh-card{min-height:148px}
+@media(min-width:900px){.mzh-cards{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.mzh-card[data-k="marks"]{--t:#0e1b3d}.mzh-card[data-k="careers"]{--t:#6a3fa0}.mzh-card[data-k="vault"]{--t:#0b7285}.mzh-card[data-k="more"]{--t:#667089}
+/* tabs inside a screen */
+.mz-sub{position:sticky;top:64px;z-index:20;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:-16px -12px 14px;padding:10px 12px;background:rgb(245 246 250 / .94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+body.dark-mode .mz-sub{background:rgb(11 18 38 / .94)}
+.mz-sub::-webkit-scrollbar{display:none}
+.mz-sub button{flex:none;min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);font-size:.82rem;font-weight:800;white-space:nowrap}
+.mz-sub button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+@media(min-width:640px){.mz-sub{margin:-16px -24px 14px;padding:10px 24px}}
+/* floating bottom bar */
+.mz-dock{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:40;width:min(calc(100% - 20px),430px);display:grid;grid-template-columns:repeat(5,1fr);gap:2px;padding:6px;border-radius:26px;background:rgb(255 255 255 / .96);border:1px solid var(--line);box-shadow:0 10px 30px rgb(14 27 61 / .2);backdrop-filter:blur(10px)}
+body.dark-mode .mz-dock{background:rgb(20 29 56 / .96)}
+@media(min-width:1024px){.mz-dock{display:none}}
+.mz-d{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:52px;border-radius:20px;background:transparent;border:0;color:var(--ink-2);font-size:.68rem;font-weight:800}
+.mz-d svg{width:22px;height:22px}
+body:not(.mz-screen) .mz-d[data-home],body.mz-screen .mz-d.tab-btn.active{background:var(--ink)!important;color:#fff!important;border-radius:20px}
+.mz-d.tab-btn.active::before{display:none!important}
+body.mz-screen .mz-d.tab-btn:not(.active){background:transparent!important;color:var(--ink-2)!important}
+body:not(.mz-screen) .mz-d.tab-btn.active{background:transparent!important;color:var(--ink-2)!important}
+@media(max-width:1023px){body{padding-bottom:calc(86px + env(safe-area-inset-bottom,0px))}#toast{bottom:calc(92px + env(safe-area-inset-bottom,0px))!important}}
+/* More sheet */
+.mz-more{position:fixed;inset:0;z-index:60}
+.mz-more-back{position:absolute;inset:0;background:rgb(8 14 32 / .55)}
+.mz-more-sheet{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:min(100%,520px);max-height:88vh;overflow-y:auto;padding:16px 16px calc(20px + env(safe-area-inset-bottom,0px));background:var(--card);border-radius:26px 26px 0 0;box-shadow:0 -12px 40px rgb(8 14 32 / .3)}
+@media(min-width:640px){.mz-more-sheet{bottom:auto;top:72px;transform:translateX(-50%);border-radius:22px;max-height:calc(100vh - 100px);max-height:calc(100dvh - 100px)}}
+.mz-more-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.mz-more-head h2{font-size:1.15rem;font-weight:900;margin:0}
+.mz-more-head button{min-width:44px;min-height:44px;border-radius:12px;background:var(--paper);border:1px solid var(--line);font-weight:800;color:var(--ink)}
+.mz-more-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mz-more-grid button{min-height:56px;border-radius:14px;background:var(--paper);border:1px solid var(--line);font-weight:800;font-size:.85rem;color:var(--ink)}
+.mz-more-list{display:grid;gap:8px;margin-top:12px}
+.mz-more-list button{min-height:50px;padding:0 16px;border-radius:14px;background:var(--card);border:1px solid var(--line);text-align:left;font-weight:700;font-size:.92rem;color:var(--ink)}
+.mz-more-note{margin:16px 2px 8px;font-size:.78rem;line-height:1.5;color:var(--ink-2)}
+.mz-more-links{display:flex;flex-wrap:wrap;gap:6px 16px}
+.mz-more-links a{display:inline-flex;align-items:center;min-height:44px;font-size:.85rem;font-weight:700;color:var(--navy)}
+
+/* career picker: two columns instead of a 44-row stack on phones */
+@media(max-width:639px){#app-main [data-mzp="Explore"] > div.flex-wrap.gap-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}#app-main [data-mzp="Explore"] > div.flex-wrap.gap-2 > button{text-align:left;min-height:48px;line-height:1.2}}
+/* compact front door on phones */
+@media(max-width:639px){
+  #mz-home{padding-top:16px}
+  .mzh-title{font-size:1.9rem}
+  .mzh-lede{display:none}
+  .mzh-cta{margin-top:16px;width:100%;justify-content:center}
+  .mzh-ghost{width:100%}
+  .mzh-ask{margin:20px 0 10px;font-size:1.05rem}
+  .mzh-cards{gap:10px}
+  .mzh-card{min-height:0;padding:14px;gap:2px}
+  .mzh-card svg{width:38px;height:38px;padding:8px;margin-bottom:4px}
+  .mzh-card span{display:none}
+  .mzh-card strong{font-size:1rem}
+}
+/* Desktop: legacy_inline.css forces .hidden to display:none !important, which hid the top navigation on wide screens. */
+@media(min-width:1024px){nav[aria-label="Primary navigation"]{display:flex!important}}
+/* On the front door no screen is open, so no top tab should look selected */
+body:not(.mz-screen) nav[aria-label="Primary navigation"] .tab-btn.active{background:transparent!important;color:var(--ink-2)!important}
+.mz-hd-more{align-items:center}
+
+/* course cards: long notes and source text sit behind one tap */
+.mz-notes>summary{display:flex;align-items:center;min-height:36px;cursor:pointer;font-size:.72rem;font-weight:800;color:var(--navy)}
+.mz-notes[open]>summary{margin-bottom:2px}
