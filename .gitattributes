@@ -1,0 +1,18 @@
+# One line-ending standard for everyone: LF. The SHA-256 seals hash exact bytes, so CRLF would make every gate fail on Windows.
+* text=auto eol=lf
+*.py text eol=lf
+*.js text eol=lf
+*.html text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.sh text eol=lf
+# Windows batch files are the one exception: cmd.exe needs CRLF
+*.bat text eol=crlf
+# Never alter these
+*.png binary
+*.jpg binary
+*.ico binary
+*.gz binary
+*.zip binary
+*.bundle binary

@@ -14,6 +14,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
+    html, body { max-width: 100%; overflow-x: hidden; }
+    *, *::before, *::after { box-sizing: border-box; min-width: 0; }
+    img, canvas, video, svg { max-width: 100%; }
+    table { max-width: 100%; }
+    button, select, input:not([type=checkbox]):not([type=radio]) { min-height: 44px; }
+    .hidden { display: none !important; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: #f8fafc;
@@ -65,7 +71,7 @@
   <!-- Official-Grade Institutional Notice Bar -->
   <div id="civic-trust-bar" class="bg-slate-950 text-slate-300 text-[11px] border-b border-slate-800 px-3 sm:px-6 py-1.5">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-      <span><strong class="text-white">Independent South African Decision Engine</strong>· Verify 2027 admission rules via DHET, QCTO, SAQA &amp; NSFAS.</span>
+      <span><strong class="text-white">Independent South African Decision Engine</strong>· Verify <span class="mz-yr">2027</span> admission rules via DHET, QCTO, SAQA &amp; NSFAS.</span>
       <span class="text-slate-400">On-Device Privacy · Official CAS WhatsApp: <strong class="text-slate-200 font-mono">081 308 4196</strong></span>
     </div>
   </div>
@@ -105,7 +111,7 @@
     <!-- Print-Only Institutional Handout Header -->
   <div class="print-only max-w-7xl mx-auto px-4 pt-2 pb-3 border-b-2 border-slate-900 mb-4">
     <div class="text-lg font-extrabold text-slate-900">Mzansi Pathways — Independent Post-School Pathway Summary</div>
-    <div class="text-xs text-slate-600">Verify final 2027 admission rules directly with DHET, QCTO, SAQA, NSFAS &amp; official institutions · Official CAS WhatsApp: 081 308 4196</div>
+    <div class="text-xs text-slate-600">Verify final <span class="mz-yr">2027</span> admission rules directly with DHET, QCTO, SAQA, NSFAS &amp; official institutions · Official CAS WhatsApp: 081 308 4196</div>
   </div>
 
   <main id="app-main" class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4"></main>
@@ -278,12 +284,15 @@
         <p class="text-emerald-900">Lock your Results, Plan A/B/C, and Evidence Vault with your own passphrase (PBKDF2 120,000 rounds + AES-GCM) to move to another phone without needing an account.</p>
         <input id="enc-pass" type="password" placeholder="Enter a strong passphrase (min 8 characters)" class="w-full px-3 py-2 rounded-xl bg-white border border-emerald-300 text-xs font-semibold" />
         <div id="enc-pass-strength" class="text-[11px] text-slate-600">Enter at least 8 characters to lock/unlock backups</div>
+        <div id="enc-last-backup" class="text-[11px] font-semibold text-slate-700"></div>
+        <p class="text-[11px] text-amber-900">Write your passphrase down. If you forget it, nobody can open the backup, not even us. Keep the backup file in two places.</p>
         <div class="flex flex-wrap gap-2">
           <button type="button" id="btn-export-enc" class="flex-1 py-2 rounded-xl bg-emerald-700 text-white font-extrabold hover:bg-emerald-800">Download Encrypted Backup</button>
           <label class="flex-1 text-center py-2 rounded-xl bg-white text-emerald-900 border border-emerald-300 font-extrabold cursor-pointer hover:bg-emerald-100">
              Unlock on New Phone
             <input id="in-import-enc" type="file" accept=".mzansi,.json" class="hidden" />
           </label>
+          <button type="button" id="btn-undo-restore" class="hidden flex-1 py-2 rounded-xl bg-white text-rose-800 border border-rose-300 font-extrabold hover:bg-rose-50">Undo restore</button>
         </div>
       </div>
 
@@ -306,8 +315,15 @@
   </div>
 
 
+  <script src="./js/engine.js"></script>
+  <script src="./js/ocr.js"></script>
+  <script src="./js/data.js"></script>
+  <script src="./js/i18n.js"></script>
+  <script>window.__ENGINE_PARSE = window.parseStatementText; window.__ENG = { evaluateNsc: window.evaluateNsc, evaluateProgramme: window.evaluateProgramme };</script>
   <script>
     const STORAGE_KEY = 'mzansi_pathways_v2_state';
+    const PREV_KEY = STORAGE_KEY + '_prev', CORRUPT_KEY = STORAGE_KEY + '_corrupt', UNDO_KEY = STORAGE_KEY + '_before_restore';
+    let saveFailed = false, lastPrevAt = 0;
 
     const CAREERS = [
       {
@@ -466,6 +482,7 @@
       nearHomeOnly: false,
       routeFilter: 'All',
       routeSearch: '',
+      instQ: '', instProv: '', instType: '', instOpen: false,
       compareRouteIds: ['up_bsc_cs', 'ump_dip_ict', 'tut_hc_it'],
       starDraft: '',
       docChecklist: {
@@ -529,7 +546,17 @@
     let interviewIdx = 0;
 
     try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+      // Failsafe load: a damaged saved profile is quarantined (never silently overwritten) and the last good copy is used instead.
+      const raw = localStorage.getItem(STORAGE_KEY);
+      let saved = null;
+      if (raw) {
+        try { saved = JSON.parse(raw); } catch (e) { saved = null; }
+        if (!saved || typeof saved !== 'object' || Array.isArray(saved)) {
+          saved = null;
+          try { localStorage.setItem(CORRUPT_KEY, raw); } catch (e) {}
+          try { const prev = JSON.parse(localStorage.getItem(PREV_KEY) || 'null'); if (prev && typeof prev === 'object' && !Array.isArray(prev)) { saved = prev; window._mzRecovered = true; } } catch (e) {}
+        }
+      }
       if (saved && typeof saved === 'object') state = { ...state, ...saved, plans: { ...state.plans, ...(saved.plans || {}) } };
     } catch (e) {}
 
@@ -572,7 +599,7 @@
       ['Consumer Studies', ['consumer studies']]
     ];
 
-    function parseStatementText(rawText) {
+    function legacyParseStatementText(rawText) {
       if (typeof rawText !== 'string' || !rawText.trim()) return [];
       const lines = rawText.split(/\r?\n/).map(l =>l.trim()).filter(Boolean).slice(0, 80);
       const found = {};
@@ -612,6 +639,10 @@
         found[matched] = { name: matched, mark, isHomeLanguage: isHL, isLifeOrientation: isLO, confidence, include: true };
       }
       return Object.values(found);
+    }
+
+    function parseStatementText(rawText) {
+      return (typeof window.__ENGINE_PARSE === "function") ? window.__ENGINE_PARSE(rawText) : legacyParseStatementText(rawText);
     }
 
     function getDeadlineBadge(deadlineStr) {
@@ -819,7 +850,9 @@
     async function loadLiveOpenJobs() {
       try {
         if (window.location.protocol !== 'https:' && window.location.protocol !== 'http:') return;
-        const resp = await fetch('./data/open_jobs_live.json', { cache: 'no-store' });
+        const ctl = typeof AbortController === 'function' ? new AbortController() : null;
+        const tm = ctl ? setTimeout(() => ctl.abort(), 10000) : null;
+        let resp; try { resp = await fetch('./data/open_jobs_live.json', { cache: 'no-store', signal: ctl ? ctl.signal : undefined }); } finally { if (tm) clearTimeout(tm); }
         if (!resp.ok) return;
         const payload = await resp.json();
         const valid = filterLegalOpenJobs(payload && payload.jobs ? payload.jobs : []);
@@ -993,9 +1026,9 @@
     }
 
     function getWhatIfDelta() {
-      const realMatches = SAMPLE_PROGRAMMES.filter(p => { const st = evaluateProgramme(state.subjects, p).status; return st === 'Strong Match' || st === 'Conditional'; }).length;
+      const realMatches = SAMPLE_PROGRAMMES.filter(p => { const st = evaluateProgramme(state.subjects, p).status; return st === 'Meets Minimums' || st === 'Conditional'; }).length;
       const simSubs = state.subjects.map(s => s.name === (state.whatIfSubject || 'Mathematics') ? { ...s, mark: Number(state.whatIfMaths) || 0 } : s);
-      const simMatches = SAMPLE_PROGRAMMES.filter(p => { const st = evaluateProgramme(simSubs, p).status; return st === 'Strong Match' || st === 'Conditional'; }).length;
+      const simMatches = SAMPLE_PROGRAMMES.filter(p => { const st = evaluateProgramme(simSubs, p).status; return st === 'Meets Minimums' || st === 'Conditional'; }).length;
       const diff = simMatches - realMatches;
       return { realMatches, simMatches, diff };
     }
@@ -1062,12 +1095,33 @@
     }
     repairState(state);
 
-    function saveState() { try { repairState(state); localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {} }
+    function syncYearLabels() { try { document.querySelectorAll('.mz-yr').forEach(e => { e.textContent = String(state.intakeYear || MZDATA.defaultYear()); }); } catch (e) {} }
+    // Failsafe save: keeps the last good copy (at most every 30 s), retries once after freeing the extra copies, and TELLS the learner if saving fails.
+    function saveState() {
+      try {
+        repairState(state);
+        const json = JSON.stringify(state);
+        const write = () => {
+          const old = localStorage.getItem(STORAGE_KEY);
+          if (old && old !== json && Date.now() - lastPrevAt > 30000) {
+            try { JSON.parse(old); localStorage.setItem(PREV_KEY, old); lastPrevAt = Date.now(); } catch (e) {}
+          }
+          localStorage.setItem(STORAGE_KEY, json);
+        };
+        try { write(); }
+        catch (e) { localStorage.removeItem(PREV_KEY); localStorage.removeItem(CORRUPT_KEY); write(); }
+        saveFailed = false;
+      } catch (e) {
+        if (!saveFailed) { saveFailed = true; showToast('Could not save on this phone (storage full or blocked). Open Sync & Backup and download a backup so you do not lose your work.', 7000); }
+      }
+    }
+    ['pagehide', 'visibilitychange'].forEach(ev => window.addEventListener(ev, () => { if (ev === 'pagehide' || document.visibilityState === 'hidden') saveState(); }));
     function escapeHtml(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-    function showToast(msg) {
+    function showToast(msg, ms) {
       const t = document.getElementById('toast');
+      if (!t) return;
       t.textContent = msg; t.classList.remove('hidden');
-      clearTimeout(window._pt2); window._pt2 = setTimeout(() =>t.classList.add('hidden'), 2600);
+      clearTimeout(window._pt2); window._pt2 = setTimeout(() =>t.classList.add('hidden'), ms || 2600);
     }
 
     function markToLevel(m) {
@@ -1082,7 +1136,7 @@
       return state.subjects.map(s =>s.name === targetName ? { ...s, mark: Number(state.whatIfMaths) || 0 } : s);
     }
 
-    function evaluateNsc(subs) {
+    function legacyEvaluateNsc(subs) {
       const hl = subs.filter(s =>s.isHomeLanguage);
       const nonLo = subs.filter(s =>!s.isLifeOrientation);
       const aps = nonLo.slice(0, 6).reduce((a, s) =>a + markToLevel(s.mark), 0);
@@ -1097,9 +1151,20 @@
       return { passLevel, aps };
     }
 
+    function evaluateNsc(subs) { return window.__ENG.evaluateNsc(subs); }
+    function evaluateProgramme(subs, prog) {
+      // Rules from another intake year can never show green: treated as unverified for the chosen year.
+      if (prog.intakeYear && state.intakeYear && prog.intakeYear !== state.intakeYear) {
+        prog = Object.assign({}, prog, { verificationStatus: 'pending_review' });
+        const r = window.__ENG.evaluateProgramme(subs, prog);
+        r.reasons = (r.reasons || []).concat(['These rules are for ' + prog.intakeYear + ', not ' + state.intakeYear + '. Rules change every year.']);
+        return r;
+      }
+      return window.__ENG.evaluateProgramme(subs, prog);
+    }
     const PASS_RANK = { 'Did Not Meet Minimum NSC Pass': 0, 'Higher Certificate Pass': 1, 'Diploma Pass': 2, "Bachelor's Pass": 3 };
 
-    function evaluateProgramme(subs, prog) {
+    function legacyEvaluateProgramme(subs, prog) {
       if (!prog.verifiedRules) return { status: 'Needs Verification', badge: 'bg-slate-100 text-slate-700 border-slate-300', reasons: ['Requirements must be confirmed directly with the accredited provider.'], missing: [] };
       const nsc = evaluateNsc(subs);
       const byName = {};
@@ -1112,8 +1177,8 @@
         if ((PASS_RANK[prog.minPassLevel] || 0) - (PASS_RANK[nsc.passLevel] || 0) >1) nearGap = false;
       }
       if (prog.minAps >0) {
-        if (nsc.aps >= prog.minAps) reasons.push(`APS ${nsc.aps} ≥ minimum ${prog.minAps}`);
-        else { const g = prog.minAps - nsc.aps; missing.push(`APS ${nsc.aps} is ${g} pt(s) below minimum ${prog.minAps}`); if (g >4) nearGap = false; }
+        if (nsc.aps >= prog.minAps) reasons.push(`APS ${nsc.aps ?? 'n/a'} ≥ minimum ${prog.minAps}`);
+        else { const g = prog.minAps - nsc.aps; missing.push(`APS ${nsc.aps ?? 'n/a'} is ${g} pt(s) below minimum ${prog.minAps}`); if (g >4) nearGap = false; }
       }
       (prog.subjectRequirements || []).forEach(req =>{
         let best = null;
@@ -1126,14 +1191,14 @@
 
       if (!missing.length) {
         if (prog.requiresSelection) return { status: 'Conditional', badge: 'bg-sky-100 text-sky-900 border-sky-300', reasons: [...reasons, 'Subject to institutional selection & space'], missing: [] };
-        return { status: 'Strong Match', badge: 'bg-emerald-100 text-emerald-900 border-emerald-300', reasons, missing: [] };
+        return { status: 'Meets Minimums', badge: 'bg-emerald-100 text-emerald-900 border-emerald-300', reasons, missing: [] };
       }
       if (nearGap && missing.length <= 2) return { status: 'Near Match', badge: 'bg-amber-100 text-amber-950 border-amber-300', reasons, missing };
       return { status: 'Not Currently Eligible', badge: 'bg-rose-100 text-rose-900 border-rose-300', reasons, missing };
     }
 
     function findBottlenecks(subs) {
-      const okSet = new Set(['Strong Match', 'Conditional']);
+      const okSet = new Set(['Meets Minimums', 'Conditional']);
       const base = SAMPLE_PROGRAMMES.filter(p =>okSet.has(evaluateProgramme(subs, p).status)).length;
       const out = [];
       subs.forEach((s, idx) =>{
@@ -1153,7 +1218,7 @@
       const ev = evaluateProgramme(subs, p);
       const alts = SAMPLE_PROGRAMMES.filter(x =>x.id !== p.id && x.careerFamily === p.careerFamily)
         .map(x =>({ x, e: evaluateProgramme(subs, x) }))
-        .filter(o =>o.e.status === 'Strong Match' || o.e.status === 'Conditional' || o.e.status === 'Near Match');
+        .filter(o =>o.e.status === 'Meets Minimums' || o.e.status === 'Conditional' || o.e.status === 'Near Match');
       document.getElementById('why-title').textContent = `${p.name} — ${p.institution}`;
       document.getElementById('why-body').innerHTML = `
         <div class="flex flex-wrap gap-1.5">
@@ -1164,6 +1229,7 @@
           <div class="font-extrabold text-slate-900">Deterministic Rule Breakdown:</div>
           ${ev.reasons.map(r =>`<div class="text-emerald-800 font-semibold">✓ ${escapeHtml(r)}</div>`).join('')}
           ${ev.missing.map(m =>`<div class="text-rose-800 font-semibold">✗ ${escapeHtml(m)}</div>`).join('')}
+          ${prevYearNote(p)}
           <div class="text-[11px] text-slate-500 pt-1"><strong>Source:</strong>${escapeHtml(p.sourceTier)} · <strong>Est. Cost:</strong>${escapeHtml(p.estAnnualCost)}</div>
         </div>
         ${ev.missing.length ? `
@@ -1181,8 +1247,18 @@
         </div>
       `;
       const wb = document.getElementById('why-body');
-      if (wb) wb.insertAdjacentHTML('beforeend', '<div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-[11px] space-y-1"><div class="font-extrabold text-slate-900">Pre-Application Verification Checklist</div><ul class="list-disc pl-4 text-slate-700 space-y-0.5"><li>Confirm 2027 prospectus APS &amp; subject minimums on the official institution site.</li><li>Verify campus/site accreditation on DHET, QCTO, or SAQA before paying any registration fee.</li><li>Check NSFAS / SETA funding and application closing dates early.</li></ul></div>');
+      if (wb) wb.insertAdjacentHTML('beforeend', '<div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-[11px] space-y-1"><div class="font-extrabold text-slate-900">Pre-Application Verification Checklist</div><ul class="list-disc pl-4 text-slate-700 space-y-0.5"><li>Confirm ' + (p.intakeYear || state.intakeYear) + ' prospectus APS &amp; subject minimums on the official institution site.</li><li>Verify campus/site accreditation on DHET, QCTO, or SAQA before paying any registration fee.</li><li>Check NSFAS / SETA funding and application closing dates early.</li></ul></div>');
             document.getElementById('why-modal').classList.remove('hidden');
+    }
+
+    // Compares a record with the same programme in the previous intake year. Information only: never changes eligibility.
+    function prevYearNote(p) {
+      if (!p.baseId || !p.intakeYear) return '';
+      const q = SAMPLE_PROGRAMMES.find(x => x.baseId === p.baseId && x.intakeYear === p.intakeYear - 1);
+      if (!q) return '';
+      const same = q.minAps === p.minAps && JSON.stringify(q.subjectRequirements) === JSON.stringify(p.subjectRequirements);
+      const note = q.verificationStatus === 'verified' ? '' : ' (that record was not fully verified)';
+      return `<div class="text-[11px] text-slate-700 pt-1"><strong>Compared with ${q.intakeYear}:</strong> ${same ? 'APS and subject minimums are the same' : 'APS or subject minimums changed (minimum APS was ' + escapeHtml(q.minAps) + ', now ' + escapeHtml(p.minAps) + ')'}${note}. Always confirm on the official prospectus.</div>`;
     }
 
     function getGreeting() {
@@ -1210,7 +1286,7 @@
 
     function speakPathwaysSummary() {
       const nsc = evaluateNsc(getActiveSubjects());
-      safeSpeech(`${getGreeting()}! Your current summary is ${nsc.passLevel} with an APS of ${nsc.aps} excluding Life Orientation. Open Careers or All Routes to compare University, TVET, and Workplace options.`);
+      safeSpeech(`${getGreeting()}! Your current summary is ${nsc.passLevel} with an APS of ${nsc.aps ?? 'n/a'} excluding Life Orientation. Open Careers or All Routes to compare University, TVET, and Workplace options.`);
     }
 
     function getHumanCheckIn() {
@@ -1248,7 +1324,7 @@
       const pB = SAMPLE_PROGRAMMES.find(x =>x.id === state.plans.B);
       const pC = SAMPLE_PROGRAMMES.find(x =>x.id === state.plans.C);
       return [
-        `Hi family — here is my realistic post-school plan based on my ${nsc.passLevel} (APS ${nsc.aps}, excl. LO):`,
+        `Hi family — here is my realistic post-school plan based on my ${nsc.passLevel} (APS ${nsc.aps ?? 'n/a'}, excl. LO):`,
         pA ? `• Plan A (Reach): ${pA.name} at ${pA.institution} (${pA.estAnnualCost}).` : '',
         pB ? `• Plan B (Safe In-Province): ${pB.name} at ${pB.institution} (${pB.estAnnualCost}).` : '',
         pC ? `• Plan C (Near-Home / TVET Backup): ${pC.name} at ${pC.institution} (${pC.estAnnualCost}).` : '',
@@ -1276,7 +1352,8 @@
     }
 
     function wipeLocalProfile() {
-      try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+      try { [STORAGE_KEY, PREV_KEY, CORRUPT_KEY, UNDO_KEY].forEach(k => localStorage.removeItem(k)); } catch (e) {}  // every saved copy goes, not just the main one
+      state.lastBackupAt = '';
       state.subjects = DEFAULT_SUBJECTS.map(x =>({ ...x }));
       state.evidenceVault = [];
       state.cvName = ''; state.cvPhone = ''; state.cvEmail = ''; state.starDraft = '';
@@ -1296,7 +1373,7 @@
       const docsDone = Object.values(state.docChecklist || {}).filter(Boolean).length;
       const docsTot = Object.keys(state.docChecklist || {}).length;
       if (docsDone < docsTot) return { title: `Application documents ${docsDone}/${docsTot} ready`, desc: 'Check off your Statement of Results, Proof of Residence, and Z83/CV before deadlines close.', tab: 'plan', btn: 'Open Plan A/B/C & Docs →' };
-      return { title: `Your ${nsc.passLevel} (APS ${nsc.aps}) is ready`, desc: 'Compare your Plan A, Plan B, and Plan C side-by-side and test affordability.', tab: 'plan', btn: 'Review Plan A/B/C →' };
+      return { title: `Your ${nsc.passLevel} (APS ${nsc.aps ?? 'n/a'}) is ready`, desc: 'Compare your Plan A, Plan B, and Plan C side-by-side and test affordability.', tab: 'plan', btn: 'Review Plan A/B/C →' };
     }
 
     function buildFamilyDossier() {
@@ -1310,7 +1387,7 @@
         return p ? `Plan ${k} [${st}]: ${p.name} @ ${p.institution} (${p.route}) | ${p.estAnnualCost}` : `Plan ${k}: Not selected`;
       }).join('\n');
       const docsTxt = Object.entries(state.docChecklist || {}).map(([k, v]) =>`${v ? '[x]' : '[ ]'} ${k}`).join('\n');
-      return `MZANSI PATHWAYS — FAMILY STUDY & CAREER DOSSIER\nProvince: ${state.province} | Stage: ${state.gradeStage}\nNSC Summary: ${nsc.passLevel} (APS ${nsc.aps}, excl. LO)\n\nPLAN A / B / C\n${plansTxt}\n\nAFFORDABILITY ESTIMATE\nOption A Net/yr: R${netA.toLocaleString()}\nOption C Net/yr: R${netC.toLocaleString()}\n\nDOCUMENT READINESS\n${docsTxt}\n\nOfficial CAS WhatsApp (Gov Service): 081 308 4196`;
+      return `MZANSI PATHWAYS — FAMILY STUDY & CAREER DOSSIER\nProvince: ${state.province} | Stage: ${state.gradeStage}\nNSC Summary: ${nsc.passLevel} (APS ${nsc.aps ?? 'n/a'}, excl. LO)\n\nPLAN A / B / C\n${plansTxt}\n\nAFFORDABILITY ESTIMATE\nOption A Net/yr: R${netA.toLocaleString()}\nOption C Net/yr: R${netC.toLocaleString()}\n\nDOCUMENT READINESS\n${docsTxt}\n\nOfficial CAS WhatsApp (Gov Service): 081 308 4196`;
     }
 
     function applyModes() {
@@ -1355,7 +1432,7 @@
                 <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">${state.whatIfActive ? 'Hypothetical What-If' : 'Confirmed NSC Summary'}</div>
                 <span class="px-2 py-0.5 rounded bg-emerald-900/60 text-emerald-300 border border-emerald-700/50 text-[10px] font-bold">Readiness ${getReadinessRing()}%</span>
               </div>
-              <div class="text-2xl font-extrabold tracking-tight text-white">APS ${nsc.aps} <span class="text-xs font-medium text-slate-400">(excl. LO)</span></div>
+              <div class="text-2xl font-extrabold tracking-tight text-white">APS ${nsc.aps ?? 'n/a'} <span class="text-xs font-medium text-slate-400">(excl. LO)</span></div>
               <div class="text-xs font-semibold text-emerald-300">${escapeHtml(nsc.passLevel)}</div>
               <button type="button" id="speak-summary-btn" class="mt-1 w-full py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-100 text-[11px] font-bold border border-slate-600">Read Summary Aloud</button>
             </div>
@@ -1363,7 +1440,7 @@
 
           <!-- Live Quick-Route Summary Chips -->
           ${(() =>{
-            const strongN = SAMPLE_PROGRAMMES.filter(p =>{ const s = evaluateProgramme(subs, p).status; return s === 'Strong Match' || s === 'Conditional'; }).length;
+            const strongN = SAMPLE_PROGRAMMES.filter(p =>{ const s = evaluateProgramme(subs, p).status; return s === 'Meets Minimums' || s === 'Conditional'; }).length;
             const noUniN = SAMPLE_PROGRAMMES.filter(p =>!p.isUniversity).length;
             const docsDone = Object.values(state.docChecklist || {}).filter(Boolean).length;
             const docsTot = Object.keys(state.docChecklist || {}).length;
@@ -1434,8 +1511,12 @@
                   </div>
                   <div class="flex flex-wrap items-center gap-2">
                     <label class="px-3 py-2 rounded-xl bg-indigo-700 text-white font-extrabold cursor-pointer hover:bg-indigo-800">
-                       Choose / Snap Photo
-                      <input id="scan-image-input" type="file" accept="image/*" capture="environment" class="hidden" />
+                       Choose from Gallery / Files
+                      <input id="scan-image-input" type="file" accept="image/*" class="hidden" />
+                    </label>
+                    <label class="px-3 py-2 rounded-xl bg-slate-800 text-white font-extrabold cursor-pointer hover:bg-slate-900 min-h-[44px]">
+                      Take Photo
+                      <input id="scan-camera-input" type="file" accept="image/*" capture="environment" class="hidden" />
                     </label>
                     <button type="button" id="scan-rotate-btn" class="px-2.5 py-2 rounded-xl bg-white text-slate-800 border border-slate-200 font-bold">↻ Rotate 90°</button>
                     <button type="button" id="scan-contrast-btn" class="px-2.5 py-2 rounded-xl bg-white text-slate-800 border border-slate-200 font-bold">Boost Contrast</button>
@@ -1446,6 +1527,7 @@
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
                     <div class="bg-white rounded-xl p-2 border border-indigo-200 text-center">
                       <canvas id="scan-canvas" class="max-w-full h-auto ${state.scanZoom ? 'max-h-[460px]' : 'max-h-64'} mx-auto rounded-lg bg-slate-100"></canvas>
+                      <div id="ocr-progress" role="status" aria-live="polite" class="text-[11px] font-bold text-indigo-800"></div>
                       <div id="scan-canvas-status" class="text-[11px] text-slate-500 mt-1">No photo loaded yet — upload a report card photo or paste text on the right.</div>
                     </div>
                     <div class="space-y-2">
@@ -1469,7 +1551,7 @@
                           <div class="grid grid-cols-12 gap-2 items-center p-1.5 rounded-lg bg-slate-50 border border-slate-200">
                             <div class="col-span-1 text-center"><input type="checkbox" data-scan-inc="${idx}" ${sp.include !== false ? 'checked' : ''} aria-label="Include subject" class="w-4 h-4 accent-emerald-700" /></div>
                             <div class="col-span-6 font-bold text-slate-800">${escapeHtml(sp.name)}</div>
-                            <div class="col-span-3"><input type="number" min="0" max="100" data-scan-mark="${idx}" value="${sp.mark}" aria-label="Detected mark" class="w-full px-2 py-1 rounded bg-white border border-slate-300 text-center font-extrabold" /></div>
+                            <div class="col-span-3"><input type="number" min="0" max="100" data-scan-mark="${idx}" value="${sp.mark ?? ''}" placeholder="type mark" aria-label="Detected mark" class="w-full px-2 py-1 rounded bg-white border border-slate-300 text-center font-extrabold" /></div>
                             <div class="col-span-2 text-center"><span class="px-1.5 py-0.5 rounded text-[10px] font-black ${sp.confidence === 'high' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-900'}">${sp.confidence === 'high' ? 'High' : 'Review'}</span></div>
                           </div>
                         `).join('')}
@@ -1577,7 +1659,7 @@
                 <p class="text-xs text-slate-600">Filter by sector and pick a career to inspect real job duties, progression ladders, and every eligible South African route.</p>
               </div>
               <select id="career-sector-filter" aria-label="Filter careers by sector" class="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-300 text-xs font-bold text-slate-800">
-                ${[['all', 'All Sectors'], ['tech', 'Tech & IT'], ['artisan', 'Artisan & Mining'], ['admin', 'Public Admin & Office']].map(([k, l]) => `<option value="${k}" ${(state.careerSector || 'all') === k ? 'selected' : ''}>${l}</option>`).join('')}
+                ${[['all', 'All Sectors']].concat([...new Set(CAREERS.map(c => c.family))].map(f => [f, MZDATA.state.familyLabels[f] || f])).map(([k, l]) => `<option value="${k}" ${(state.careerSector || 'all') === k ? 'selected' : ''}>${l}</option>`).join('')}
               </select>
             </div>
             <div class="flex flex-wrap gap-2">
@@ -1639,10 +1721,55 @@
       `;
     }
 
-    function renderStudy() {
+    function renderFunding() {
+      const b = MZDATA.state.bursaries || [];
+      if (!b.length) return '';
+      return `<details class="mt-4 bg-white rounded-3xl p-4 border border-slate-200 shadow-sm"><summary class="font-extrabold text-sm cursor-pointer min-h-[44px] flex items-center">Funding &amp; bursaries (${b.length})</summary><div class="space-y-2 mt-2 text-xs">${b.map(x => `<div class="p-3 rounded-xl bg-slate-50 border border-slate-200"><div class="font-extrabold">${escapeHtml(x.name)} <span class="text-[10px] font-bold text-slate-500">${escapeHtml(x.type)}</span></div><div>${escapeHtml(x.summary)}</div><div class="text-slate-600">${escapeHtml(x.note)}</div></div>`).join('')}<div class="text-[11px] font-bold text-amber-900">Amounts, criteria and deadlines are not shown until checked against the funder's official site. Never pay to apply.</div></div></details>`;
+    }
+    function renderInstitutions() {
+      const all = MZDATA.state.institutions || [];
+      if (!all.length) return '';
+      const yr = state.intakeYear;
+      const q = (state.instQ || '').trim().toLowerCase(), fp = state.instProv || '', ft = state.instType || '';
+      const ins = all.filter(i => (!fp || i.province === fp) && (!ft || i.type === ft) && (!q || (i.name + ' ' + (i.short || '') + ' ' + i.province + ' ' + i.type).toLowerCase().includes(q)));
+      const years = MZDATA.yearChoices();
+      const cov = years.map(y => { const ps = SAMPLE_PROGRAMMES.filter(p => p.intakeYear === y); return { y, n: ps.length, v: ps.filter(p => p.verificationStatus === 'verified').length }; });
+      const covHtml = `<div class="p-2 rounded-xl bg-slate-50 border border-slate-200 text-[11px]"><div class="font-extrabold text-slate-700">Programme records by intake year</div><div class="flex flex-wrap gap-1.5 pt-1">${cov.map(c => `<button type="button" data-year-jump="${c.y}" class="px-2 py-1 rounded-lg border ${c.y === yr ? 'bg-slate-900 text-white border-slate-900' : 'bg-white border-slate-300'} font-bold">${c.y}: ${c.n} loaded, ${c.v} verified</button>`).join('')}</div></div>`;
+      const card = i => {
+        const progs = SAMPLE_PROGRAMMES.filter(p => p.institution.indexOf(i.name) === 0);
+        const thisYr = progs.filter(p => p.intakeYear === yr);
+        const ver = thisYr.filter(p => p.verificationStatus === 'verified').length;
+        const others = [...new Set(progs.filter(p => p.intakeYear && p.intakeYear !== yr).map(p => p.intakeYear))].sort();
+        const aps = i.type === 'TVET' ? escapeHtml(i.apsNote || 'Use the college\'s own entry rules.')
+          : i.apsMethod ? `APS method loaded: ${escapeHtml(i.apsMethod.replace(/_/g, ' '))}. Re-checked each year.` : 'This institution uses its own APS table. Use its official calculator.';
+        const draft = i.listStatus === 'draft_unchecked' ? '<div class="text-[11px] font-bold text-amber-900 bg-amber-50 border border-amber-200 rounded-lg p-1.5">Draft list entry: name and province not yet checked against the official DHET list. Confirm on the DHET site before relying on it.</div>' : '';
+        const link = i.officialUrl ? `<a href="${escapeHtml(i.officialUrl)}" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-xl bg-slate-900 text-white font-bold min-h-[44px] inline-flex items-center">Official website</a>`
+          : `<a href="https://www.dhet.gov.za/" target="_blank" rel="noopener noreferrer" class="px-3 py-2 rounded-xl bg-slate-900 text-white font-bold min-h-[44px] inline-flex items-center">Find on DHET site</a>`;
+        const key = i.type === 'TVET' ? i.name : i.short;
+        return `<details class="rounded-xl bg-slate-50 border border-slate-200 p-2"><summary class="font-extrabold min-h-[44px] flex items-center cursor-pointer">${escapeHtml(i.name)} <span class="ml-2 text-[10px] font-bold text-slate-500">${escapeHtml(i.short)} · ${escapeHtml(i.province)}</span></summary>
+          <div class="space-y-1 pt-1 text-xs"><div><strong>Type:</strong> ${escapeHtml(i.type)}</div>${draft}<div>${aps}</div>
+          <div><strong>${yr} programmes loaded:</strong> ${thisYr.length} (${ver} fully verified)${thisYr.length ? '' : ' - no checked rules yet, confirm with the institution'}</div>
+          ${others.length ? `<div class="text-slate-600">Other years loaded: ${others.join(', ')}. Rules are for that year only.</div>` : ''}
+          <div class="flex flex-wrap gap-2 pt-1">${link}
+          <button type="button" data-inst-search="${escapeHtml(key)}" class="px-3 py-2 rounded-xl bg-white border border-slate-300 font-bold min-h-[44px]">See its programmes</button></div>
+          <div class="text-[11px] text-slate-500">Admission is decided by the institution. Found a mistake? Tell the app owner (see CONTRIBUTING.md).</div></div></details>`;
+      };
+      const groups = [...new Set(ins.map(i => i.type))];
+      const types = [...new Set(all.map(i => i.type))];
+      const selCls = 'px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold';
+      const filters = `<div class="flex flex-wrap gap-2"><input id="inst-search" type="text" value="${escapeHtml(state.instQ || '')}" aria-label="Search institutions" placeholder="Search name, province, type..." class="flex-1 min-w-[160px] px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold" />
+        <select id="inst-prov" aria-label="Institution province" class="${selCls}"><option value="">All provinces</option>${MZDATA.PROVINCES.map(v => `<option value="${v}" ${fp === v ? 'selected' : ''}>${v}</option>`).join('')}</select>
+        <select id="inst-type" aria-label="Institution type" class="${selCls}"><option value="">All types</option>${types.map(v => `<option value="${escapeHtml(v)}" ${ft === v ? 'selected' : ''}>${escapeHtml(v)}</option>`).join('')}</select></div>
+        <div class="text-[11px] text-slate-500">Showing ${ins.length} of ${all.length}</div>`;
+      return `<details id="inst-panel" ${state.instOpen ? 'open' : ''} class="mt-4 bg-white rounded-3xl p-4 border border-slate-200 shadow-sm"><summary class="font-extrabold text-sm cursor-pointer min-h-[44px] flex items-center"><span>Institutions</span>&nbsp;(${all.length})</summary><div class="space-y-2 mt-2">${covHtml}${filters}${groups.map(g => `<div class="text-[11px] font-extrabold text-slate-500 uppercase pt-1">${escapeHtml(g)}</div>${ins.filter(i => i.type === g).map(card).join('')}`).join('') || '<div class="text-xs text-slate-500">No institution matches. Clear the search or filters.</div>'}<div class="text-[11px] text-slate-500">Private colleges and SETAs are added once checked against official lists.</div></div></details>`;
+    }
+    function renderStudy() { return renderStudyCore() + renderInstitutions() + renderFunding(); }
+    function renderStudyCore() {
       const subs = getActiveSubjects();
       const rq = (state.routeSearch || '').trim().toLowerCase();
-      const list = SAMPLE_PROGRAMMES.filter(p =>{
+      let list = SAMPLE_PROGRAMMES.filter(p =>{
+        if (p.intakeYear && p.intakeYear !== state.intakeYear) return false;
+        if (state.provFilter && state.provFilter !== 'all' && p.province !== state.provFilter) return false;
         if (state.noUniOnly && p.isUniversity) return false;
         if (rq && !`${p.name} ${p.institution} ${p.campus} ${p.route} ${p.nqf}`.toLowerCase().includes(rq)) return false;
         if (state.nearHomeOnly && p.province !== state.province) return false;
@@ -1652,12 +1779,20 @@
       if (state.routeSort === 'near') {
         list.sort((a, b) =>(a.province === state.province ? 0 : 1) - (b.province === state.province ? 0 : 1));
       } else {
-        const rank = { 'Strong Match': 0, 'Conditional': 1, 'Near Match': 2, 'Needs Verification': 3, 'Not Currently Eligible': 4 };
+        const rank = { 'Meets Minimums': 0, 'Conditional': 1, 'Possible - Verify Rules': 2, 'Near Match': 3, 'Check Official Page': 4, 'Needs Verification': 5, 'Enter All 7 Subjects': 6, 'Not Currently Eligible': 7 };
         list.sort((a, b) =>(rank[evaluateProgramme(subs, a).status] ?? 9) - (rank[evaluateProgramme(subs, b).status] ?? 9));
       }
+      const listAll = list; list = list.slice(0, state.routeLimit || 20);
+      const yrHas = SAMPLE_PROGRAMMES.some(p => p.intakeYear === state.intakeYear);
+      const yrsLoaded = [...new Set(SAMPLE_PROGRAMMES.map(p => p.intakeYear).filter(y => y && y !== state.intakeYear))].sort();
+      const otherYearsHtml = yrsLoaded.length ? ' Rules are loaded for: ' + yrsLoaded.map(y => `<button type="button" data-year-jump="${y}" class="underline font-extrabold">${y}</button>`).join(', ') + '. Those rules are for that year only.' : '';
+      const yrOpts = MZDATA.yearChoices().map(y => `<option value="${y}" ${y === state.intakeYear ? 'selected' : ''}>${y} intake</option>`).join('');
+      const prOpts = ['all'].concat(MZDATA.PROVINCES).map(v => `<option value="${v}" ${(state.provFilter || 'all') === v ? 'selected' : ''}>${v === 'all' ? 'All provinces' : v}</option>`).join('');
       return `
         <div class="space-y-4">
           <div class="bg-white rounded-3xl p-4 border border-slate-200 shadow-sm flex flex-wrap items-center justify-between gap-2.5">
+            <div class="w-full flex flex-wrap gap-2"><select id="intake-year" aria-label="Intake year" class="px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold">${yrOpts}</select><select id="prov-filter" aria-label="Province" class="px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold">${prOpts}</select></div>
+            ${yrHas ? '' : `<div class="w-full text-[11px] font-bold text-amber-900 bg-amber-50 border border-amber-200 rounded-xl p-2">No checked rules are loaded for ${state.intakeYear} yet. The pathways below are illustrative. Always confirm with the institution.${otherYearsHtml}</div>`}
             <div class="flex flex-wrap gap-2">
               <button id="toggle-nouni" class="px-3.5 py-2 rounded-xl text-xs font-extrabold border ${state.noUniOnly ? 'bg-teal-700 text-white border-teal-700' : 'bg-teal-50 text-teal-900 border-teal-200'}">${state.noUniOnly ? '✓ No University Required: ON' : ' No University Required Mode'}</button>
               <button id="toggle-nearhome" class="px-3.5 py-2 rounded-xl text-xs font-extrabold border ${state.nearHomeOnly ? 'bg-blue-700 text-white border-blue-700' : 'bg-blue-50 text-blue-900 border-blue-200'}">${state.nearHomeOnly ? `✓ Near Home (${escapeHtml(state.province)}): ON` : ` I Cannot Relocate (${escapeHtml(state.province)})`}</button>
@@ -1669,7 +1804,7 @@
               ${['All', 'University', 'Higher Certificate / UoT', 'Public TVET College', 'QCTO Occupational'].map(rt => `<button type="button" data-route-filter="${escapeHtml(rt)}" class="px-2.5 py-1 rounded-lg border ${state.routeFilter === rt ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'}">${escapeHtml(rt)}</button>`).join('')}
               <button type="button" id="clear-route-filters-btn" class="ml-auto px-2.5 py-1 rounded-lg border border-rose-200 bg-rose-50 text-rose-800 hover:bg-rose-100">Clear Filters</button>
             </div>
-            <div class="text-xs font-bold text-slate-500">Showing ${list.length} illustrative pathways</div>
+            <div class="text-xs font-bold text-slate-500">Showing ${list.length} of ${listAll.length} pathways</div>${listAll.length > list.length ? '<button type="button" id="show-more-routes" class="px-3 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold">Show 20 more</button>' : ''}
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
@@ -1830,7 +1965,7 @@
           <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3 text-xs">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <h2 class="text-sm font-extrabold text-slate-900">"Can I Afford This?" — Annual Out-of-Pocket Comparison</h2>
-              <span class="text-[11px] text-slate-500 font-semibold">Edit with your real estimates — always verify official 2027 fees</span>
+              <span class="text-[11px] text-slate-500 font-semibold">Edit with your real estimates — always verify official ${state.intakeYear} fees</span>
             </div>
             ${(() =>{
               const a = state.affordA || { tuition: 58000, accomm: 45000, transport: 6000, funding: 0 };
@@ -1941,12 +2076,16 @@
                   </div>
                   <div class="flex flex-wrap gap-2">
                     <label class="px-3 py-1.5 rounded-lg bg-slate-900 text-white font-bold cursor-pointer hover:bg-slate-800">
-                      Upload CV File (.txt/.md/.doc)
-                      <input id="cv-file-input" type="file" accept=".txt,.md,.html,.htm,.doc,.rtf" class="hidden" />
+                      Upload CV (PDF / Word .docx / text)
+                      <input id="cv-file-input" type="file" accept=".pdf,.docx,.txt,.md,.html,.htm,.rtf" class="hidden" />
                     </label>
                     <label class="px-3 py-1.5 rounded-lg bg-blue-700 text-white font-bold cursor-pointer hover:bg-blue-800">
                       Scan Printed CV Photo
-                      <input id="cv-image-input" type="file" accept="image/*" capture="environment" class="hidden" />
+                      <input id="cv-image-input" type="file" accept="image/*" class="hidden" />
+                    </label>
+                    <label class="px-3 py-2 rounded-xl bg-slate-800 text-white font-extrabold cursor-pointer hover:bg-slate-900 min-h-[44px]">
+                      Take Photo
+                      <input id="cv-camera-input" type="file" accept="image/*" capture="environment" class="hidden" />
                     </label>
                     <button type="button" id="cv-rotate-btn" class="px-2.5 py-1.5 rounded-lg bg-white text-slate-800 border border-slate-300 font-bold hover:bg-slate-100">↻ Rotate 90°</button>
                     <button type="button" id="cv-contrast-btn" class="px-2.5 py-1.5 rounded-lg bg-white text-slate-800 border border-slate-300 font-bold hover:bg-slate-100">Boost Contrast</button>
@@ -2253,7 +2392,11 @@
             <div class="flex flex-wrap gap-2">
               <label class="px-3 py-1.5 rounded-lg bg-slate-900 text-white font-bold cursor-pointer hover:bg-slate-800">
                 Upload / Snap Job Flyer Photo
-                <input id="flyer-image-input" type="file" accept="image/*" capture="environment" class="hidden" />
+                <input id="flyer-image-input" type="file" accept="image/*" class="hidden" />
+                    </label>
+                    <label class="px-3 py-2 rounded-xl bg-slate-800 text-white font-extrabold cursor-pointer hover:bg-slate-900 min-h-[44px]">
+                      Take Photo
+                      <input id="flyer-camera-input" type="file" accept="image/*" capture="environment" class="hidden" />
               </label>
               <button type="button" id="flyer-rotate-btn" class="px-2.5 py-1.5 rounded-lg bg-white text-slate-800 border border-slate-300 font-bold hover:bg-slate-100">↻ Rotate 90°</button>
               <button type="button" id="flyer-contrast-btn" class="px-2.5 py-1.5 rounded-lg bg-white text-slate-800 border border-slate-300 font-bold hover:bg-slate-100">Boost Contrast</button>
@@ -2356,8 +2499,15 @@
         bindEvents();
       } catch (err) {
         state.tab = 'results';
-        try { document.getElementById('app-main').innerHTML = renderResults(); bindEvents(); } catch (e2) {}
-        showToast('Recovered view safely');
+        try { document.getElementById('app-main').innerHTML = renderResults(); bindEvents(); showToast('Recovered view safely'); }
+        catch (e2) {
+          // Last resort: never leave a blank screen. The saved profile is untouched.
+          const mm = document.getElementById('app-main');
+          if (mm) {
+            mm.innerHTML = '<div class="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-sm text-amber-950 space-y-2"><div class="font-extrabold">This screen could not load.</div><p>Your saved information is safe on this phone. Reload the page. If it happens again, open Sync &amp; Backup in Settings and download a backup first.</p><button type="button" id="mz-reload-btn" class="px-4 py-2 rounded-xl bg-slate-900 text-white font-bold text-xs">Reload</button></div>';
+            const rb = document.getElementById('mz-reload-btn'); if (rb) rb.addEventListener('click', () => location.reload());
+          }
+        }
       }
     }
     function render() { safeRender(); }
@@ -2471,7 +2621,7 @@
           const p = SAMPLE_PROGRAMMES.find(x =>x.id === state.plans[k]);
           return p ? `Plan ${k}: ${p.name} @ ${p.institution} (${p.route}) — ${p.estAnnualCost}` : `Plan ${k}: Not set`;
         }).join('\n');
-        const msg = `Mzansi Pathways Family Plan (${state.province}) | ${nsc.passLevel} (APS ${nsc.aps})\n` + txt;
+        const msg = `Mzansi Pathways Family Plan (${state.province}) | ${nsc.passLevel} (APS ${nsc.aps ?? 'n/a'})\n` + txt;
         const ta = document.createElement('textarea'); ta.value = msg; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
         document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); showToast('Family Plan A/B/C copied for WhatsApp!'); } catch (err) {} ta.remove();
       });
@@ -2510,30 +2660,34 @@
       if (scBtn) scBtn.addEventListener('click', () =>{ state.scannerOpen = false; saveState(); render(); });
       document.querySelectorAll('[data-g9-goal]').forEach(b =>b.addEventListener('click', () =>{ state.grade9Goal = b.dataset.g9Goal; saveState(); render(); }));
 
-      const scanImgIn = document.getElementById('scan-image-input');
-      if (scanImgIn) scanImgIn.addEventListener('change', e =>{
-        const f = e.target.files && e.target.files[0];
+      document.querySelectorAll('[data-inst-search]').forEach(b => b.addEventListener('click', () => { state.routeSearch = b.dataset.instSearch; state.routeFilter = 'All'; state.noUniOnly = false; state.nearHomeOnly = false; state.routeLimit = 20; saveState(); render(); window.scrollTo(0, 0); }));
+      const iy = document.getElementById('intake-year');
+      if (iy) iy.addEventListener('change', e => { state.intakeYear = Number(e.target.value); state.routeLimit = 20; syncYearLabels(); saveState(); render(); });
+      document.querySelectorAll('[data-year-jump]').forEach(b => b.addEventListener('click', () => { state.intakeYear = Number(b.dataset.yearJump); state.routeLimit = 20; syncYearLabels(); saveState(); render(); }));
+      const ipn = document.getElementById('inst-panel'); if (ipn) ipn.addEventListener('toggle', () => { state.instOpen = ipn.open; saveState(); });
+      const isr = document.getElementById('inst-search');
+      if (isr) isr.addEventListener('input', e => { state.instQ = e.target.value; state.instOpen = true; clearTimeout(window._isT); window._isT = setTimeout(() => { saveState(); render(); const el = document.getElementById('inst-search'); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }, 180); });
+      const ipv = document.getElementById('inst-prov'); if (ipv) ipv.addEventListener('change', e => { state.instProv = e.target.value; state.instOpen = true; saveState(); render(); });
+      const ity = document.getElementById('inst-type'); if (ity) ity.addEventListener('change', e => { state.instType = e.target.value; state.instOpen = true; saveState(); render(); });
+      const pf = document.getElementById('prov-filter');
+      if (pf) pf.addEventListener('change', e => { state.provFilter = e.target.value; state.routeLimit = 20; saveState(); render(); });
+      const smr = document.getElementById('show-more-routes');
+      if (smr) smr.addEventListener('click', () => { state.routeLimit = (state.routeLimit || 20) + 20; render(); });
+      const loadScan = async f => {
         if (!f) return;
-        const url = URL.createObjectURL(f);
-        const img = new Image();
-        img.onload = () =>{
-          try {
-            const canvas = document.getElementById('scan-canvas');
-            if (!canvas) return;
-            const maxW = 1400;
-            const scale = img.width >maxW ? (maxW / img.width) : 1;
-            canvas.width = Math.max(1, Math.round(img.width * scale));
-            canvas.height = Math.max(1, Math.round(img.height * scale));
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            window._scanAngle = 0;
-            const st = document.getElementById('scan-canvas-status');
-            if (st) st.textContent = `Loaded ${canvas.width}x${canvas.height}px locally (OOM-safe). Tap Auto-Read or paste Google Lens text.`;
-          } finally { URL.revokeObjectURL(url); }
-        };
-        img.onerror = () =>{ URL.revokeObjectURL(url); showToast('Could not decode image file. Try a JPG or PNG photo.'); };
-        img.src = url;
+        const canvas = document.getElementById('scan-canvas');
+        if (!canvas) return;
+        try {
+          await MZOCR.fileToCanvas(f, canvas);
+          const st = document.getElementById('scan-canvas-status');
+          if (st) st.textContent = `Loaded ${canvas.width}x${canvas.height}px on this device. Crop to the text area if you can, then tap Auto-Read.`;
+        } catch (err) { showToast(MZOCR.friendlyError(err)); }
+      };
+      ['scan-image-input','scan-camera-input'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('change', e => { loadScan(e.target.files && e.target.files[0]); e.target.value = ''; });
       });
+
 
       const rotBtn = document.getElementById('scan-rotate-btn');
       if (rotBtn) rotBtn.addEventListener('click', () =>{
@@ -2570,22 +2724,15 @@
       if (detBtn) detBtn.addEventListener('click', async () =>{
         const canvas = document.getElementById('scan-canvas');
         if (!canvas || !canvas.width) { showToast('Load a report card photo first'); return; }
-        if (!('TextDetector' in window)) {
-          showToast('Your browser lacks built-in TextDetector — copy text via Google Lens and paste it on the right!');
-          return;
-        }
         try {
-          const detector = new window.TextDetector();
-          const blocks = await detector.detect(canvas);
-          const txt = (blocks || []).map(b =>b.rawValue).filter(Boolean).join('\n');
-          if (!txt.trim()) { showToast('No text detected — try Boost Contrast or paste from Google Lens.'); return; }
-          state.scanRawText = txt;
-          state.scanParsed = parseStatementText(txt);
+          showToast('Reading your report... this can take 10–30 seconds');
+          const out = await MZOCR.readStatementCanvas(canvas, parseStatementText);
+          if (!out.text.trim()) { showToast('No text found. Try a clearer photo, or type your marks.'); return; }
+          state.scanRawText = out.text; state.scanParsed = out.rows;
+          state.scanLowConfidence = out.confidence < 70;
           saveState(); render();
-          showToast(`Detected ${state.scanParsed.length} subjects — please review and confirm!`);
-        } catch (err) {
-          showToast('On-device text detection unavailable here — paste text from Google Lens.');
-        }
+          showToast(out.rows.length ? `Read ${out.rows.length} subjects. Please check EVERY mark.` : 'Could not find subjects. Type your marks or paste the text.');
+        } catch (err) { showToast(MZOCR.friendlyError(err)); }
       });
 
       const sampBtn = document.getElementById('scan-sample-btn');
@@ -2613,26 +2760,29 @@
         if (state.scanParsed[idx]) {
           state.scanParsed[idx].include = e.target.checked; saveState();
           const lp = document.getElementById('scan-live-preview');
-          if (lp) { const act = state.scanParsed.filter(s => s.include !== false); const pn = evaluateNsc(act); lp.textContent = act.length ? `${pn.passLevel} · APS ${pn.aps} (excl. LO)` : 'Select at least 1 subject'; }
+          if (lp) { const act = state.scanParsed.filter(s => s.include !== false); const pn = evaluateNsc(act.filter(hasMark)); lp.textContent = act.length ? `${pn.passLevel} · APS ${pn.aps ?? 'n/a'} (excl. LO)` : 'Select at least 1 subject'; }
         }
       }));
       document.querySelectorAll('[data-scan-mark]').forEach(inp =>inp.addEventListener('input', e =>{
         const idx = Number(inp.dataset.scanMark);
         if (state.scanParsed[idx]) {
-          const v = Math.max(0, Math.min(100, Math.round(Number(e.target.value) || 0)));
+          const v = e.target.value === '' ? null : Math.max(0, Math.min(100, Math.round(Number(e.target.value))));
           state.scanParsed[idx].mark = v; saveState();
           const lp = document.getElementById('scan-live-preview');
-          if (lp) { const pn = evaluateNsc(state.scanParsed.filter(s => s.include !== false)); lp.textContent = `${pn.passLevel} · APS ${pn.aps} (excl. LO)`; }
+          if (lp) { const pn = evaluateNsc(state.scanParsed.filter(s => s.include !== false && hasMark(s))); lp.textContent = `${pn.passLevel} · APS ${pn.aps ?? 'n/a'} (excl. LO)`; }
         }
       }));
 
       const applyScanBtn = document.getElementById('scan-apply-btn');
       if (applyScanBtn) applyScanBtn.addEventListener('click', () =>{
         const chosen = (state.scanParsed || []).filter(s =>s.include !== false).map(s =>({
-          name: s.name, mark: Math.max(0, Math.min(100, Number(s.mark) || 0)),
+          name: s.name, mark: Math.max(0, Math.min(100, Number(s.mark))),
           isHomeLanguage: Boolean(s.isHomeLanguage), isLifeOrientation: Boolean(s.isLifeOrientation)
         }));
-        if (!chosen.length) { showToast('Select at least one subject to apply'); return; }
+        const ready = scanRowsReady((state.scanParsed || []));
+        if (!ready.ok) { showToast(ready.why); return; }
+        if (!window._scanArmed) { window._scanArmed = true; showToast('Check every mark against your report card, then tap Confirm again. Photos can be misread.'); return; }
+        window._scanArmed = false;
         pushSubjectUndo(); state.subjects = chosen;
         state.scannerOpen = false;
         saveState(); render();
@@ -2667,7 +2817,7 @@
       const z83Btn = document.getElementById('dl-z83-prep-btn');
       if (z83Btn) z83Btn.addEventListener('click', () => {
         const nsc = evaluateNsc(state.subjects);
-        const quals = (state.cvQualifications && state.cvQualifications.length) ? state.cvQualifications : [`National Senior Certificate (${nsc.passLevel}, APS ${nsc.aps} excl. LO)`];
+        const quals = (state.cvQualifications && state.cvQualifications.length) ? state.cvQualifications : [`National Senior Certificate (${nsc.passLevel}, APS ${nsc.aps ?? 'n/a'} excl. LO)`];
         const txt = [
           'MZANSI PATHWAYS — Z83 GOVERNMENT APPLICATION PREP SHEET',
           'Official Form Source: https://www.gov.za/about-government/government-jobs',
@@ -2781,7 +2931,7 @@
       if (msBtn) msBtn.addEventListener('click', () => {
         const nsc = evaluateNsc(state.subjects);
         if (!Array.isArray(state.cvQualifications)) state.cvQualifications = [];
-        const qual = `National Senior Certificate (${nsc.passLevel}, APS ${nsc.aps} excl. LO)`;
+        const qual = `National Senior Certificate (${nsc.passLevel}, APS ${nsc.aps ?? 'n/a'} excl. LO)`;
         if (!state.cvQualifications.includes(qual)) state.cvQualifications.unshift(qual);
         const starterStory = 'Completed Matric practical projects, school assignments, and community/family support tasks — replace this line with one specific real task you personally completed.';
         if (!state.evidenceVault.some(e => e.skill === 'First-Time Matriculant School & Community Project')) {
@@ -2820,39 +2970,30 @@
       if (cviFile) cviFile.addEventListener('change', e => {
         const f = e.target.files && e.target.files[0];
         if (!f) return;
-        const r = new FileReader();
-        r.onload = () => {
-          state.cvRawText = String(r.result || '').slice(0, 30000);
+        showToast('Reading CV file...');
+        MZOCR.readAnyFile(f, { canvas: document.getElementById('cv-canvas') }).then(res => {
+          state.cvRawText = String(res.text || '').slice(0, 30000);
           state.cvParsed = parsePreviousCvText(state.cvRawText);
           saveState(); render();
-          showToast('Loaded previous CV file locally — review extracted details below!');
-        };
-        r.onerror = () => showToast('Could not read file — try pasting your CV text directly.');
-        r.readAsText(f);
+          showToast('CV read on this device. Review the extracted details below.');
+        }).catch(err => showToast(MZOCR.friendlyError(err)));
       });
 
-      const cviImg = document.getElementById('cv-image-input');
-      if (cviImg) cviImg.addEventListener('change', e => {
-        const f = e.target.files && e.target.files[0];
+      const loadCvImg = async f => {
         if (!f) return;
-        const url = URL.createObjectURL(f);
-        const img = new Image();
-        img.onload = () => {
-          try {
-            const canvas = document.getElementById('cv-canvas');
-            if (!canvas) return;
-            const maxW = 1400;
-            const scale = img.width > maxW ? (maxW / img.width) : 1;
-            canvas.width = Math.max(1, Math.round(img.width * scale));
-            canvas.height = Math.max(1, Math.round(img.height * scale));
-            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-            const st = document.getElementById('cv-canvas-status');
-            if (st) st.textContent = `Loaded ${canvas.width}x${canvas.height}px locally. Tap Auto-Read Photo or paste Google Lens text.`;
-          } finally { URL.revokeObjectURL(url); }
-        };
-        img.onerror = () => { URL.revokeObjectURL(url); showToast('Could not decode CV photo.'); };
-        img.src = url;
+        const canvas = document.getElementById('cv-canvas');
+        if (!canvas) return;
+        try {
+          await MZOCR.fileToCanvas(f, canvas);
+          const st = document.getElementById('cv-canvas-status');
+          if (st) st.textContent = `Loaded ${canvas.width}x${canvas.height}px on this device. Crop to the text area if you can, then tap Auto-Read.`;
+        } catch (err) { showToast(MZOCR.friendlyError(err)); }
+      };
+      ['cv-image-input','cv-camera-input'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('change', e => { loadCvImg(e.target.files && e.target.files[0]); e.target.value = ''; });
       });
+
 
       const cviRot = document.getElementById('cv-rotate-btn');
       if (cviRot) cviRot.addEventListener('click', () => {
@@ -2920,16 +3061,14 @@
       if (cviDet) cviDet.addEventListener('click', async () => {
         const canvas = document.getElementById('cv-canvas');
         if (!canvas || !canvas.width) { showToast('Load a printed CV photo first'); return; }
-        if (!('TextDetector' in window)) { showToast('Browser lacks built-in TextDetector — copy text via Google Lens and paste it on the right.'); return; }
         try {
-          const blocks = await new window.TextDetector().detect(canvas);
-          const txt = (blocks || []).map(b => b.rawValue).filter(Boolean).join('\n');
-          if (!txt.trim()) { showToast('No text detected — paste text from Google Lens.'); return; }
-          state.cvRawText = txt;
-          state.cvParsed = parsePreviousCvText(txt);
+          showToast('Reading CV photo... please wait');
+          const out = await MZOCR.readTextCanvas(canvas, '4');
+          if (!out.text.trim()) { showToast('No text found. Try a clearer photo or paste the text.'); return; }
+          state.cvRawText = out.text; state.cvParsed = parsePreviousCvText(out.text);
           saveState(); render();
-          showToast('Extracted text from CV photo — review and confirm below!');
-        } catch (err) { showToast('On-device text detection unavailable here — paste text from Google Lens.'); }
+          showToast('Text read from CV photo. Review and confirm below.');
+        } catch (err) { showToast(MZOCR.friendlyError(err)); }
       });
 
       const cviSample = document.getElementById('cv-sample-btn');
@@ -3058,28 +3197,21 @@
       const lti = document.getElementById('local-town-input');
       if (lti) lti.addEventListener('change', e => { state.localTown = e.target.value.trim(); saveState(); render(); });
 
-      const fImg = document.getElementById('flyer-image-input');
-      if (fImg) fImg.addEventListener('change', e => {
-        const f = e.target.files && e.target.files[0];
+      const loadFlyerImg = async f => {
         if (!f) return;
-        const url = URL.createObjectURL(f);
-        const img = new Image();
-        img.onload = () => {
-          try {
-            const canvas = document.getElementById('flyer-canvas');
-            if (!canvas) return;
-            const maxW = 1400;
-            const scale = img.width > maxW ? (maxW / img.width) : 1;
-            canvas.width = Math.max(1, Math.round(img.width * scale));
-            canvas.height = Math.max(1, Math.round(img.height * scale));
-            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-            const st = document.getElementById('flyer-canvas-status');
-            if (st) st.textContent = `Loaded ${canvas.width}x${canvas.height}px locally. Tap Auto-Read Flyer or paste Google Lens text.`;
-          } finally { URL.revokeObjectURL(url); }
-        };
-        img.onerror = () => { URL.revokeObjectURL(url); showToast('Could not decode flyer image.'); };
-        img.src = url;
+        const canvas = document.getElementById('flyer-canvas');
+        if (!canvas) return;
+        try {
+          await MZOCR.fileToCanvas(f, canvas);
+          const st = document.getElementById('flyer-canvas-status');
+          if (st) st.textContent = `Loaded ${canvas.width}x${canvas.height}px on this device. Crop to the text area if you can, then tap Auto-Read.`;
+        } catch (err) { showToast(MZOCR.friendlyError(err)); }
+      };
+      ['flyer-image-input','flyer-camera-input'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('change', e => { loadFlyerImg(e.target.files && e.target.files[0]); e.target.value = ''; });
       });
+
 
       const fRot = document.getElementById('flyer-rotate-btn');
       if (fRot) fRot.addEventListener('click', () => {
@@ -3110,16 +3242,14 @@
       if (fDet) fDet.addEventListener('click', async () => {
         const canvas = document.getElementById('flyer-canvas');
         if (!canvas || !canvas.width) { showToast('Upload a job flyer photo first'); return; }
-        if (!('TextDetector' in window)) { showToast('Browser lacks built-in TextDetector — copy flyer text via Google Lens and paste on the right.'); return; }
         try {
-          const blocks = await new window.TextDetector().detect(canvas);
-          const txt = (blocks || []).map(b => b.rawValue).filter(Boolean).join('\n');
-          if (!txt.trim()) { showToast('No text detected — paste text from Google Lens.'); return; }
-          state.flyerRawText = txt;
-          state.flyerParsed = parseJobFlyerText(txt);
+          showToast('Reading flyer... please wait');
+          const out = await MZOCR.readTextCanvas(canvas, '4');
+          if (!out.text.trim()) { showToast('No text found. Crop to the text area or paste the text.'); return; }
+          state.flyerRawText = out.text; state.flyerParsed = parseJobFlyerText(out.text);
           saveState(); render();
-          showToast('Analyzed job flyer text locally!');
-        } catch (err) { showToast('On-device text detection unavailable — paste text from Google Lens.'); }
+          showToast('Flyer read on this device. Always verify the employer.');
+        } catch (err) { showToast(MZOCR.friendlyError(err)); }
       });
 
       const fSamp = document.getElementById('flyer-sample-btn');
@@ -3481,6 +3611,28 @@
     const authModalEl = document.getElementById('auth-modal');
     if (authModalEl) authModalEl.addEventListener('click', e =>{ if (e.target === authModalEl) authModalEl.classList.add('hidden'); });
 
+    function syncBackupUi() {
+      const lb = document.getElementById('enc-last-backup');
+      if (lb) {
+        let when = '';
+        try { if (state.lastBackupAt) when = new Date(state.lastBackupAt).toLocaleDateString(); } catch (e) {}
+        lb.textContent = when ? 'Last backup downloaded: ' + when : 'No backup downloaded yet. Make one before you clear your browser or change phones.';
+      }
+      const ub = document.getElementById('btn-undo-restore');
+      let has = false; try { has = !!localStorage.getItem(UNDO_KEY); } catch (e) {}
+      if (ub) ub.classList.toggle('hidden', !has);
+    }
+    const undoRestoreBtn = document.getElementById('btn-undo-restore');
+    if (undoRestoreBtn) undoRestoreBtn.addEventListener('click', () => {
+      try {
+        const prev = JSON.parse(localStorage.getItem(UNDO_KEY) || 'null');
+        if (!prev || typeof prev !== 'object' || Array.isArray(prev)) { showToast('Nothing to undo'); return; }
+        state = { ...state, ...prev }; localStorage.removeItem(UNDO_KEY);
+        repairState(state); saveState(); applyModes(); render(); syncBackupUi(); showToast('Your earlier profile is back.');
+      } catch (e) { showToast('Could not undo'); }
+    });
+    if (authBtn) authBtn.addEventListener('click', syncBackupUi);
+    if (setOpenSync) setOpenSync.addEventListener('click', syncBackupUi);
     const expEncBtn = document.getElementById('btn-export-enc');
     if (expEncBtn) expEncBtn.addEventListener('click', async () =>{
       const pass = (document.getElementById('enc-pass')?.value || '');
@@ -3491,14 +3643,16 @@
         const key = await deriveAesKey(pass, salt);
         const plain = new TextEncoder().encode(JSON.stringify(state));
         const cipher = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, plain));
-        const b64 = u =>btoa(String.fromCharCode(...u));
-        const bundle = JSON.stringify({ format: 'mzansi-pathways-aes256-v1', salt: b64(salt), iv: b64(iv), data: b64(cipher) });
+        // Chunked: String.fromCharCode(...bigArray) overflows the call stack for a large profile and made backups fail.
+        const b64 = u => { let bin = ''; for (let i = 0; i < u.length; i += 8192) bin += String.fromCharCode.apply(null, u.subarray(i, i + 8192)); return btoa(bin); };
+        const bundle = JSON.stringify({ format: 'mzansi-pathways-aes256-v1', createdAt: new Date().toISOString(), salt: b64(salt), iv: b64(iv), data: b64(cipher) });
         const url = URL.createObjectURL(new Blob([bundle], { type: 'application/json' }));
         const a = document.createElement('a'); a.href = url; a.download = 'mzansi_pathways_encrypted.mzansi';
         document.body.appendChild(a); a.click(); a.remove();
         setTimeout(() =>URL.revokeObjectURL(url), 1000);
-        showToast('Downloaded AES-256 encrypted backup!');
-      } catch (err) { showToast('Encryption unavailable in this browser'); }
+        state.lastBackupAt = new Date().toISOString(); saveState(); syncBackupUi();
+        showToast('Downloaded AES-256 encrypted backup! Keep a second copy somewhere else (WhatsApp it to yourself, email, or a USB stick).', 5000);
+      } catch (err) { showToast(err && err.name === 'QuotaExceededError' ? 'Not enough space to create the backup' : 'Could not create the backup in this browser. Try another browser.'); }
     });
 
     const impEncIn = document.getElementById('in-import-enc');
@@ -3506,20 +3660,28 @@
       const f = e.target.files && e.target.files[0];
       const pass = (document.getElementById('enc-pass')?.value || '');
       if (!f || pass.length < 8) { showToast('Enter your 8+ character passphrase first, then choose the file'); return; }
+      if (f.size > 5 * 1024 * 1024) { showToast('That file is too big to be a Mzansi Pathways backup'); e.target.value = ''; return; }
       const r = new FileReader();
       r.onload = async () =>{
         try {
           const pkg = JSON.parse(String(r.result || '{}'));
+          if (!pkg || pkg.format !== 'mzansi-pathways-aes256-v1' || !pkg.salt || !pkg.iv || !pkg.data) { showToast('This is not a Mzansi Pathways backup file'); return; }
           const fromB64 = s =>Uint8Array.from(atob(s), c =>c.charCodeAt(0));
           const key = await deriveAesKey(pass, fromB64(pkg.salt));
           const dec = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: fromB64(pkg.iv) }, key, fromB64(pkg.data));
           const restored = JSON.parse(new TextDecoder().decode(dec));
-          state = { ...state, ...restored };
-          saveState(); applyModes(); render();
+          if (!restored || typeof restored !== 'object' || Array.isArray(restored) || !Array.isArray(restored.subjects)) { showToast('The backup opened but its contents look damaged. Your current profile was not changed.'); return; }
+          // Safety copy of the CURRENT profile first, so a wrong restore can be undone.
+          try { localStorage.setItem(UNDO_KEY, JSON.stringify(state)); } catch (e2) {}
+          state = { ...state, ...restored, plans: { ...state.plans, ...(restored.plans || {}) } };
+          repairState(state);
+          saveState(); applyModes(); render(); syncBackupUi();
           document.getElementById('auth-modal').classList.add('hidden');
-          showToast('Unlocked & restored your profile on this phone!');
-        } catch (err) { showToast('Wrong passphrase or invalid backup file'); }
+          showToast('Unlocked & restored your profile. Tap Sync & Backup > Undo restore if this was the wrong file.', 5000);
+        } catch (err) { showToast('Wrong passphrase or invalid backup file. Your current profile was not changed.'); }
+        finally { e.target.value = ''; }
       };
+      r.onerror = () => showToast('Could not read that file');
       r.readAsText(f);
     });
 
@@ -3556,7 +3718,12 @@
     window.addEventListener('offline', syncNetPill);
     syncNetPill();
     applyModes();
+    syncBackupUi();
+    if (window._mzRecovered) showToast('Your saved profile was damaged, so the last good copy was restored. Please check your marks.', 6000);
+    if (!state.intakeYear) state.intakeYear = MZDATA.defaultYear();
+    syncYearLabels();
     render();
+    MZDATA.load(SAMPLE_PROGRAMMES, CAREERS).then(n => { if (n) render(); });
     if (!state.tutorialSeen) openTutorial(0);
     loadLiveOpenJobs();
   </script>

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "gateCount": 84,
+  "gateCount": 92,
   "sha256": {
     "01_verify_secrets_and_keys.py": "fd5d23b7768fa63684dd727fe6066d14aa2311f558f26cb67b59f4b7a6a7bac4",
     "02_verify_auth_and_session_policy.py": "7922473ee1e311308785856242769305a788c2bb6cd52878004b7b8c9fa51956",
@@ -34,7 +34,7 @@
     "30_verify_career_gap_and_high_contrast.py": "5571e00dc7c60337034c2a29f0c2ca7bf1d315ab840aff185f61d0ca7ce61114",
     "31_verify_multi_subject_whatif_and_a11y.py": "94dc5eb631ae67ae108ab5babb29cf2efa9b6e8818bb7f7707e1dadf7a1b59f9",
     "32_verify_docs_completeness.py": "8c8666cea8a6059cb1aeed745186f35a48c5692d2fa50135966e2e667648fe86",
-    "33_verify_image_to_result_scanner.py": "f19aa923d2a0f94169e333a66525e8a7db1da9d3ca9790c004c7cb261c5df461",
+    "33_verify_image_to_result_scanner.py": "b684d769416e2580758e70d6039cff329bb1883f383fd791491891be6946c3b6",
     "34_verify_custom_rules_validator_and_deadlines.py": "c441269cf1bdbda295a53dc2dbb0be63e0a83e12412e40fe36027fdd16a95ae8",
     "35_verify_human_checkin_and_family_script.py": "5126a1a272eefd43c40d756bc3d67b085a4aaba0f26a148e6cbaa37c4ea69a5b",
     "36_verify_symbol_fallback_and_safe_speech.py": "300980a0a932a819c1f473be789ef6a226388e519d743d17f28e5189b9654eb5",
@@ -85,6 +85,14 @@
     "81_verify_deterministic_job_sort_and_scheme_guard.py": "806cd9a342140c10dd2b1d24e4f7a7a1d00920530d5c00c7c44bd5adc6dd307c",
     "82_verify_v55_job_sort_and_empty_reset.py": "2f894637c914091e35698296c391190b4a3072b2b3f1d3bf380ccb49587d375f",
     "83_verify_matric_cv_missing_details_honesty.py": "21cf96a075f49553a929df9dd3daa2559a61ed175bbfd1795ba3ac000f5fa7f5",
-    "84_verify_v56_closing_soon_pill_and_copy_cv.py": "66c9ab7542829f80c323a7a252c6955b9128981f90705d128cd95a416d708259"
+    "84_verify_v56_closing_soon_pill_and_copy_cv.py": "67e1223c3effd92e2937a580153c7ca22c7554962f4a7ef1ea3eda7bd4529e5b",
+    "85_verify_prospectus_multi_check.py": "dbc4913aa9c686b60e118670a314ffde00485b3cb083d677a6c8cae882a5bac4",
+    "86_verify_languages_and_institution_pages.py": "cfa63605b22cc08c06dbe4bbed8c39800c06238fffdc9fe2be51ce36c7c6d271",
+    "87_verify_all_years_and_tvet_institutions.py": "b773687224a6c2072188185ae35709fc00d9d70635df13bdae4964ab18f1320e",
+    "88_verify_maintenance_failsafes.py": "b3dca25345f1dfe422f34b8c47a4262ee487564d1797c5fe6f1d2c1365847954",
+    "89_verify_setup_guide_and_preflight.py": "b7839c29c58a688f1f9d4690bfb1d68e5c9cf80d604812661c9917dc883a6c27",
+    "90_verify_v63_hardening.py": "7cd95d7604098856bfe412ecdf7463f8adf2eb0ebb23f5444ef27600edac3a5c",
+    "91_verify_github_publish_failsafes.py": "77841528fe8a20e48757ad10ba277221b25ffdce23042371220759cd2fcc80bd",
+    "92_verify_v67_publish_and_backup_hardening.py": "d0f0a924d12c0dbefba99ce730e88cbc8763d77fde543c334fde796d107567f2"
   }
 }

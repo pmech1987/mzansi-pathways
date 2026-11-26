@@ -1,9 +1,9 @@
 {
-  "total_gates": 84,
-  "passed_gates": 84,
+  "total_gates": 92,
+  "passed_gates": 92,
   "all_passed": true,
   "verification_stages": 3,
-  "total_duration_ms": 2092.5,
+  "total_duration_ms": 11458.3,
   "gates": [
     {
       "gate": "01_secrets_and_keys",
@@ -11,7 +11,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 25.1
+      "duration_ms": 35.0
     },
     {
       "gate": "02_auth_and_session_policy",
@@ -19,7 +19,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 23.7
+      "duration_ms": 31.3
     },
     {
       "gate": "03_xss_and_unsafe_js",
@@ -27,7 +27,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 53.0
+      "duration_ms": 38.7
     },
     {
       "gate": "04_source_authority_tiers",
@@ -35,7 +35,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 22.3
+      "duration_ms": 35.2
     },
     {
       "gate": "05_rule_conflicts",
@@ -43,7 +43,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 20.1
+      "duration_ms": 34.8
     },
     {
       "gate": "06_data_freshness",
@@ -51,7 +51,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 24.2
+      "duration_ms": 42.8
     },
     {
       "gate": "07_nsc_aps_determinism",
@@ -59,7 +59,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 23.8
+      "duration_ms": 40.4
     },
     {
       "gate": "08_no_guaranteed_admission",
@@ -67,7 +67,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.3
+      "duration_ms": 33.5
     },
     {
       "gate": "09_cas_government_attribution",
@@ -75,7 +75,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 22.8
+      "duration_ms": 28.3
     },
     {
       "gate": "10_anti_scam_disclosures",
@@ -83,7 +83,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 22.5
+      "duration_ms": 29.7
     },
     {
       "gate": "11_legitimacy_registers",
@@ -91,7 +91,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 22.8
+      "duration_ms": 27.5
     },
     {
       "gate": "12_cv_honesty_guard",
@@ -99,7 +99,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 22.3
+      "duration_ms": 24.0
     },
     {
       "gate": "13_whatif_isolation",
@@ -107,7 +107,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 22.3
+      "duration_ms": 24.5
     },
     {
       "gate": "14_accessibility_and_parent_mode",
@@ -115,7 +115,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 19.7
+      "duration_ms": 28.6
     },
     {
       "gate": "15_pwa_manifest_and_icons",
@@ -123,7 +123,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 19.6
+      "duration_ms": 35.8
     },
     {
       "gate": "16_service_worker_syntax",
@@ -131,7 +131,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 102.7
+      "duration_ms": 68.3
     },
     {
       "gate": "17_json_schemas",
@@ -139,7 +139,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 22.4
+      "duration_ms": 34.0
     },
     {
       "gate": "18_sha256_integrity_manifest",
@@ -147,7 +147,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 24.6
+      "duration_ms": 35.2
     },
     {
       "gate": "19_ci_least_privilege",
@@ -155,7 +155,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.4
+      "duration_ms": 33.7
     },
     {
       "gate": "20_unit_test_suite",
@@ -163,7 +163,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 96.4
+      "duration_ms": 8313.6
     },
     {
       "gate": "21_rls_and_db_policies",
@@ -171,7 +171,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.1
+      "duration_ms": 26.6
     },
     {
       "gate": "22_otp_rate_limit_and_lockout",
@@ -179,7 +179,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.1
+      "duration_ms": 26.7
     },
     {
       "gate": "23_csp_and_security_headers",
@@ -187,7 +187,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.0
+      "duration_ms": 25.5
     },
     {
       "gate": "24_portable_backup_encryption",
@@ -195,7 +195,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.1
+      "duration_ms": 29.1
     },
     {
       "gate": "25_failsafes_and_error_bounds",
@@ -203,7 +203,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 25.8
+      "duration_ms": 31.7
     },
     {
       "gate": "26_document_and_star_failsafes",
@@ -211,7 +211,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 19.3
+      "duration_ms": 29.2
     },
     {
       "gate": "27_privacy_wipe_and_motivation_honesty",
@@ -219,7 +219,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.6
+      "duration_ms": 28.2
     },
     {
       "gate": "28_dossier_export_and_hl_warning",
@@ -227,7 +227,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 20.5
+      "duration_ms": 35.9
     },
     {
       "gate": "29_offline_indicator_and_compare_table",
@@ -235,7 +235,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 20.6
+      "duration_ms": 33.6
     },
     {
       "gate": "30_career_gap_and_high_contrast",
@@ -243,7 +243,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.5
+      "duration_ms": 35.2
     },
     {
       "gate": "31_multi_subject_whatif_and_a11y",
@@ -251,7 +251,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 20.1
+      "duration_ms": 33.3
     },
     {
       "gate": "32_docs_completeness",
@@ -259,7 +259,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 22.0
+      "duration_ms": 33.1
     },
     {
       "gate": "33_verify_image_to_result_scanner",
@@ -267,7 +267,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.4
+      "duration_ms": 34.0
     },
     {
       "gate": "34_verify_custom_rules_validator_and_deadlines",
@@ -275,7 +275,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.7
+      "duration_ms": 34.9
     },
     {
       "gate": "35_verify_human_checkin_and_family_script",
@@ -283,7 +283,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 20.0
+      "duration_ms": 33.8
     },
     {
       "gate": "36_verify_symbol_fallback_and_safe_speech",
@@ -291,7 +291,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 19.7
+      "duration_ms": 27.1
     },
     {
       "gate": "37_verify_skippable_onboarding_tutorial",
@@ -299,7 +299,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.8
+      "duration_ms": 40.2
     },
     {
       "gate": "38_verify_settings_modal_and_clean_header",
@@ -307,7 +307,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 20.1
+      "duration_ms": 35.4
     },
     {
       "gate": "39_verify_civic_ui_and_two_way_entry",
@@ -315,7 +315,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 22.1
+      "duration_ms": 40.7
     },
     {
       "gate": "40_verify_institutional_polish_and_integrity",
@@ -323,7 +323,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 22.9
+      "duration_ms": 43.2
     },
     {
       "gate": "41_verify_interactive_tutorial_demos_and_settings_guide",
@@ -331,7 +331,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.2
+      "duration_ms": 32.0
     },
     {
       "gate": "42_verify_github_governance_and_pages_ci",
@@ -339,7 +339,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.6
+      "duration_ms": 26.4
     },
     {
       "gate": "43_verify_csv_export_and_formula_guard",
@@ -347,7 +347,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 23.7
+      "duration_ms": 28.9
     },
     {
       "gate": "44_verify_pwa_theme_sync_and_nsfas_precheck",
@@ -355,7 +355,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.8
+      "duration_ms": 32.0
     },
     {
       "gate": "45_verify_undo_print_header_and_link_hygiene",
@@ -363,7 +363,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.8
+      "duration_ms": 43.0
     },
     {
       "gate": "46_verify_aps_reference_prefs_reset_and_changelog",
@@ -371,7 +371,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.8
+      "duration_ms": 38.3
     },
     {
       "gate": "47_verify_canonical_subject_picker_whatif_delta_and_coverage",
@@ -379,7 +379,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 20.8
+      "duration_ms": 39.8
     },
     {
       "gate": "48_verify_cv_upload_and_image_scan",
@@ -387,7 +387,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 25.4
+      "duration_ms": 46.7
     },
     {
       "gate": "49_verify_cv_photo_controls_and_saved_cv_versions",
@@ -395,7 +395,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 26.5
+      "duration_ms": 44.2
     },
     {
       "gate": "50_verify_cv_qualifications_zoom_and_milestone_integrity",
@@ -403,7 +403,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.8
+      "duration_ms": 26.1
     },
     {
       "gate": "51_verify_matric_cv_starter_and_legal_job_ingestor",
@@ -411,7 +411,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 27.1
+      "duration_ms": 32.0
     },
     {
       "gate": "52_verify_copyright_safe_metadata_and_cv_refresh",
@@ -419,7 +419,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 26.0
+      "duration_ms": 31.5
     },
     {
       "gate": "53_verify_dark_mode_isolation_and_sa_gov_directory",
@@ -427,7 +427,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.3
+      "duration_ms": 29.6
     },
     {
       "gate": "54_verify_municipal_tracker_and_z83_prep",
@@ -435,7 +435,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 23.2
+      "duration_ms": 39.4
     },
     {
       "gate": "55_verify_plain_txt_cv_gov_alerts_and_dark_link_contrast",
@@ -443,7 +443,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 22.6
+      "duration_ms": 26.9
     },
     {
       "gate": "56_verify_company_and_agency_registers",
@@ -451,7 +451,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.8
+      "duration_ms": 28.6
     },
     {
       "gate": "57_verify_scam_demo_missing_cv_guide_and_json_lint",
@@ -459,7 +459,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 24.7
+      "duration_ms": 28.6
     },
     {
       "gate": "58_verify_job_flyer_scanner_and_auto_job_workflow",
@@ -467,7 +467,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 52.3
+      "duration_ms": 87.2
     },
     {
       "gate": "59_verify_auto_job_search_and_live_feed_loader",
@@ -475,7 +475,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.4
+      "duration_ms": 36.9
     },
     {
       "gate": "60_verify_lever_ats_and_sixty_gate_milestone",
@@ -483,7 +483,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.9
+      "duration_ms": 34.2
     },
     {
       "gate": "61_verify_legal_and_popia_compliance_charter",
@@ -491,7 +491,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 25.5
+      "duration_ms": 36.4
     },
     {
       "gate": "62_verify_multi_check_gate_attestation",
@@ -499,7 +499,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.8
+      "duration_ms": 34.9
     },
     {
       "gate": "63_verify_anti_bypass_gate_audit_and_career_filter",
@@ -507,7 +507,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.5
+      "duration_ms": 34.0
     },
     {
       "gate": "64_verify_route_type_pills_plan_progress_and_tamper_tests",
@@ -515,7 +515,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 20.2
+      "duration_ms": 25.9
     },
     {
       "gate": "65_verify_filter_reset_why_checklist_and_stage1_tests",
@@ -523,7 +523,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 22.2
+      "duration_ms": 24.0
     },
     {
       "gate": "66_verify_cv_readiness_register_share_and_full_audit",
@@ -531,7 +531,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.4
+      "duration_ms": 25.4
     },
     {
       "gate": "67_verify_passphrase_strength_and_state_self_check",
@@ -539,7 +539,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.8
+      "duration_ms": 25.0
     },
     {
       "gate": "68_verify_flyer_photo_controls_and_keyboard_nav",
@@ -547,7 +547,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.0
+      "duration_ms": 25.6
     },
     {
       "gate": "69_verify_job_expiry_freshness_and_meta_block",
@@ -555,7 +555,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 25.7
+      "duration_ms": 27.8
     },
     {
       "gate": "70_verify_v49_live_job_actions_and_portal_overdue",
@@ -563,7 +563,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.2
+      "duration_ms": 25.4
     },
     {
       "gate": "71_verify_job_deduplication_and_gov_portals",
@@ -571,7 +571,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 24.6
+      "duration_ms": 28.1
     },
     {
       "gate": "72_verify_v50_job_bookmarks_and_province_filter",
@@ -579,7 +579,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.4
+      "duration_ms": 26.8
     },
     {
       "gate": "73_verify_source_breakdown_and_csv_formula_guard",
@@ -587,7 +587,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 25.0
+      "duration_ms": 31.6
     },
     {
       "gate": "74_verify_v51_shortlist_csv_and_cv_freshness_alert",
@@ -595,7 +595,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.7
+      "duration_ms": 26.6
     },
     {
       "gate": "75_verify_manifest_and_workflow_sync",
@@ -603,7 +603,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 20.9
+      "duration_ms": 27.8
     },
     {
       "gate": "76_verify_v52_job_filter_reset_and_scam_checklist",
@@ -611,7 +611,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 22.2
+      "duration_ms": 26.4
     },
     {
       "gate": "77_verify_url_shortener_anti_scam_block",
@@ -619,7 +619,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 24.6
+      "duration_ms": 31.0
     },
     {
       "gate": "78_verify_v53_portal_overdue_summary_and_copy_job_link",
@@ -627,7 +627,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.2
+      "duration_ms": 28.9
     },
     {
       "gate": "79_verify_popia_pii_scrub_in_job_feed",
@@ -635,7 +635,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 25.0
+      "duration_ms": 31.4
     },
     {
       "gate": "80_verify_eighty_gate_milestone_and_v54_ux",
@@ -643,7 +643,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 20.7
+      "duration_ms": 28.2
     },
     {
       "gate": "81_verify_deterministic_job_sort_and_scheme_guard",
@@ -651,7 +651,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 26.1
+      "duration_ms": 41.4
     },
     {
       "gate": "82_verify_v55_job_sort_and_empty_reset",
@@ -659,7 +659,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 21.6
+      "duration_ms": 36.8
     },
     {
       "gate": "83_verify_matric_cv_missing_details_honesty",
@@ -667,7 +667,7 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 26.2
+      "duration_ms": 42.7
     },
     {
       "gate": "84_verify_v56_closing_soon_pill_and_copy_cv",
@@ -675,7 +675,71 @@
       "auth_verified": true,
       "checks_passed": 3,
       "errors": [],
-      "duration_ms": 20.3
+      "duration_ms": 28.1
+    },
+    {
+      "gate": "85_verify_prospectus_multi_check",
+      "passed": true,
+      "auth_verified": true,
+      "checks_passed": 3,
+      "errors": [],
+      "duration_ms": 51.1
+    },
+    {
+      "gate": "86_verify_languages_and_institution_pages",
+      "passed": true,
+      "auth_verified": true,
+      "checks_passed": 3,
+      "errors": [],
+      "duration_ms": 33.7
+    },
+    {
+      "gate": "87_verify_all_years_and_tvet_institutions",
+      "passed": true,
+      "auth_verified": true,
+      "checks_passed": 3,
+      "errors": [],
+      "duration_ms": 29.3
+    },
+    {
+      "gate": "88_verify_maintenance_failsafes",
+      "passed": true,
+      "auth_verified": true,
+      "checks_passed": 3,
+      "errors": [],
+      "duration_ms": 25.1
+    },
+    {
+      "gate": "89_verify_setup_guide_and_preflight",
+      "passed": true,
+      "auth_verified": true,
+      "checks_passed": 3,
+      "errors": [],
+      "duration_ms": 48.2
+    },
+    {
+      "gate": "90_verify_v63_hardening",
+      "passed": true,
+      "auth_verified": true,
+      "checks_passed": 3,
+      "errors": [],
+      "duration_ms": 51.0
+    },
+    {
+      "gate": "91_verify_github_publish_failsafes",
+      "passed": true,
+      "auth_verified": true,
+      "checks_passed": 3,
+      "errors": [],
+      "duration_ms": 47.3
+    },
+    {
+      "gate": "92_verify_v67_publish_and_backup_hardening",
+      "passed": true,
+      "auth_verified": true,
+      "checks_passed": 3,
+      "errors": [],
+      "duration_ms": 83.1
     }
   ]
 }
