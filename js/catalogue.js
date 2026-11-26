@@ -7,6 +7,7 @@
  */
 (function (root) {
   'use strict';
+  var PAGE = (typeof matchMedia === 'function' && matchMedia('(max-width:639px)').matches) ? 12 : 24; // shorter first screen on phones
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const PASS_RANK = { 'Higher Certificate Pass': 1, 'Diploma Pass': 2, "Bachelor's Pass": 3 };
   let CAT = null;
@@ -174,8 +175,8 @@
         ${ev.gaps.length ? `<div class="p-2 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 font-semibold">${ev.gaps.map(esc).join(' | ')}</div>` : ''}
         ${ev.tier === 'qualify' || ev.tier === 'open' ? `<div class="p-2 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900">${ev.reasons.map(esc).join(' · ')}</div>` : ''}
         ${p.requiresSelection ? '<div class="text-[11px] text-amber-900 font-semibold">Selection applies: meeting the minimum does not guarantee a place.</div>' : ''}
-        ${p.note ? `<div class="text-[11px] text-slate-600">${esc(p.note)}</div>` : ''}
-        <div class="text-[10px] text-slate-500">${p.status === 'pending_review' ? esc('Read from the prospectus (' + (p.sourceDoc || 'document') + (p.sourcePage ? ', ' + p.sourcePage : '') + '). Not yet checked by a second person: confirm on the official page.') : ev.indicative ? 'INDICATIVE typical requirement, not a copy of this year\'s prospectus. Confirm APS, subjects and whether LO counts on the official page.' : esc('Source: ' + (p.sourceDoc || '') + (p.sourcePage ? ', ' + p.sourcePage : ''))}</div>
+        ${(ev.indicative || p.status === 'pending_review') ? '<div class="text-[11px] font-semibold text-amber-900">Confirm on the official page before you apply.</div>' : ''}
+        <details class="mz-notes"><summary>Notes and source</summary>${p.note ? `<div class="text-[11px] text-slate-600 mt-1">${esc(p.note)}</div>` : ''}<div class="text-[10px] text-slate-500 mt-1">${p.status === 'pending_review' ? esc('Read from the prospectus (' + (p.sourceDoc || 'document') + (p.sourcePage ? ', ' + p.sourcePage : '') + '). Not yet checked by a second person: confirm on the official page.') : ev.indicative ? 'INDICATIVE typical requirement, not a copy of this year\'s prospectus. Confirm APS, subjects and whether LO counts on the official page.' : esc('Source: ' + (p.sourceDoc || '') + (p.sourcePage ? ', ' + p.sourcePage : ''))}</div></details>
         <div class="flex flex-wrap gap-2 pt-1 border-t border-slate-100">
           <a href="${esc(inst.url)}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl bg-slate-900 text-white font-bold">Official site ↗</a>
           <button type="button" data-study-plan="${esc(p.id)}" class="px-3 py-1.5 rounded-xl bg-blue-50 text-blue-900 border border-blue-200 font-bold">Add to Plan</button>
@@ -193,7 +194,7 @@
     const typeLabel = { all: 'All types', University: 'Universities', UoT: 'Universities of Technology', TVET: 'TVET Colleges' };
     const instOpts = have.filter(i => !f.type || f.type === 'all' || i.type === f.type);
     const faculties = [...new Set(load().flat.filter(p => (!f.inst || f.inst === 'all' || p.institutionId === f.inst) && (!f.type || f.type === 'all' || p._inst.type === f.type)).map(p => p.faculty))].sort();
-    const q = query(subs, E, f), limit = f.limit || 24, shown = q.rows.slice(0, limit);
+    const q = query(subs, E, f), limit = f.limit || PAGE, shown = q.rows.slice(0, limit);
     const me = q.me, counts = { qualify: 0, open: 0, close: 0, gap: 0, incomplete: 0 };
     q.rows.forEach(r => counts[r.ev.tier]++);
     const none = institutionsWithoutData(allInst);
@@ -265,7 +266,7 @@
           ${Object.keys(g.fac).map(fn => `<details open class="rounded-2xl border border-slate-200 bg-slate-50/60 p-2"><summary class="cursor-pointer text-xs font-extrabold text-slate-800 px-2 py-1">${esc(fn)} (${g.fac[fn].length})</summary><div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">${g.fac[fn].map(r => card(r, { cmp: state.studyCmp })).join('')}</div></details>`).join('')}
         </section>`).join('') : `<div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">${shown.map(r => card(r, { cmp: state.studyCmp })).join('')}</div>`}
 
-      ${q.rows.length > shown.length ? `<div class="text-center"><button type="button" id="study-more" class="px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-extrabold">Show 24 more (${q.rows.length - shown.length} left)</button></div>` : ''}
+      ${q.rows.length > shown.length ? `<div class="text-center"><button type="button" id="study-more" class="px-4 py-2.5 rounded-xl bg-slate-900 text-white text-xs font-extrabold">Show ${Math.min(PAGE, q.rows.length - shown.length)} more (${q.rows.length - shown.length} left)</button></div>` : ''}
 
       ${(() => {
         const cmp = (state.studyCmp || []).map(id => load().flat.find(p => p.id === id)).filter(Boolean).slice(0, 3);
@@ -291,7 +292,7 @@
   function bindStudy(state, save, rerender, toast) {
     const f = state.studyF = state.studyF || {};
     const on = (id, ev, fn) => { const el = document.getElementById(id); if (el) el.addEventListener(ev, fn); };
-    const set = (k, v) => { f[k] = v; f.limit = 24; save(); rerender(); };
+    const set = (k, v) => { f[k] = v; f.limit = PAGE; save(); rerender(); };
     on('study-type', 'change', e => { f.inst = 'all'; f.faculty = 'all'; set('type', e.target.value); });
     on('study-inst', 'change', e => { f.faculty = 'all'; set('inst', e.target.value); });
     on('study-field', 'change', e => set('field', e.target.value));
@@ -300,9 +301,9 @@
     on('study-lo-only', 'change', e => set('loOnly', e.target.checked));
     on('study-group-toggle', 'click', () => set('groupBy', f.groupBy === 'inst' ? '' : 'inst'));
     on('study-reset', 'click', () => { state.studyF = {}; save(); rerender(); });
-    on('study-more', 'click', () => { f.limit = (f.limit || 24) + 24; save(); rerender(); });
+    on('study-more', 'click', () => { f.limit = (f.limit || PAGE) + PAGE; save(); rerender(); });
     on('study-search', 'input', e => {
-      f.q = e.target.value; f.limit = 24; clearTimeout(root._stT);
+      f.q = e.target.value; f.limit = PAGE; clearTimeout(root._stT);
       root._stT = setTimeout(() => { save(); rerender(); const el = document.getElementById('study-search'); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }, 220);
     });
     document.querySelectorAll('[data-study-faculty]').forEach(b => b.addEventListener('click', () => set('faculty', f.faculty === b.dataset.studyFaculty ? 'all' : b.dataset.studyFaculty)));

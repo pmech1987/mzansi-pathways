@@ -207,7 +207,7 @@
       closingSoonOnly: false,
       scanDocType: 'final_nsc',
       scanConfirmed: false,
-      studyF: {}, studyCmp: [], studyPlanPicks: [], marksVerified: false, marksSig: '', workKind: 'all'
+      studyF: {}, studyCmp: [], studyPlanPicks: [], marksVerified: false, marksSig: '', workKind: 'all', workQual: 'all', qualLevel: '', qualField: ''
     };
     let scamResult = null;
     const subjectHistory = [];
@@ -553,6 +553,7 @@
       }
       const evSkills = (state.evidenceVault || []).map(e => `${e.skill} ${e.tools}`).join(' ').toLowerCase().split(/[\s,/]+/).filter(w => w.length >= 4);
       if (evSkills.some(w => blob.includes(w))) score += 15;
+      if (window.MZWORK && state.qualField && MZWORK.fieldFit(state.qualField, job)) score += 30;
       return Math.min(100, score);
     }
 
@@ -800,6 +801,9 @@
 
     function repairState(s) {
       if (!s || typeof s !== 'object') return;
+      if (['matric', 'cert', 'diploma', 'degree'].indexOf(s.qualLevel) < 0) s.qualLevel = '';
+      s.qualField = String(s.qualField || '').slice(0, 60);
+      if (['all', 'general', 'qualified', 'mine'].indexOf(s.workQual) < 0) s.workQual = 'all';
       validateStateIntegrity(s);
       if (!Array.isArray(s.subjects) || s.subjects.length < 1) s.subjects = DEFAULT_SUBJECTS.map(x =>({ ...x }));
       s.subjects = s.subjects.map(x =>({
@@ -842,7 +846,7 @@
       }
     }
     ['pagehide', 'visibilitychange'].forEach(ev => window.addEventListener(ev, () => { if (ev === 'pagehide' || document.visibilityState === 'hidden') saveState(); }));
-    function escapeHtml(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+    function escapeHtml(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;'); }
     function showToast(msg, ms) {
       const t = document.getElementById('toast');
       if (!t) return;
@@ -1025,16 +1029,36 @@
       return hr < 12 ? 'Good morning' : hr < 18 ? 'Good afternoon' : 'Good evening';
     }
 
+    let ttsVoices = [];
+    function loadTtsVoices() { try { const v = window.speechSynthesis.getVoices(); if (v && v.length) ttsVoices = v; } catch (e) {} return ttsVoices; }
+    if ('speechSynthesis' in window) { loadTtsVoices(); try { window.speechSynthesis.addEventListener('voiceschanged', loadTtsVoices); } catch (e) {} }
+    function pickVoice(lang) {
+      const target = lang.toLowerCase(), base = target.split('-')[0];
+      const vs = loadTtsVoices().filter(v => !/espeak/i.test(v.name || ''));
+      const norm = v => String(v.lang || '').replace(/_/g, '-').toLowerCase();
+      return vs.find(v => v.localService && norm(v) === target) || vs.find(v => norm(v) === target) || vs.find(v => v.localService && norm(v).startsWith(base)) || vs.find(v => norm(v).startsWith(base)) || null;
+    }
+    function stopSpeech() { try { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); } catch (e) {} }
+    window.addEventListener('pagehide', stopSpeech);
     function safeSpeech(msg) {
-      if ('speechSynthesis' in window) {
+      if ('speechSynthesis' in window && typeof window.SpeechSynthesisUtterance === 'function') {
         try {
-          window.speechSynthesis.cancel();
-          const u = new SpeechSynthesisUtterance(String(msg || ''));
-          u.lang = state.lang === 'af' ? 'af-ZA' : 'en-ZA';
-          u.rate = 0.92;
-          window.speechSynthesis.speak(u);
-          showToast('Reading aloud...');
-          return true;
+          stopSpeech();
+          // Short chunks: long single utterances silently stop after ~15s on Android Chrome.
+          const chunks = String(msg || '').replace(/\s+/g, ' ').trim().match(/[^.!?]+[.!?]?/g) || [];
+          if (chunks.length) {
+            const lang = state.lang === 'af' ? 'af-ZA' : state.lang === 'zu' ? 'zu-ZA' : 'en-ZA';
+            const voice = pickVoice(lang) || (lang === 'en-ZA' ? pickVoice('en-GB') : null);
+            chunks.forEach(c => {
+              const u = new SpeechSynthesisUtterance(c.trim());
+              u.lang = voice ? String(voice.lang).replace(/_/g, '-') : lang;
+              if (voice) u.voice = voice;
+              u.rate = 0.92;
+              window.speechSynthesis.speak(u);
+            });
+            showToast('Reading aloud...');
+            return true;
+          }
         } catch (e) {}
       }
       showToast(String(msg || ''));
@@ -2040,6 +2064,51 @@
         ['Retail, call centre, hospitality, security', 'Grade 12 helps; security needs PSIRA registration.', g12]
       ];
     }
+    function activeWorkItems() { return SAMPLE_WORK.filter(w => !getJobFreshness(w.closing).expired); }
+    function workQualCard() {
+      const M = window.MZWORK; if (!M) return '';
+      const lvl = state.qualLevel || '', fld = state.qualField || '', wq = state.workQual || 'all';
+      const act = activeWorkItems();
+      const nGen = act.filter(w => M.jobQual(w).rank === 0).length;
+      const nQual = act.filter(w => (M.jobQual(w).rank || 0) >= 1).length;
+      const nMine = lvl ? act.filter(w => M.jobQual(w).rank >= 1 && M.fits(lvl, w)).length : 0;
+      const chips = [['all', 'All jobs (' + act.length + ')'], ['general', 'General jobs, no qualification (' + nGen + ')'], ['qualified', 'Needs a qualification (' + nQual + ')'], ['mine', 'Fits what I completed' + (lvl ? ' (' + nMine + ')' : '')]];
+      const help = !lvl ? 'Tell us what you have finished and we will sort jobs for you.' : (wq === 'mine' ? 'Showing jobs that ask for a qualification at or below yours' + (fld ? ', with ' + escapeHtml(fld) + ' jobs first.' : '.') : 'Jobs are labelled by what they usually ask for.');
+      return `<section id="work-qual-card" class="wq-card">
+        <h2 class="wq-h">What have you completed?</h2>
+        <p class="wq-p">Finished studying? Pick your highest qualification and your field. Jobs that need a diploma or degree are shown separately from general jobs.</p>
+        <div class="wq-row">
+          <label class="wq-lab">Highest qualification<select id="qual-level" class="wq-in"><option value="">Choose...</option>${M.LEVELS.map(l => `<option value="${l.key}" ${lvl === l.key ? 'selected' : ''}>${l.label}</option>`).join('')}</select></label>
+          <label class="wq-lab">Field of study<input id="qual-field" class="wq-in" type="text" maxlength="60" value="${escapeHtml(fld)}" placeholder="e.g. IT, Accounting, Engineering" /></label>
+        </div>
+        <div class="wq-chips" id="work-qual-chips">${chips.map(([k, l]) => `<button type="button" data-work-qual="${k}" class="wq-chip ${wq === k ? 'on' : ''}">${escapeHtml(l)}</button>`).join('')}</div>
+        <p class="wq-note">${help} Labels are guesses from the job title unless the job states them. The advert always has the final word.</p>
+        <div class="wq-boards"><strong>Where graduates and diploma holders look:</strong>
+          <a href="https://www.pnet.co.za/" target="_blank" rel="noopener noreferrer">PNet ↗</a>
+          <a href="https://www.careerjunction.co.za/" target="_blank" rel="noopener noreferrer">CareerJunction ↗</a>
+          <a href="https://za.indeed.com/" target="_blank" rel="noopener noreferrer">Indeed SA ↗</a>
+          <a href="https://www.linkedin.com/jobs/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+          <a href="https://www.yes4youth.co.za/" target="_blank" rel="noopener noreferrer">YES programme ↗</a>
+          <a href="https://sayouth.mobi/" target="_blank" rel="noopener noreferrer">SA Youth ↗</a>
+          <span>Never pay to apply for a job.</span></div>
+      </section>`;
+    }
+    function atsCard() {
+      return `<section id="ats-card" class="wq-card">
+        <h2 class="wq-h">Is my CV ATS friendly?</h2>
+        <p class="wq-p">Many employers use software (an ATS) that reads your CV before a person does. Paste your CV text for a quick checklist. This is a rule-based check to help you fix common problems. It cannot promise a pass.</p>
+        <label class="wq-lab">Your CV text<textarea id="ats-cv" rows="6" class="wq-in" placeholder="Paste your CV here...">${escapeHtml(state.cvRawText || '')}</textarea></label>
+        <label class="wq-lab">Job advert (optional, to check key words)<textarea id="ats-ad" rows="3" class="wq-in" placeholder="Paste the job advert to see which key words you are missing"></textarea></label>
+        <div class="wq-actions"><button type="button" id="ats-run" class="wq-btn">Check my CV</button><button type="button" data-tab="vault" class="wq-btn ghost">Build or fix my CV</button></div>
+        <div id="ats-out" class="wq-out" aria-live="polite"></div>
+        <p class="wq-note">Safest format: a Word (.docx) or text-based PDF, one column, plain headings, no photos, tables or text boxes. Keep your ID number off it.</p>
+      </section>`;
+    }
+    function renderAtsResult(r) {
+      const col = r.score >= 75 ? 'good' : (r.score >= 50 ? 'mid' : 'bad');
+      const kw = (r.adGiven ? `<div class="wq-kw"><strong>Key words you have:</strong> ${r.matched.length ? escapeHtml(r.matched.join(', ')) : 'none yet'}<br><strong>Missing from your CV (add only if true):</strong> ${r.missing.length ? escapeHtml(r.missing.join(', ')) : 'none'}</div>` : '');
+      return `<div class="wq-score ${col}">${r.score}<small>/100</small></div><ul class="wq-list">${r.items.map(i => `<li class="${i.ok ? 'ok' : 'no'}"><span aria-hidden="true">${i.ok ? '✓' : '!'}</span> ${escapeHtml(i.text)}</li>`).join('')}</ul>${kw}`;
+    }
     function renderWork() {
       const wr = workReadinessRows();
       const wk = state.workKind || 'all';
@@ -2053,6 +2122,8 @@
             <div class="text-[11px] text-slate-400">Typical minimums only. The advert always has the final word.</div>
             <div class="flex flex-wrap gap-1.5 text-[11px] font-extrabold" id="work-kind-chips">${[['all', 'All jobs'], ['gov', 'Government posts'], ['learn', 'Learnerships & internships'], ['private', 'Private & local']].map(([k, l]) => `<button type="button" data-work-kind="${k}" class="px-3 py-1.5 rounded-full border ${wk === k ? 'bg-white text-slate-900 border-white' : 'bg-transparent text-white border-slate-500'}">${l}</button>`).join('')}</div>
           </section>
+          ${workQualCard()}
+          ${atsCard()}
           <div id="legal-free-jobs-card" class="rounded-2xl bg-white border border-slate-200 border-l-4 border-l-slate-900 p-4 shadow-sm space-y-2.5 text-xs">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <div>
@@ -2099,6 +2170,12 @@
               const provFilter = state.jobProvinceFilter || 'ALL';
               let items = SAMPLE_WORK.map(w => ({ ...w, jobKey: `${w.title}|${w.employer}|${w.url}`, matchScore: scoreJobMatch(w), freshness: getJobFreshness(w.closing), kind: jobKindOf(w) })).filter(w => !w.freshness.expired);
               if ((state.workKind || 'all') !== 'all') items = items.filter(w => w.kind === state.workKind);
+              if (window.MZWORK) {
+                const wqf = state.workQual || 'all';
+                if (wqf === 'general') items = items.filter(w => MZWORK.jobQual(w).rank === 0);
+                else if (wqf === 'qualified') items = items.filter(w => (MZWORK.jobQual(w).rank || 0) >= 1);
+                else if (wqf === 'mine') items = items.filter(w => MZWORK.jobQual(w).rank >= 1 && MZWORK.fits(state.qualLevel, w) !== false);
+              }
               if (provFilter !== 'ALL') items = items.filter(w => `${w.province} ${w.town}`.toLowerCase().includes(provFilter.toLowerCase()) || String(w.province || '').toLowerCase() === 'south africa');
               if (q) items = items.filter(w => `${w.title} ${w.employer} ${w.town} ${w.province}`.toLowerCase().includes(q));
               if (state.savedJobsOnly) items = items.filter(w => savedSet.has(w.jobKey));
@@ -2134,7 +2211,7 @@
                   </div>
                 </div>
                 <h2 class="text-base font-extrabold text-slate-900">${escapeHtml(w.title)}</h2>
-                <div class="flex flex-wrap items-center gap-1.5"><span class="px-2 py-0.5 rounded-full bg-slate-900 text-white text-[10px] font-extrabold">${escapeHtml(JOB_KINDS[w.kind] || 'Job')}</span></div>
+                <div class="flex flex-wrap items-center gap-1.5"><span class="px-2 py-0.5 rounded-full bg-slate-900 text-white text-[10px] font-extrabold">${escapeHtml(JOB_KINDS[w.kind] || 'Job')}</span>${window.MZWORK ? (() => { const q = MZWORK.jobQual(w), f = MZWORK.fits(state.qualLevel, w); return `<span class="wq-badge r${q.rank === null ? 'x' : q.rank}">${escapeHtml(q.label)}${q.inferred ? ' (guess)' : ''}</span>` + (q.rank >= 1 && f === true ? '<span class="wq-badge you">You have this level ✓</span>' : (q.rank >= 1 && f === false ? '<span class="wq-badge no">Above your level</span>' : '')) + (MZWORK.fieldFit(state.qualField, w) ? '<span class="wq-badge you">In your field</span>' : ''); })() : ''}</div>
                 <div class="text-slate-600">${escapeHtml(w.town)}, ${escapeHtml(w.province)} · ${escapeHtml(w.salary)} · Closes ${escapeHtml(w.closing)}</div>
                 <div class="p-2 rounded-xl bg-blue-50 border border-blue-200 text-[11px] text-blue-950"><strong>Minimum to apply (typical):</strong> ${escapeHtml(JOB_KIND_HELP[w.kind] || '')}</div>
                 <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] space-y-0.5">
@@ -2357,6 +2434,19 @@
             </div>
             <div id="cipc-check-out" class="hidden p-2.5 rounded-lg bg-slate-50 border border-slate-200 text-[11px] font-semibold text-slate-800"></div>
           </section>
+          <section class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-2.5" aria-labelledby="reg-title">
+            <h2 id="reg-title" class="text-base font-extrabold text-slate-900">Verify a private college or qualification</h2>
+            <p class="text-xs text-slate-600">Checks the <em>format</em> of a DHET registration number or SAQA ID and warns about retired qualifications. It cannot confirm a college is registered: always check the official DHET register or call 0800 87 2222 before paying anything.</p>
+            <div class="flex flex-wrap items-end gap-2">
+              <div class="flex-1 min-w-[200px]"><label for="reg-dhet-in" class="block text-[11px] font-bold text-slate-600 mb-1">DHET registration no.</label><input id="reg-dhet-in" type="text" inputmode="text" autocomplete="off" placeholder="e.g. 2015/HE07/001" class="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-300 text-xs font-mono" /></div>
+              <button type="button" id="reg-dhet-btn" class="px-3.5 py-2 rounded-lg bg-slate-900 text-white text-xs font-bold hover:bg-slate-800">Check college number</button>
+            </div>
+            <div class="flex flex-wrap items-end gap-2">
+              <div class="flex-1 min-w-[200px]"><label for="reg-saqa-in" class="block text-[11px] font-bold text-slate-600 mb-1">SAQA qualification ID</label><input id="reg-saqa-in" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 78964" class="w-full px-3 py-2 rounded-lg bg-slate-50 border border-slate-300 text-xs font-mono" /></div>
+              <button type="button" id="reg-saqa-btn" class="px-3.5 py-2 rounded-lg bg-slate-900 text-white text-xs font-bold hover:bg-slate-800">Check SAQA ID</button>
+            </div>
+            <div id="reg-out" role="status" aria-live="polite" class="hidden p-2.5 rounded-lg border text-[11px] font-semibold"></div>
+          </section>
           <form id="scam-form" class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-2.5">
             <h2 class="text-base font-extrabold text-slate-900">SA Recruitment Scam Indicator Scanner</h2>
             <textarea id="scam-in" rows="3" required placeholder="Paste any suspicious WhatsApp, Facebook, or SMS job advert..." class="w-full px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs"></textarea>
@@ -2404,6 +2494,13 @@
       document.querySelectorAll('[data-sub-mark]').forEach(el =>el.addEventListener('change', e =>{ state.subjects[Number(el.dataset.subMark)].mark = Math.max(0, Math.min(100, Number(e.target.value) || 0)); saveState(); render(); }));
       const gs = document.getElementById('grade-stage');
       if (gs) gs.addEventListener('change', e =>{ state.gradeStage = e.target.value; saveState(); render(); });
+      const ql = document.getElementById('qual-level'); if (ql) ql.addEventListener('change', e => { state.qualLevel = e.target.value; if (state.qualLevel && state.workQual === 'all') state.workQual = 'mine'; saveState(); render(); });
+      const qf = document.getElementById('qual-field'); if (qf) qf.addEventListener('change', e => { state.qualField = e.target.value.trim().slice(0, 60); saveState(); render(); });
+      const atsBtn = document.getElementById('ats-run'); if (atsBtn) atsBtn.addEventListener('click', () => {
+        const cvT = document.getElementById('ats-cv').value, adT = document.getElementById('ats-ad').value;
+        state.cvRawText = cvT.slice(0, 30000); saveState();
+        const out = document.getElementById('ats-out'); out.innerHTML = renderAtsResult(MZWORK.atsCheck(cvT, adT)); out.scrollIntoView({ block: 'nearest' });
+      });
       document.querySelectorAll('[data-aff]').forEach(inp =>inp.addEventListener('change', e =>{
         const [planKey, field] = inp.dataset.aff.split('|');
         const target = planKey === 'A' ? state.affordA : state.affordC;
@@ -3227,6 +3324,16 @@
           out.textContent = res.msg;
         }
       });
+      const regOut = (r) => {
+        const out = document.getElementById('reg-out'); if (!out || !r) return;
+        const tone = r.tone === 'red' ? 'bg-rose-50 border-rose-300 text-rose-900' : r.tone === 'amber' ? 'bg-amber-50 border-amber-300 text-amber-950' : 'bg-blue-50 border-blue-300 text-blue-900';
+        out.className = 'p-2.5 rounded-lg border text-[11px] font-semibold ' + tone;
+        out.textContent = r.message;
+      };
+      const dhetBtn = document.getElementById('reg-dhet-btn');
+      if (dhetBtn) dhetBtn.addEventListener('click', () => { if (window.MZ_TRUST) regOut(window.MZ_TRUST.checkPrivateCollegeReg(document.getElementById('reg-dhet-in').value)); });
+      const saqaBtn = document.getElementById('reg-saqa-btn');
+      if (saqaBtn) saqaBtn.addEventListener('click', () => { if (window.MZ_TRUST) regOut(window.MZ_TRUST.checkSaqaQualification(document.getElementById('reg-saqa-in').value)); });
       const sf = document.getElementById('scam-form');
       const ssb = document.getElementById('scam-sample-btn');
       if (ssb) ssb.addEventListener('click', () => {
@@ -3239,11 +3346,19 @@
         e.preventDefault();
         const txt = document.getElementById('scam-in').value;
         const flags = [];
-        if (/(?<!no\s)(?<!zero\s)\b(?:registration|application|admin|processing)\s+fee\b/i.test(txt)) flags.push('Requests application/registration fee');
-        if (/\b(?:pay|deposit|eft|ewallet|cashsend)\s*r?\s*\d+/i.test(txt)) flags.push('Requests upfront payment/deposit');
+        // "no registration fee" / "zero admin fee" is reassuring, so drop those phrases before looking for fee demands.
+        // (No regex lookbehind: it is a syntax error on iPhones older than iOS 16.4 and would stop the whole app loading.)
+        const t2 = txt.replace(/\b(?:no|zero|without|free of)\s+(?:any\s+)?(?:registration|application|admin|processing)\s+fees?\b/gi, ' ');
+        if (/\b(?:registration|application|admin|processing)\s+fees?\b/i.test(t2)) flags.push('Requests application/registration fee');
+        if (/\b(?:pay|deposit|eft|ewallet|cashsend|send)\s*r?\s*\d+/i.test(txt)) flags.push('Requests upfront payment/deposit');
+        if (/\b(?:ewallet|cash\s*send|mukuru|pep\s*money|shoprite\s*money|capitec\s*pay\s*me)\b/i.test(txt)) flags.push('Asks for an informal money transfer (eWallet / CashSend / Mukuru)');
         if (/(eskom|transnet|sasol|saps|department of|shoprite|fnb)/i.test(txt) && /@(gmail|yahoo|hotmail|outlook)\.com/i.test(txt)) flags.push('Major SA employer using free webmail');
-        if (/\b(?:bit\.ly|tinyurl\.com|t\.co|wa\.me)\b/i.test(txt) && /\b(?:urgent|whatsapp only|send id)\b/i.test(txt)) flags.push('Shortened link / WhatsApp-only urgency pattern');
+        if (/\b(?:bit\.ly|tinyurl\.com|t\.co|wa\.me|rb\.gy|cutt\.ly|shorturl\.at)\b/i.test(txt)) flags.push('Hides the real destination behind a shortened link');
+        if (/\b(?:urgent|whatsapp only|whatsapp\s+your\s+cv|send id)\b/i.test(txt)) flags.push('Pressure or WhatsApp-only application with no official employer portal');
         if (/\b(?:medical|police clearance|uniform|training|placement)\s+(?:fee|deposit|payment)\b/i.test(txt)) flags.push('Demands upfront medical/clearance/placement fee (illegal for job seekers)');
+        if (/\b100\s*%\s*(?:guaranteed|assured)\s*(?:job|placement|employment)\b/i.test(txt)) flags.push('Promises a guaranteed job (reputable employers never do)');
+        if (/\b(?:send|share|attach)\b[^.\n]{0,40}\b(?:id\s*(?:copy|number|document)|bank\s*(?:details|statement)|pin|otp)\b/i.test(txt)) flags.push('Asks for ID copies, bank details, PIN or OTP before any interview');
+        if (/\bn[1-3]\b/i.test(txt) && /\b(?:nated|report\s*191|certificate|diploma)\b/i.test(txt)) flags.push('Mentions NATED N1-N3, which was phased out on 1 Jan 2024');
         scamResult = flags; render();
       });
     }
@@ -3259,6 +3374,8 @@
       if (us) { state.studyPlanPicks = (state.studyPlanPicks || []).filter(x => x !== us.dataset.unsaveStudy); saveState(); render(); return; }
       const si = e.target.closest && e.target.closest('[data-study-inst]');
       if (si) { state.studyF = { inst: si.dataset.studyInst, show: 'all' }; saveState(); render(); window.scrollTo(0, 0); return; }
+      const wqb = e.target.closest && e.target.closest('[data-work-qual]');
+      if (wqb) { state.workQual = wqb.dataset.workQual; if (state.workQual === 'mine' && !state.qualLevel) showToast('Choose your highest qualification first.'); saveState(); render(); return; }
       const wkb = e.target.closest && e.target.closest('[data-work-kind]');
       if (wkb) { state.workKind = wkb.dataset.workKind; saveState(); render(); return; }
       const cs = e.target.closest && e.target.closest('[data-career-study]');
@@ -3489,17 +3606,11 @@
       runTutorialDemo(step.demoAction);
     });
     document.getElementById('prov-select').addEventListener('change', e =>{ state.province = e.target.value; saveState(); render(); });
-    const langSel = document.getElementById('lang-select'); if (langSel) langSel.addEventListener('change', e =>{ state.lang = e.target.value; saveState(); render(); showToast('Language updated'); });
+    const langSel = document.getElementById('lang-select'); if (langSel) langSel.addEventListener('change', e =>{ state.lang = e.target.value; saveState(); try { if (window.MZI18N) window.MZI18N.setLang(state.lang); } catch (err) {} render(); showToast('Language updated'); });
     document.addEventListener('keydown', e =>{
       if (e.altKey && ['1','2','3','4','5','6'].includes(e.key)) {
         const tabs = ['results', 'careers', 'study', 'plan', 'vault', 'work'];
         state.tab = tabs[Number(e.key) - 1]; saveState(); render(); return;
-      }
-      if (e.altKey && /^[1-6]$/.test(e.key)) {
-        const tabs = ['results', 'careers', 'study', 'plan', 'vault', 'work'];
-        state.tab = tabs[Number(e.key) - 1];
-        saveState(); render();
-        return;
       }
             if (e.key === 'Escape') {
         document.getElementById('why-modal').classList.add('hidden');
@@ -3520,13 +3631,22 @@
       }
     });
     if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+      const hadController = !!navigator.serviceWorker.controller;
+      let swNoticeShown = false;
+      // A new release takes over by itself; tell the person once instead of leaving them on a half-old screen.
+      navigator.serviceWorker.addEventListener('controllerchange', () =>{
+        if (!hadController || swNoticeShown) return; swNoticeShown = true;
+        showToast('A new version of Mzansi Pathways is ready. Reload the page when convenient to use it.', 7000);
+      });
       window.addEventListener('load', () =>{ navigator.serviceWorker.register('./sw.js').catch(() =>{}); });
     }
-    async function deriveAesKey(passphrase, salt) {
+    // v2 backups use OWASP-recommended 600k PBKDF2 rounds and record the count in the file; v1 files (120k) still open.
+    const KDF_ITER_V1 = 120000, KDF_ITER_V2 = 600000;
+    async function deriveAesKey(passphrase, salt, iterations) {
       const enc = new TextEncoder();
       const baseKey = await crypto.subtle.importKey('raw', enc.encode(passphrase), 'PBKDF2', false, ['deriveKey']);
       return crypto.subtle.deriveKey(
-        { name: 'PBKDF2', salt, iterations: 120000, hash: 'SHA-256' },
+        { name: 'PBKDF2', salt, iterations: iterations || KDF_ITER_V2, hash: 'SHA-256' },
         baseKey,
         { name: 'AES-GCM', length: 256 },
         false,
@@ -3570,12 +3690,12 @@
       try {
         const salt = crypto.getRandomValues(new Uint8Array(16));
         const iv = crypto.getRandomValues(new Uint8Array(12));
-        const key = await deriveAesKey(pass, salt);
+        const key = await deriveAesKey(pass, salt, KDF_ITER_V2);
         const plain = new TextEncoder().encode(JSON.stringify(state));
         const cipher = new Uint8Array(await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, plain));
         // Chunked: String.fromCharCode(...bigArray) overflows the call stack for a large profile and made backups fail.
         const b64 = u => { let bin = ''; for (let i = 0; i < u.length; i += 8192) bin += String.fromCharCode.apply(null, u.subarray(i, i + 8192)); return btoa(bin); };
-        const bundle = JSON.stringify({ format: 'mzansi-pathways-aes256-v1', createdAt: new Date().toISOString(), salt: b64(salt), iv: b64(iv), data: b64(cipher) });
+        const bundle = JSON.stringify({ format: 'mzansi-pathways-aes256-v2', kdf: 'PBKDF2-SHA256', iterations: KDF_ITER_V2, createdAt: new Date().toISOString(), salt: b64(salt), iv: b64(iv), data: b64(cipher) });
         const url = URL.createObjectURL(new Blob([bundle], { type: 'application/json' }));
         const a = document.createElement('a'); a.href = url; a.download = 'mzansi_pathways_encrypted.mzansi';
         document.body.appendChild(a); a.click(); a.remove();
@@ -3595,9 +3715,13 @@
       r.onload = async () =>{
         try {
           const pkg = JSON.parse(String(r.result || '{}'));
-          if (!pkg || pkg.format !== 'mzansi-pathways-aes256-v1' || !pkg.salt || !pkg.iv || !pkg.data) { showToast('This is not a Mzansi Pathways backup file'); return; }
+          if (!pkg || (pkg.format !== 'mzansi-pathways-aes256-v1' && pkg.format !== 'mzansi-pathways-aes256-v2') || !pkg.salt || !pkg.iv || !pkg.data) { showToast('This is not a Mzansi Pathways backup file'); return; }
           const fromB64 = s =>Uint8Array.from(atob(s), c =>c.charCodeAt(0));
-          const key = await deriveAesKey(pass, fromB64(pkg.salt));
+          const iters = pkg.format === 'mzansi-pathways-aes256-v2' ? Number(pkg.iterations) : KDF_ITER_V1;
+          // Refuse weakened or absurd values so a tampered file can neither downgrade the key stretching nor freeze the phone.
+          if (!Number.isInteger(iters) || iters < KDF_ITER_V1 || iters > 5000000) { showToast('This backup file is not valid'); return; }
+          showToast('Unlocking... this can take a few seconds');
+          const key = await deriveAesKey(pass, fromB64(pkg.salt), iters);
           const dec = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: fromB64(pkg.iv) }, key, fromB64(pkg.data));
           const restored = JSON.parse(new TextDecoder().decode(dec));
           if (!restored || typeof restored !== 'object' || Array.isArray(restored) || !Array.isArray(restored.subjects)) { showToast('The backup opened but its contents look damaged. Your current profile was not changed.'); return; }
@@ -3622,8 +3746,11 @@
       showToast('Cloud OTP requires connecting your Supabase Auth URL — use Option 1 encrypted transfer offline today!');
     });
 
-    window.addEventListener('error', e =>{ if (e && e.preventDefault) e.preventDefault(); });
-    window.addEventListener('unhandledrejection', e =>{ if (e && e.preventDefault) e.preventDefault(); });
+    // Errors never pop up in front of a learner, but the last few are kept in memory (window.__mzErrors) so a helper can read them from the console.
+    window.__mzErrors = [];
+    const keepErr = m =>{ try { window.__mzErrors.push(String(m).slice(0, 300)); if (window.__mzErrors.length > 20) window.__mzErrors.shift(); } catch (x) {} };
+    window.addEventListener('error', e =>{ if (e && e.target === window) keepErr((e.message || 'error') + ' @' + (e.filename || '').split('/').pop() + ':' + (e.lineno || 0)); if (e && e.preventDefault) e.preventDefault(); });
+    window.addEventListener('unhandledrejection', e =>{ keepErr('promise: ' + (e && e.reason && (e.reason.message || e.reason))); if (e && e.preventDefault) e.preventDefault(); });
 
     let deferredPwaPrompt = null;
     window.addEventListener('beforeinstallprompt', e =>{
@@ -3647,12 +3774,16 @@
     window.addEventListener('online', syncNetPill);
     window.addEventListener('offline', syncNetPill);
     syncNetPill();
+    // Ask the browser not to evict saved marks when the phone is short of space (silent, best effort).
+    try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() =>{}); } catch (e) {}
     applyModes();
     syncBackupUi();
     if (window._mzRecovered) showToast('Your saved profile was damaged, so the last good copy was restored. Please check your marks.', 6000);
     if (!state.intakeYear) state.intakeYear = MZDATA.defaultYear();
     syncYearLabels();
     render();
+    // Apply the saved language to the key screens (i18n.js keeps its own copy, so sync it from the profile).
+    try { if (window.MZI18N && state.lang) window.MZI18N.setLang(state.lang); } catch (e) {}
     MZDATA.load(SAMPLE_PROGRAMMES, CAREERS).then(n => { if (n) render(); });
     /* v78: tour is opt-in (home page link or Help), no longer pops over the first screen */
     loadLiveOpenJobs();

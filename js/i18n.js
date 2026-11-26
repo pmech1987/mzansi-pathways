@@ -11,6 +11,16 @@
     zu: { name: 'isiZulu', reviewed: false, t: ['Imiphumela','Imisebenzi','Zonke izindlela','Uhlelo A/B/C','Izilungiselelo','Vala','Khetha kwi-Gallery / Amafayela','Thatha isithombe','Funda isithombe ngokuzenzakalelayo',
       'Ifinyelela ezidingweni eziphansi','Ngokwemibandela','Seduze nokufaneleka','Idinga ukuqinisekiswa','Okwamanje ayifaneleki','Bonisa ezingu-20 ezengeziwe','Zonke izifundazwe',
       'Ukwamukelwa kunqunywa yisikhungo.','Izikhungo','Ulimi'] },
+    af: { name: 'Afrikaans', reviewed: false, t: ['Resultate','Loopbane','Alle roetes','Plan A/B/C','Instellings','Maak toe','Kies uit Galery / L\u00eaers','Neem foto','Lees foto outomaties',
+      'Voldoen aan minimum','Voorwaardelik','Amper \u2019n passing','Verifikasie nodig','Tans nie geskik nie','Wys nog 20','Alle provinsies',
+      'Toelating word deur die instelling besluit.','Instellings','Taal'],
+      // Extra exact-match labels (home screen, navigation). Draft, same status as the lines above.
+      x: { 'Career Paths':'Loopbaanpaaie','Study Paths':'Studiepaaie','Work Paths':'Werkpaaie','Evidence & CV':'Bewyse en CV','My marks':'My punte','My pathway':'My pad','Study':'Studeer','Work':'Werk','Funding':'Befondsing','More':'Meer','Tour':'Toer','Sync':'Sinkroniseer',
+        'Install App':'Installeer toepassing','Offline':'Aflyn','University':'Universiteit','University of Technology':'Universiteit van Tegnologie','TVET or occupational':'TVET of beroepsgerig','Learn and earn':'Leer en verdien','Check my options':'Kyk na my opsies',
+        'Scan or paste my results':'Skandeer of plak my uitslae','Tell us where you are.':'Vertel ons waar jy is.','What do you want to figure out?':'Wat wil jy uitvind?','Free. No sign-up.':'Gratis. Geen registrasie.',
+        'Enter your results and see where you stand.':'Voer jou uitslae in en sien waar jy staan.','Courses and institutions you realistically qualify for.':'Kursusse en instellings waarvoor jy realisties kwalifiseer.',
+        'Jobs and careers that match where you are now.':'Werke en loopbane wat by jou huidige posisie pas.','Keep your proof and build a CV.':'Hou jou bewyse en bou \u2019n CV.','Bursaries and what each route will cost you.':'Beurse en wat elke roete jou sal kos.',
+        'Build a Plan A, B and C you can act on.':'Bou \u2019n Plan A, B en C waarop jy kan optree.','Take the 1-minute tour':'Doen die 1-minuut-toer' } },
     ss: { name: 'siSwati', reviewed: false, t: ['Imiphumela','Emisebenti','Tonkhe tindlela','Luhlelo A/B/C','Kulungiselela','Vala','Khetsa e-Gallery / Emafayela','Thatha sitfombe','Fundza sitfombe ngekwakho',
       'Ifinyelela kulokudzingekako','Ngemibandzela','Seduze nekufaneleka','Idzinga kucinisekiswa','Angakafaneli njengamanje','Khombisa letingu-20 letingetiwe','Tonkhe tifundza',
       'Kwemukelwa kunqunywa sisikhungo.','Tikhungo','Lulwimi'] },
@@ -18,16 +28,18 @@
       'Swi fikelela leswi lavekaka','Hi swiyimo','Ya tshinela','Swi lava ku tiyisisiwa','Hi nkarhi lowu a nga fanelanga','Kombisa 20 yin\'wana','Swifundzha hinkwaswo',
       'Ku amukeriwa swi tiyisisiwa hi xikolo.','Swikolo','Ririmi'] }
   };
-  const DRAFT = { en: '', zu: 'Lokhu kuyinguqulo yokuqala engakahlolwa ngumuntu okhuluma isiZulu kahle.', ss: 'This is a draft siSwati translation not yet checked by a fluent speaker. English is always correct.', ts: 'This is a draft Xitsonga translation not yet checked by a fluent speaker. English is always correct.' };
+  const DRAFT = { en: '', af: 'This is a draft Afrikaans translation not yet checked by a fluent speaker. English is always correct.', zu: 'Lokhu kuyinguqulo yokuqala engakahlolwa ngumuntu okhuluma isiZulu kahle.', ss: 'This is a draft siSwati translation not yet checked by a fluent speaker. English is always correct.', ts: 'This is a draft Xitsonga translation not yet checked by a fluent speaker. English is always correct.' };
   let lang = 'en', busy = false; const orig = new WeakMap();
-  function map(l) { const m = {}; if (D[l]) EN_KEYS.forEach((k, i) => { m[k] = D[l].t[i]; }); return m; }
+  function map(l) { const m = {}; if (D[l]) { EN_KEYS.forEach((k, i) => { m[k] = D[l].t[i]; }); if (D[l].x) Object.keys(D[l].x).forEach(k => { m[k] = D[l].x[k]; }); } return m; }
+  // Every English phrase that any language can translate, so a text node is only remembered when it might change.
+  const KNOWN = {}; EN_KEYS.forEach(k => { KNOWN[k] = 1; }); Object.keys(D).forEach(l => { if (D[l].x) Object.keys(D[l].x).forEach(k => { KNOWN[k] = 1; }); });
   function apply(rootEl) {
     if (busy) return; busy = true;
     try {
       const m = map(lang), w = document.createTreeWalker(rootEl || document.body, NodeFilter.SHOW_TEXT);
       let n; while ((n = w.nextNode())) {
         const par = n.parentNode && n.parentNode.nodeName; if (par === 'SCRIPT' || par === 'STYLE' || par === 'TEXTAREA') continue;
-        if (!orig.has(n)) { const s = n.nodeValue.trim(); if (!(s in map('zu')) && !EN_KEYS.includes(s)) continue; orig.set(n, n.nodeValue); }
+        if (!orig.has(n)) { const s = n.nodeValue.trim(); if (!KNOWN[s]) continue; orig.set(n, n.nodeValue); }
         const o = orig.get(n); if (o === undefined) continue; const s = o.trim();
         const to = lang === 'en' ? o : (m[s] ? o.replace(s, m[s]) : o);
         if (n.nodeValue !== to) n.nodeValue = to;

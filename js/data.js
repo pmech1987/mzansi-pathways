@@ -9,6 +9,14 @@
 
   // Client-side safety net: a record can only LOSE trust here, never gain it. Real proof is checked in CI (gate 85).
   function trustOf(p) {
+    // Rows read from the official prospectus by the pipeline carry their own list of automatic checks. Every one must pass and the row must be recent.
+    if (p.verificationStatus === 'auto_verified') {
+      const cs = Array.isArray(p.autoChecks) ? p.autoChecks : [];
+      const good = cs.filter(c => c && c.ok === true).length;
+      const days = p.lastVerifiedAt ? (Date.now() - Date.parse(p.lastVerifiedAt)) / 864e5 : 9999;
+      const pass = cs.length >= 14 && good === cs.length && days <= 120;
+      return { checks: good, total: cs.length, reviewers: 0, auto: true, ageDays: Math.round(days), status: pass ? 'verified' : 'pending_review' };
+    }
     const types = new Set((p.checks || []).filter(c => c.ok === true).map(c => c.type));
     const n = ['official_domain', 'document_hash', 'second_source', 'institution_confirmation', 'year_match'].filter(t => types.has(t)).length;
     const rev = new Set((p.signoffs || []).map(s => s.reviewer)).size;
@@ -26,7 +34,7 @@
       route: p.route, isUniversity: p.route === 'University', name: p.name, nqf: p.nqf ? 'NQF ' + p.nqf : '', duration: p.duration || '',
       estAnnualCost: p.feesNote || 'See official fee schedule', costLevel: 'Check official fees', funding: p.funding || [],
       deadline: closes || 'Check official portal', closes: closes, verifiedRules: tr.status !== 'unverified_existence',
-      verificationStatus: tr.status, trust: tr, sourceTier: (p.sourceDoc || 'Source not recorded') + (p.sourcePage ? ', ' + p.sourcePage : '') + ' | checks ' + tr.checks + '/5, reviewers ' + tr.reviewers + '/2',
+      verificationStatus: tr.status, trust: tr, sourceTier: tr.auto ? 'Auto-checked against the official prospectus: ' + (p.sourceDoc || 'source not recorded') + (p.sourcePage ? ', ' + p.sourcePage : '') + ' | ' + tr.checks + '/' + tr.total + ' automatic checks passed' : (p.sourceDoc || 'Source not recorded') + (p.sourcePage ? ', ' + p.sourcePage : '') + ' | checks ' + tr.checks + '/5, reviewers ' + tr.reviewers + '/2',
       legitStatus: inst.type === 'University' || inst.type === 'UoT' ? 'Public institution (DHET)' : 'Verify accreditation',
       minPassLevel: p.minPassLevel, minAps: p.minAps || 0, requiresSelection: !!p.requiresSelection,
       subjectRequirements: p.subjectRequirements || [], apsMethod: inst.apsMethod || null,
@@ -82,5 +90,5 @@
     const y = defaultYear(), s = new Set(state.years.concat([y - 1, y, y + 1, y + 2, y + 3]));
     return Array.from(s).sort();
   }
-  root.MZDATA = { PROVINCES, defaultYear, load, yearChoices, state, toAppShape };
+  root.MZDATA = { PROVINCES, defaultYear, load, yearChoices, state, toAppShape, trustOf };
 })(window);
