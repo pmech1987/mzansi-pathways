@@ -1,0 +1,103 @@
+name: Data refresh
+
+# Runs every night at 00:05 South African time, when you push a sheet into inbox/, and on demand (Actions tab > Data refresh > Run workflow).
+on:
+  schedule:
+    - cron: '5 22 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['inbox/*.csv', 'inbox/*.json', 'data/catalogue.json', 'data/events.json', 'data/institutions.json', 'data/public_ats_boards.json']
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: mz-data-writes
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Back up the data (kept 30 days, outside git)
+        run: python3 scripts/backup_data.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: data-backup-${{ github.run_id }}
+          path: backups/
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Import programme sheets from inbox/
+        id: import
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          failed=0
+          shopt -s nullglob
+          for f in inbox/*.csv inbox/*.json; do
+            echo "== $f"
+            if python scripts/csv_to_programmes_json.py "$f" | tee -a import.log; then
+              mv "$f" "inbox/done/$(date -u +%Y%m%d)_$(basename "$f")"
+            else
+              failed=1
+            fi
+          done
+          exit $failed
+
+      - name: Rebuild the catalogue file
+        run: python scripts/build_catalogue.py
+
+      - name: Fetch open jobs from official employer boards
+        if: github.event_name != 'push'
+        continue-on-error: true
+        run: python scripts/fetch_jobs.py
+
+      - name: Roll the intake year over if one is due
+        run: python scripts/roll_year.py
+
+      - name: Refresh event statuses, drop expired jobs, audit programmes
+        run: python scripts/refresh_data.py | tee refresh.log
+
+      - name: Checks (nothing is committed if these fail)
+        run: |
+          python scripts/test_scripts.py
+          python scripts/test_automation.py
+          python scripts/test_hardening.py
+          python scripts/validate_data.py
+          node tests/run.mjs
+
+      - name: Summary
+        if: always()
+        run: |
+          { echo '### Data refresh'; echo '```'; cat import.log refresh.log 2>/dev/null; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit changes
+        run: |
+          scripts/push_data.sh "data: automated refresh $(date -u +%F)" data js inbox
+
+      - name: Fail if a sheet had rejected rows
+        if: steps.import.outcome == 'failure'
+        run: |
+          echo "Some rows in inbox/ were rejected. See the 'Import programme sheets' step and fix the sheet." >&2
+          exit 1
+      - name: Tell a person if this failed
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: scripts/ci_status.sh fail "Data refresh"
+      - name: Close the failure issue if we recovered
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: scripts/ci_status.sh ok "Data refresh"
