@@ -1,8 +1,8 @@
-const CACHE = 'mzansi-pathways-v67';
+const CACHE = 'mzansi-pathways-v76';
 // CORE: the app cannot work offline without these. If one cannot be fetched the install fails and the old worker keeps running.
-const CORE = ['./', './index.html', './js/engine.js', './js/data.js', './js/i18n.js', './js/ocr.js'];
+const CORE = ['./', './index.html', './js/engine.js', './js/data.js', './js/i18n.js', './js/ocr.js', './js/catalogue.js', './js/catalogue_data.js'];
 // NICE: saved if reachable, never blocks the install (a missing icon or data file must not break offline mode for everyone).
-const NICE = ['./manifest.json', './icon-192.png', './icon-512.png', './data/index.json', './data/institutions.json', './data/careers.json', './data/bursaries.json'];
+const NICE = ['./manifest.json', './icon-192.png', './icon-512.png', './data/index.json', './data/institutions.json', './data/careers.json', './data/bursaries.json', './data/events.json', './data/pset_national_registry.json'];
 const OPTIONAL = ['./vendor/tesseract/tesseract.min.js', './vendor/tesseract/worker.min.js', './vendor/tesseract/eng.traineddata.gz'];
 
 function offlineJson() { return new Response('{}', { status: 503, headers: { 'Content-Type': 'application/json' } }); }
@@ -56,3 +56,5 @@ self.addEventListener('fetch', e => {
   // Everything else: saved copy first. A failed request gets a clean error, never the home page pretending to be a script or image.
   e.respondWith(caches.match(e.request).then(hit => hit || fetch(e.request).catch(() => new Response('', { status: 503 }))));
 });
+
+self.addEventListener('message', e => { if (e.data && e.data.type === 'SKIP_WAITING') self.skipWaiting(); });

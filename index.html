@@ -65,6 +65,7 @@
       body { background: #ffffff !important; color: #000000 !important; padding: 0 !important; }
     }
   </style>
+  <link rel="stylesheet" href="./css/civic_mobile_a11y.css" />
 </head>
 <body class="min-h-screen flex flex-col">
 
@@ -90,11 +91,11 @@
       <!-- Desktop Nav -->
       <nav class="hidden lg:flex items-center gap-1 shrink-0" aria-label="Primary navigation">
         <button data-tab="results" class="tab-btn active whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Results</button>
-        <button data-tab="careers" class="tab-btn whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Careers</button>
-        <button data-tab="study" class="tab-btn whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">All Routes</button>
+        <button data-tab="careers" class="tab-btn whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Career Paths</button>
+        <button data-tab="study" class="tab-btn whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Study Paths</button>
         <button data-tab="plan" class="tab-btn whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Plan A/B/C</button>
         <button data-tab="vault" class="tab-btn whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Evidence &amp; CV</button>
-        <button data-tab="work" class="tab-btn whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Work &amp; Scams</button>
+        <button data-tab="work" class="tab-btn whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Work Paths</button>
       </nav>
 
       <!-- Primary Header Actions (Secondary preferences live cleanly in Settings) -->
@@ -120,7 +121,7 @@
   <nav class="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white border-t border-slate-200 grid grid-cols-6 text-[11px] font-bold text-slate-600" aria-label="Mobile navigation">
     <button data-tab="results" class="tab-btn active py-2.5 text-center">Results</button>
     <button data-tab="careers" class="tab-btn py-2.5 text-center">Careers</button>
-    <button data-tab="study" class="tab-btn py-2.5 text-center">Routes</button>
+    <button data-tab="study" class="tab-btn py-2.5 text-center">Study</button>
     <button data-tab="plan" class="tab-btn py-2.5 text-center">Plan</button>
     <button data-tab="vault" class="tab-btn py-2.5 text-center">Vault</button>
     <button data-tab="work" class="tab-btn py-2.5 text-center">Work</button>
@@ -318,6 +319,8 @@
   <script src="./js/engine.js"></script>
   <script src="./js/ocr.js"></script>
   <script src="./js/data.js"></script>
+  <script src="./js/catalogue_data.js"></script>
+  <script src="./js/catalogue.js"></script>
   <script src="./js/i18n.js"></script>
   <script>window.__ENGINE_PARSE = window.parseStatementText; window.__ENG = { evaluateNsc: window.evaluateNsc, evaluateProgramme: window.evaluateProgramme };</script>
   <script>
@@ -365,29 +368,29 @@
         id: 'up_bsc_cs', careerFamily: 'tech', institution: 'University of Pretoria (UP)', campus: 'Hatfield, Pretoria (Gauteng)', province: 'Gauteng', distanceKmFromMp: 135,
         route: 'University', isUniversity: true, name: 'BSc Computer Science', nqf: 'NQF 7', duration: '3 Years Full-Time',
         estAnnualCost: 'Est. R55k–R70k tuition + R45k+ accomm. (Verify 2027 UP fees)', costLevel: 'High (Relocation)',
-        funding: ['NSFAS (Subject to Criteria)', 'Corporate Tech Bursaries'], deadline: '30 Sep (Verify official portal)',
-        verifiedRules: true, sourceTier: 'Sample — Verify 2027 Prospectus', legitStatus: 'Public University (DHET)',
+        funding: ['NSFAS (Subject to Criteria)', 'Corporate Tech Bursaries'], deadline: '2026-06-30',
+        verifiedRules: false, verificationStatus: 'pending_review', apsMethod: 'nsc_best6_noLO', sourceTier: 'Verify 2027 UP Prospectus (Maths L6 = 70%)', legitStatus: 'Public University (DHET)',
         minPassLevel: "Bachelor's Pass", minAps: 30, requiresSelection: true,
-        subjectRequirements: [{ anyOf: ['English Home Language', 'English First Additional Language'], minMark: 60 }, { anyOf: ['Mathematics'], minMark: 60 }],
+        subjectRequirements: [{ anyOf: ['English Home Language', 'English First Additional Language'], minMark: 60 }, { anyOf: ['Mathematics'], minMark: 70 }],
         officialUrl: 'https://www.up.ac.za/'
       },
       {
         id: 'ump_dip_ict', careerFamily: 'tech', institution: 'University of Mpumalanga (UMP)', campus: 'Mbombela, Mpumalanga', province: 'Mpumalanga', distanceKmFromMp: 0,
         route: 'University', isUniversity: true, name: 'Diploma in ICT (Application Development)', nqf: 'NQF 6', duration: '3 Years Full-Time',
         estAnnualCost: 'Est. R35k–R48k tuition (Verify 2027 UMP fees)', costLevel: 'Moderate (In-Province)',
-        funding: ['NSFAS (Subject to Criteria)', 'MICT SETA'], deadline: '31 Oct (Verify official portal)',
-        verifiedRules: true, sourceTier: 'Sample — Verify 2027 Prospectus', legitStatus: 'Public University (DHET)',
-        minPassLevel: 'Diploma Pass', minAps: 26, requiresSelection: true,
-        subjectRequirements: [{ anyOf: ['English Home Language', 'English First Additional Language'], minMark: 50 }, { anyOf: ['Mathematics', 'Mathematical Literacy'], minMark: 45 }],
+        funding: ['NSFAS (Subject to Criteria)', 'MICT SETA'], deadline: '2026-11-30',
+        verifiedRules: false, verificationStatus: 'conflict', apsMethod: 'ump_lo_half', sourceTier: 'Conflict (APS 24 vs 26 — Verify on ump.ac.za)', legitStatus: 'Public University (DHET)',
+        minPassLevel: 'Diploma Pass', minAps: 24, requiresSelection: true,
+        subjectRequirements: [{ anyOf: ['English Home Language', 'English First Additional Language'], minMark: 50 }, { anyOf: ['Mathematics'], minMark: 50 }],
         officialUrl: 'https://www.ump.ac.za/'
       },
       {
         id: 'tut_hc_it', careerFamily: 'tech', institution: 'Tshwane University of Technology (TUT)', campus: 'eMalahleni Campus, Mpumalanga', province: 'Mpumalanga', distanceKmFromMp: 0,
-        route: 'Higher Certificate / UoT', isUniversity: false, name: 'Higher Certificate in IT (Bridging Pathway)', nqf: 'NQF 5', duration: '1 Year Full-Time',
-        estAnnualCost: 'Est. R24k–R34k tuition (Near home, no relocation)', costLevel: 'Lower (Near Home)',
-        funding: ['NSFAS (Subject to Criteria)'], deadline: '30 Sep / Late Intake TBC',
-        verifiedRules: true, sourceTier: 'Sample — Verify 2027 Prospectus', legitStatus: 'Public UoT (DHET)',
-        minPassLevel: 'Higher Certificate Pass', minAps: 20, requiresSelection: false,
+        route: 'Diploma / UoT (Extended)', isUniversity: false, name: 'Diploma in Computer Science (Extended) — eMalahleni', nqf: 'NQF 6', duration: '4 Years Full-Time',
+        estAnnualCost: 'Verify 2027 TUT fee schedule (Near home)', costLevel: 'Lower (Near Home)',
+        funding: ['NSFAS (Subject to Criteria)'], deadline: '2026-09-30',
+        verifiedRules: false, verificationStatus: 'pending_review', apsMethod: 'nsc_best6_noLO', sourceTier: 'Verify 2027 TUT eMalahleni Prospectus', legitStatus: 'Public UoT (DHET)',
+        minPassLevel: 'Diploma Pass', minAps: 23, requiresSelection: true,
         subjectRequirements: [{ anyOf: ['English Home Language', 'English First Additional Language'], minMark: 40 }, { anyOf: ['Mathematics', 'Mathematical Literacy'], minMark: 40 }],
         officialUrl: 'https://www.tut.ac.za/'
       },
@@ -526,7 +529,10 @@
       savedJobsOnly: false,
       jobProvinceFilter: 'ALL',
       jobSortBy: 'match',
-      closingSoonOnly: false
+      closingSoonOnly: false,
+      scanDocType: 'final_nsc',
+      scanConfirmed: false,
+      studyF: {}, studyCmp: [], studyPlanPicks: [], marksVerified: false, marksSig: '', workKind: 'all'
     };
     let scamResult = null;
     const subjectHistory = [];
@@ -616,7 +622,7 @@
         if (!matched) continue;
         const pcts = [...line.matchAll(/\b(100|[1-9]?\d)\s*%/g)].map(m =>Number(m[1]));
         const nums = [...line.matchAll(/\b(100|[1-9]?\d)\b/g)].map(m =>Number(m[1])).filter(n =>n >= 10 && n <= 100);
-        let mark = 50;
+        let mark = null;
         let confidence = 'high';
         if (pcts.length >= 1) {
           mark = pcts[0];
@@ -642,7 +648,8 @@
     }
 
     function parseStatementText(rawText) {
-      return (typeof window.__ENGINE_PARSE === "function") ? window.__ENGINE_PARSE(rawText) : legacyParseStatementText(rawText);
+      const safeText = String(rawText || "").replace(/\b\d{13}\b/g, "[redacted-id]");
+      return (typeof window.__ENGINE_PARSE === "function") ? window.__ENGINE_PARSE(safeText) : legacyParseStatementText(safeText);
     }
 
     function getDeadlineBadge(deadlineStr) {
@@ -716,6 +723,47 @@
       const days = Math.max(0, Math.round((today.getTime() - d.getTime()) / 86400000));
       if (days >= 30) return { stale: true, days, label: `Last updated ${days} days ago — refresh with your latest details` };
       return { stale: false, days, label: days === 0 ? 'Updated today' : `Updated ${days} day${days === 1 ? '' : 's'} ago` };
+    }
+    function renderMultiUniApsComparison(subs) {
+      const eng = window.MzansiEngine;
+      const best6 = eng && eng.apsBestSixNoLO ? eng.apsBestSixNoLO(subs) : { aps: null, reason: 'Enter 6 non-LO subjects' };
+      const ump = eng && eng.apsUMP ? eng.apsUMP(subs) : { aps: null, reason: 'Enter HL, FAL, Maths/Lit, LO + 3 electives' };
+      return `
+        <section id="aps-compare-universities" class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-2.5 text-xs">
+          <div>
+            <h3 class="text-sm font-extrabold text-slate-900">Your APS Across South African Universities</h3>
+            <p class="text-slate-600 mt-0.5">South African universities calculate APS differently—never rely on one single score across all institutions.</p>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="text-[11px] font-bold text-slate-600">UP / UJ / TUT (Best 6, Excl. LO)</div>
+              <div class="text-lg font-extrabold text-slate-900 mt-0.5">${best6.aps !== null ? `${best6.aps} / 42` : 'Incomplete'}</div>
+              <div class="text-[11px] text-slate-500">${best6.aps !== null ? 'Standard NSC levels 1–7' : escapeHtml(best6.reason || '')}</div>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+              <div class="text-[11px] font-bold text-slate-600">UMP (7 Subjects, LO ÷ 2)</div>
+              <div class="text-lg font-extrabold text-slate-900 mt-0.5">${ump.aps !== null ? `${ump.aps} / 45.5` : 'Incomplete'}</div>
+              <div class="text-[11px] text-slate-500">${ump.aps !== null ? (ump.usedMathLit ? 'Includes Maths Lit (check higher UMP APS rule)' : 'Official UMP undergraduate PDF method') : escapeHtml(ump.reason || '')}</div>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200">
+              <div class="text-[11px] font-bold text-amber-900">Wits / UCT / UFS (Custom Scales)</div>
+              <div class="text-sm font-extrabold text-amber-900 mt-1">Use Official Calculator</div>
+              <div class="text-[11px] text-amber-800">Weighted/faculty scales (e.g. Wits Maths/Eng bonus, UCT FPS, UFS LO 1pt at 60%+).</div>
+            </div>
+          </div>
+        </section>`;
+    }
+    const NEXT_90_DAYS_EVENTS = [
+      { id: 'ump_2027_closing', title: 'UMP 2027 Undergraduate Closing (Verify ump.ac.za)', date: '2026-11-30', url: 'https://www.ump.ac.za/' },
+      { id: 'nsc_results_2027', title: '2026 NSC Matric Results Release (Verify DBE date)', date: '2027-01-12', url: 'https://www.education.gov.za/' },
+      { id: 'nsc_remark_closing_2027', title: 'NSC Re-Mark / Re-Check Closing Date', date: '2027-01-25', url: 'https://www.education.gov.za/' },
+      { id: 'nsc_may_june_2027_reg', title: 'May/June 2027 Second-Chance Rewrite Registration Closes', date: '2027-02-05', url: 'https://www.education.gov.za/' }
+    ];
+    function getDaysUntilIso(iso) {
+      const m = String(iso || '').match(/^(\d{4}-\d{2}-\d{2})$/);
+      if (!m) return null;
+      const t = new Date(); t.setHours(0, 0, 0, 0);
+      return Math.round((new Date(m[1] + 'T00:00:00').getTime() - t.getTime()) / 86400000);
     }
     function copyPlainTextCv() {
       const nEl = document.getElementById('cv-name'); if (nEl) state.cvName = nEl.value.trim();
@@ -1086,6 +1134,9 @@
         isLifeOrientation: !!(x && x.isLifeOrientation)
       }));
       if (!Array.isArray(s.evidenceVault)) s.evidenceVault = [];
+      if (!s.studyF || typeof s.studyF !== 'object' || Array.isArray(s.studyF)) s.studyF = {};
+      if (!Array.isArray(s.studyCmp)) s.studyCmp = [];
+      if (!Array.isArray(s.studyPlanPicks)) s.studyPlanPicks = [];
       if (!s.plans || typeof s.plans !== 'object') s.plans = { A: 'up_bsc_cs', B: 'ump_dip_ict', C: 'tut_hc_it' };
       if (!s.planStatus || typeof s.planStatus !== 'object') s.planStatus = { A: 'Not Started', B: 'Not Started', C: 'Not Started' };
       if (!s.affordA || typeof s.affordA !== 'object') s.affordA = { tuition: 58000, accomm: 45000, transport: 6000, funding: 0 };
@@ -1128,6 +1179,37 @@
       const n = Number(m) || 0;
       if (n >= 80) return 7; if (n >= 70) return 6; if (n >= 60) return 5;
       if (n >= 50) return 4; if (n >= 40) return 3; if (n >= 30) return 2; return 1;
+    }
+
+    // v68: "Have you checked your marks?" gate. A verification only counts for the exact marks that were confirmed;
+    // change any mark and it resets, so results are never built on marks the learner has not looked at.
+    function marksSignature() { return JSON.stringify((state.subjects || []).map(x => [x.name, Number(x.mark)])); }
+    function marksAreVerified() { return !!state.marksVerified && state.marksSig === marksSignature(); }
+    function openVerifyModal(next) {
+      let m = document.getElementById('verify-marks-modal');
+      if (m) m.remove();
+      m = document.createElement('div');
+      m.id = 'verify-marks-modal';
+      m.className = 'fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-slate-900/60 p-3';
+      m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-label', 'Check your marks');
+      const rows = (state.subjects || []).map(x => '<div class="flex justify-between gap-3 py-1 border-b border-slate-100"><span class="font-semibold text-slate-800">' + escapeHtml(x.name) + '</span><span class="font-extrabold text-slate-900">' + escapeHtml(String(x.mark)) + '%</span></div>').join('');
+      m.innerHTML = '<div class="w-full max-w-md bg-white rounded-3xl p-5 space-y-3 shadow-xl max-h-[90vh] overflow-y-auto">' +
+        '<h2 class="text-base font-extrabold text-slate-900">Have you checked your marks?</h2>' +
+        '<p class="text-xs text-slate-600">Your results below are only as good as these numbers. Compare each line with your report card or statement (photos can be misread).</p>' +
+        '<div class="text-xs">' + rows + '</div>' +
+        '<div class="flex flex-col sm:flex-row gap-2 pt-1">' +
+        '<button type="button" id="vm-yes" class="flex-1 py-3 rounded-xl bg-emerald-700 text-white text-sm font-extrabold">Yes, these are correct</button>' +
+        '<button type="button" id="vm-edit" class="flex-1 py-3 rounded-xl bg-white text-slate-900 border border-slate-300 text-sm font-extrabold">No, let me fix them</button></div></div>';
+      document.body.appendChild(m);
+      const close = () => { const e = document.getElementById('verify-marks-modal'); if (e) e.remove(); };
+      document.getElementById('vm-yes').addEventListener('click', () => { state.marksVerified = true; state.marksSig = marksSignature(); saveState(); close(); next(); });
+      document.getElementById('vm-edit').addEventListener('click', () => { close(); state.tab = 'results'; saveState(); render(); window.scrollTo(0, 0); showToast('Fix any mark, then try again.'); });
+      m.addEventListener('click', e => { if (e.target === m) close(); });
+      const y = document.getElementById('vm-yes'); if (y) y.focus();
+    }
+    function goPath(tab) {
+      const go = () => { state.tab = tab; saveState(); render(); window.scrollTo(0, 0); };
+      if (marksAreVerified()) go(); else openVerifyModal(go);
     }
 
     function getActiveSubjects() {
@@ -1514,6 +1596,11 @@
                        Choose from Gallery / Files
                       <input id="scan-image-input" type="file" accept="image/*" class="hidden" />
                     </label>
+                    <select id="scan-doc-type-select" aria-label="Document type being scanned" class="px-2.5 py-2 rounded-xl bg-white text-slate-800 border border-slate-300 text-xs font-bold min-h-[44px]">
+                      <option value="final_nsc" ${(state.scanDocType || 'final_nsc') === 'final_nsc' ? 'selected' : ''}>Doc: Final Grade 12 NSC Statement</option>
+                      <option value="provisional_g11" ${state.scanDocType === 'provisional_g11' ? 'selected' : ''}>Doc: Grade 11 / Term Report (Provisional)</option>
+                      <option value="sms_portal" ${state.scanDocType === 'sms_portal' ? 'selected' : ''}>Doc: Typed SMS / Portal Screenshot</option>
+                    </select>
                     <label class="px-3 py-2 rounded-xl bg-slate-800 text-white font-extrabold cursor-pointer hover:bg-slate-900 min-h-[44px]">
                       Take Photo
                       <input id="scan-camera-input" type="file" accept="image/*" capture="environment" class="hidden" />
@@ -1521,7 +1608,7 @@
                     <button type="button" id="scan-rotate-btn" class="px-2.5 py-2 rounded-xl bg-white text-slate-800 border border-slate-200 font-bold">↻ Rotate 90°</button>
                     <button type="button" id="scan-contrast-btn" class="px-2.5 py-2 rounded-xl bg-white text-slate-800 border border-slate-200 font-bold">Boost Contrast</button>
                     <button type="button" id="scan-zoom-btn" class="px-2.5 py-2 rounded-xl bg-white text-slate-800 border border-slate-200 font-bold">Zoom Photo</button>
-                    <button type="button" id="scan-detect-btn" class="px-3 py-2 rounded-xl bg-emerald-700 text-white font-extrabold hover:bg-emerald-800">Auto-Read Photo</button>
+                    <button type="button" id="scan-detect-btn" class="px-3 py-2 rounded-xl bg-emerald-700 text-white font-extrabold hover:bg-emerald-800">Re-read Photo</button>
                     <button type="button" id="scan-sample-btn" class="px-2.5 py-2 rounded-xl bg-amber-100 text-amber-900 border border-amber-300 font-bold">Load Sample Text</button>
                   </div>
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-3 items-start">
@@ -1544,7 +1631,9 @@
                           const pNsc = evaluateNsc(activeScanned);
                           return `<div><strong class="text-emerald-950">Review Detected Marks (${activeScanned.length}/${state.scanParsed.length} selected)</strong><div class="text-[11px] text-slate-600">Live Preview: <strong id="scan-live-preview">${escapeHtml(pNsc.passLevel)} · APS ${pNsc.aps} (excl. LO)</strong> — confirm before applying.</div></div>`;
                         })()}
-                        <button type="button" id="scan-apply-btn" class="px-3.5 py-1.5 rounded-xl bg-emerald-700 text-white font-extrabold hover:bg-emerald-800">Confirm &amp; Apply to My Marks</button>
+                        ${state.scanDocType === 'provisional_g11' ? '<div class="w-full p-2.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-[11px] font-semibold">Grade 11 / Term marks are provisional. Admission offers (such as UP and UMP) may be conditional until final Grade 12 NSC results are released.</div>' : ''}
+                        <label class="inline-flex items-center gap-1.5 text-[11px] font-bold text-slate-800 cursor-pointer"><input id="scan-confirm-check" type="checkbox" ${state.scanConfirmed ? 'checked' : ''} /> I checked these marks against my report card</label>
+                        <button type="button" id="scan-apply-btn" ${state.scanConfirmed ? '' : 'disabled'} class="px-3.5 py-1.5 rounded-xl bg-emerald-700 text-white font-extrabold hover:bg-emerald-800 disabled:opacity-40 disabled:cursor-not-allowed">Confirm &amp; Apply to My Marks</button>
                       </div>
                       <div class="space-y-1.5">
                         ${state.scanParsed.map((sp, idx) =>`
@@ -1595,10 +1684,18 @@
                   </div>
                 `).join('')}
               </div>
-              <div class="flex flex-wrap gap-2 pt-1">
-                <button data-tab="careers" class="flex-1 py-2.5 rounded-xl bg-blue-700 text-white text-xs font-extrabold hover:bg-blue-800">What Can I Become? →</button>
-                <button data-tab="study" class="flex-1 py-2.5 rounded-xl bg-teal-700 text-white text-xs font-extrabold hover:bg-teal-800">Explore All Routes →</button>
-              </div>
+              ${(() => {
+                const sm = window.MZCAT ? MZCAT.summaryFor(getActiveSubjects(), window) : { qualify: 0, open: 0, close: 0, incomplete: 0 };
+                const studyLine = sm.incomplete ? 'Enter all 7 subjects to see your courses' : (sm.qualify + sm.open) + ' courses you likely qualify for · ' + sm.close + ' close';
+                const ok = marksAreVerified();
+                return `<div class="space-y-2 pt-1">
+                  <div class="text-[11px] font-extrabold uppercase tracking-wide text-slate-500">Choose a path (three different things)</div>
+                  <button type="button" data-path-go="study" class="w-full text-left p-3.5 rounded-2xl bg-teal-700 text-white hover:bg-teal-800"><div class="text-sm font-extrabold">1. Study Path: what can I study?</div><div class="text-[11px] text-teal-100">Courses at universities, universities of technology and TVET that fit your marks. ${escapeHtml(studyLine)}</div></button>
+                  <button type="button" data-path-go="careers" class="w-full text-left p-3.5 rounded-2xl bg-blue-700 text-white hover:bg-blue-800"><div class="text-sm font-extrabold">2. Career Path: what can I become?</div><div class="text-[11px] text-blue-100">Pick a career (teacher, lawyer, nurse, engineer...) and see the study route, entry jobs and growth ladder.</div></button>
+                  <button type="button" data-path-go="work" class="w-full text-left p-3.5 rounded-2xl bg-slate-800 text-white hover:bg-slate-900"><div class="text-sm font-extrabold">3. Work Path: what jobs can I apply for now?</div><div class="text-[11px] text-slate-300">Open posts, learnerships and internships you can apply for with what you have today.</div></button>
+                  <div class="text-[11px] ${ok ? 'text-emerald-800' : 'text-amber-900'} font-semibold">${ok ? '✓ You confirmed these marks.' : 'We will ask you to confirm your marks before showing results.'}</div>
+                </div>`;
+              })()}
             </div>
 
             <!-- Hypothetical What-If Simulator -->
@@ -1655,8 +1752,9 @@
           <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <div>
+                <div class="text-[11px] font-extrabold uppercase tracking-wide text-blue-700">Career Path · what you can become</div>
                 <h1 class="text-xl font-extrabold text-slate-900">Career Reality &amp; Pathway Explorer</h1>
-                <p class="text-xs text-slate-600">Filter by sector and pick a career to inspect real job duties, progression ladders, and every eligible South African route.</p>
+                <p class="text-xs text-slate-600">Pick a career to see what the job really involves and how people grow in it. Then jump to the <strong>Study Path</strong> (courses) or the <strong>Work Path</strong> (open jobs) for that career.</p>
               </div>
               <select id="career-sector-filter" aria-label="Filter careers by sector" class="px-3 py-1.5 rounded-lg bg-slate-50 border border-slate-300 text-xs font-bold text-slate-800">
                 ${[['all', 'All Sectors']].concat([...new Set(CAREERS.map(c => c.family))].map(f => [f, MZDATA.state.familyLabels[f] || f])).map(([k, l]) => `<option value="${k}" ${(state.careerSector || 'all') === k ? 'selected' : ''}>${l}</option>`).join('')}
@@ -1692,29 +1790,34 @@
               <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200 text-amber-950 font-semibold"><strong>Reality Check:</strong>${escapeHtml(car.reality)}</div>
             </div>
 
-            <!-- All Legitimate Routes to This Career -->
+            <!-- Study route + Work route for this career (kept separate) -->
             <div class="lg:col-span-7 space-y-3">
-              <h3 class="text-sm font-extrabold text-slate-900 px-1">All Routes to Become a ${escapeHtml(car.title)} (${routes.length} pathways checked)</h3>
-              ${routes.map(p =>{
-                const ev = evaluateProgramme(subs, p);
-                return `
-                  <article class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm space-y-2">
-                    <div class="flex flex-wrap items-center justify-between gap-1.5">
-                      <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold border ${ev.badge}">${escapeHtml(ev.status)}</span>
-                      <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[11px] font-bold">${escapeHtml(p.route)} · ${escapeHtml(p.nqf)}</span>
-                    </div>
-                    <div class="font-extrabold text-slate-900 text-sm">${escapeHtml(p.name)}</div>
-                    <div class="text-xs font-semibold text-blue-700">${escapeHtml(p.institution)} · ${escapeHtml(p.campus)}</div>
-                    ${ev.missing.length ? `<div class="text-[11px] text-rose-800 font-semibold">Gap: ${ev.missing.map(escapeHtml).join(' | ')}</div>` : `<div class="text-[11px] text-emerald-800 font-semibold">${ev.reasons.map(r =>'✓ ' + escapeHtml(r)).join(' · ')}</div>`}
-                    <div class="flex flex-wrap gap-2 pt-1">
-                      <button data-why-prog="${escapeHtml(p.id)}" class="px-3 py-1.5 rounded-xl bg-blue-50 text-blue-800 border border-blue-200 text-xs font-extrabold">Why? / Alternatives</button>
-                      <button data-set-plan="A|${escapeHtml(p.id)}" class="px-2.5 py-1.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold">Plan A</button>
-                      <button data-set-plan="B|${escapeHtml(p.id)}" class="px-2.5 py-1.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold">Plan B</button>
-                      <button data-set-plan="C|${escapeHtml(p.id)}" class="px-2.5 py-1.5 rounded-xl bg-slate-100 text-slate-800 text-xs font-bold">Plan C</button>
-                    </div>
-                  </article>
-                `;
-              }).join('')}
+              ${(() => {
+                const E = window;
+                const fields = window.MZCAT ? MZCAT.fieldsFor(car) : [];
+                const rows = (window.MZCAT ? MZCAT.query(subs, E, { show: 'all' }).rows : []).filter(r => fields.includes(r.p.field));
+                const yes = rows.filter(r => r.ev.tier === 'qualify' || r.ev.tier === 'open'), close = rows.filter(r => r.ev.tier === 'close');
+                const top = yes.concat(close).slice(0, 5);
+                return `<section class="bg-white rounded-3xl p-4 border border-teal-200 border-l-4 border-l-teal-700 shadow-sm space-y-2.5 text-xs">
+                  <div class="text-[11px] font-extrabold uppercase text-teal-700">Study Path to this career</div>
+                  <h3 class="text-sm font-extrabold text-slate-900">${yes.length} course${yes.length === 1 ? '' : 's'} you likely qualify for · ${close.length} close · ${rows.length} total</h3>
+                  ${top.map(r => `<div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200"><div class="font-extrabold text-slate-900">${escapeHtml(r.p.name)}</div><div class="text-blue-700 font-semibold">${escapeHtml(r.inst.short || r.inst.name)} · ${escapeHtml(r.p.qualType)}${r.p.minAps > 0 ? ' · APS ' + r.p.minAps + '+' : ''}</div><div class="text-[11px] ${r.ev.tier === 'close' ? 'text-amber-900' : 'text-emerald-800'} font-semibold">${escapeHtml(MZCAT.TIER[r.ev.tier].label)}${r.ev.gaps.length ? ': ' + escapeHtml(r.ev.gaps.join(' | ')) : ''}</div></div>`).join('') || '<div class="text-slate-600">No matching courses loaded for this career yet. None to show.</div>'}
+                  <button type="button" data-career-study="${escapeHtml(fields[0] || 'all')}" class="w-full py-2.5 rounded-xl bg-teal-700 text-white font-extrabold">See all ${rows.length} courses for this career in Study Paths →</button>
+                </section>`;
+              })()}
+              <section class="bg-white rounded-3xl p-4 border border-slate-200 border-l-4 border-l-slate-800 shadow-sm space-y-2.5 text-xs">
+                <div class="text-[11px] font-extrabold uppercase text-slate-600">Work Path into this career (jobs you can start with)</div>
+                <div class="flex flex-wrap gap-1.5">${(car.entryRoles || []).map(r => `<span class="px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200 font-bold text-slate-800">${escapeHtml(r)}</span>`).join('')}</div>
+                <button type="button" data-career-jobs="${escapeHtml(window.MZCAT ? MZCAT.jobQueryFor(car) : car.title)}" class="w-full py-2.5 rounded-xl bg-slate-900 text-white font-extrabold">Find open jobs for this career →</button>
+              </section>
+              ${(() => {
+                const routes2 = routes;
+                if (!routes2.length) return '';
+                return `<details class="bg-white rounded-3xl p-4 border border-slate-200 shadow-sm"><summary class="cursor-pointer font-extrabold text-sm text-slate-900 min-h-[44px] flex items-center">Other routes (QCTO, apprenticeships, sample campuses): ${routes2.length}</summary><div class="space-y-3 mt-2">${routes2.map(p => {
+                  const ev = evaluateProgramme(subs, p);
+                  return `<article class="rounded-2xl p-3 border border-slate-200 space-y-1.5 text-xs"><span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold border ${ev.badge}">${escapeHtml(ev.status)}</span><div class="font-extrabold text-slate-900 text-sm">${escapeHtml(p.name)}</div><div class="font-semibold text-blue-700">${escapeHtml(p.institution)} · ${escapeHtml(p.campus)}</div>${ev.missing.length ? `<div class="text-rose-800 font-semibold">Gap: ${ev.missing.map(escapeHtml).join(' | ')}</div>` : ''}<div class="flex gap-2"><button data-why-prog="${escapeHtml(p.id)}" class="px-3 py-1.5 rounded-xl bg-blue-50 text-blue-800 border border-blue-200 font-extrabold">Why? / Alternatives</button></div></article>`;
+                }).join('')}</div></details>`;
+              })()}
             </div>
           </div>
         </div>
@@ -1748,12 +1851,15 @@
         const key = i.type === 'TVET' ? i.name : i.short;
         return `<details class="rounded-xl bg-slate-50 border border-slate-200 p-2"><summary class="font-extrabold min-h-[44px] flex items-center cursor-pointer">${escapeHtml(i.name)} <span class="ml-2 text-[10px] font-bold text-slate-500">${escapeHtml(i.short)} · ${escapeHtml(i.province)}</span></summary>
           <div class="space-y-1 pt-1 text-xs"><div><strong>Type:</strong> ${escapeHtml(i.type)}</div>${draft}<div>${aps}</div>
-          <div><strong>${yr} programmes loaded:</strong> ${thisYr.length} (${ver} fully verified)${thisYr.length ? '' : ' - no checked rules yet, confirm with the institution'}</div>
+          ${(() => { const ci = window.MZCAT ? MZCAT.load().institutions.find(x => x.id === i.id) : null; const n = ci ? ci.programmes.length : 0; return `<div><strong>Course details:</strong> ${n ? n + ' courses in ' + [...new Set(ci.programmes.map(p => p.faculty))].length + ' departments (indicative)' : 'None loaded yet'}</div>`; })()}
+          <div><strong>${yr} verified prospectus records:</strong> ${thisYr.length} (${ver} fully verified)${thisYr.length ? '' : ' - none yet, confirm with the institution'}</div>
           ${others.length ? `<div class="text-slate-600">Other years loaded: ${others.join(', ')}. Rules are for that year only.</div>` : ''}
           <div class="flex flex-wrap gap-2 pt-1">${link}
-          <button type="button" data-inst-search="${escapeHtml(key)}" class="px-3 py-2 rounded-xl bg-white border border-slate-300 font-bold min-h-[44px]">See its programmes</button></div>
+          ${(window.MZCAT && MZCAT.load().institutions.some(x => x.id === i.id && x.programmes.length)) ? `<button type="button" data-study-inst="${escapeHtml(i.id)}" class="px-3 py-2 rounded-xl bg-teal-700 text-white font-bold min-h-[44px]">See its courses</button>` : ''}</div>
           <div class="text-[11px] text-slate-500">Admission is decided by the institution. Found a mistake? Tell the app owner (see CONTRIBUTING.md).</div></div></details>`;
       };
+      const hasCat = id => window.MZCAT && MZCAT.load().institutions.some(x => x.id === id && x.programmes.length);
+      ins.sort((a, b) => (hasCat(b.id) ? 1 : 0) - (hasCat(a.id) ? 1 : 0));
       const groups = [...new Set(ins.map(i => i.type))];
       const types = [...new Set(all.map(i => i.type))];
       const selCls = 'px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-bold';
@@ -1763,7 +1869,11 @@
         <div class="text-[11px] text-slate-500">Showing ${ins.length} of ${all.length}</div>`;
       return `<details id="inst-panel" ${state.instOpen ? 'open' : ''} class="mt-4 bg-white rounded-3xl p-4 border border-slate-200 shadow-sm"><summary class="font-extrabold text-sm cursor-pointer min-h-[44px] flex items-center"><span>Institutions</span>&nbsp;(${all.length})</summary><div class="space-y-2 mt-2">${covHtml}${filters}${groups.map(g => `<div class="text-[11px] font-extrabold text-slate-500 uppercase pt-1">${escapeHtml(g)}</div>${ins.filter(i => i.type === g).map(card).join('')}`).join('') || '<div class="text-xs text-slate-500">No institution matches. Clear the search or filters.</div>'}<div class="text-[11px] text-slate-500">Private colleges and SETAs are added once checked against official lists.</div></div></details>`;
     }
-    function renderStudy() { return renderStudyCore() + renderInstitutions() + renderFunding(); }
+    function renderStudy() {
+      const main = window.MZCAT ? MZCAT.renderStudyPaths(Object.assign({}, state, { _activeSubjects: getActiveSubjects }), window, MZDATA.state.institutions || []) : '';
+      const legacy = `<details class="mt-4 bg-white rounded-3xl p-4 border border-slate-200 shadow-sm"><summary class="font-extrabold text-sm cursor-pointer min-h-[44px] flex items-center">Other route types: QCTO occupational, apprenticeships and sample campus routes</summary><div class="mt-3">${renderStudyCore()}</div></details>`;
+      return main + legacy + renderInstitutions() + renderFunding();
+    }
     function renderStudyCore() {
       const subs = getActiveSubjects();
       const rq = (state.routeSearch || '').trim().toLowerCase();
@@ -1891,6 +2001,11 @@
       const slots = ['A', 'B', 'C'].map(k =>({ slot: k, prog: SAMPLE_PROGRAMMES.find(p =>p.id === state.plans[k]) }));
       return `
         <div class="space-y-4">
+          ${(() => {
+            const picks = (state.studyPlanPicks || []).map(id => window.MZCAT && MZCAT.load().flat.find(x => x.id === id)).filter(Boolean);
+            if (!picks.length) return '';
+            return `<section class="bg-white rounded-2xl p-4 border border-teal-200 border-l-4 border-l-teal-700 shadow-sm space-y-2 text-xs"><h2 class="text-sm font-extrabold text-slate-900">Courses you saved from Study Paths (${picks.length})</h2>${picks.map(pp => { const ev = MZCAT.evaluate(subs, pp, window); return `<div class="flex flex-wrap items-center justify-between gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-200"><div><div class="font-extrabold text-slate-900">${escapeHtml(pp.name)}</div><div class="text-blue-700 font-semibold">${escapeHtml(pp._inst.short || pp._inst.name)} · ${escapeHtml(MZCAT.TIER[ev.tier].label)}${pp.minAps > 0 ? ' · APS ' + pp.minAps + '+' : ''}</div></div><button type="button" data-unsave-study="${escapeHtml(pp.id)}" class="px-3 py-1.5 rounded-lg bg-white border border-slate-300 font-bold">Remove</button></div>`; }).join('')}</section>`;
+          })()}
           <div class="flex flex-wrap items-center justify-between gap-2">
             <div>
               <h1 class="text-xl font-extrabold text-slate-900">${state.parentMode ? ' Parent / Guardian Decision Summary' : ' Plan A / Plan B / Plan C Decision Board'}</h1>
@@ -2090,7 +2205,7 @@
                     <button type="button" id="cv-rotate-btn" class="px-2.5 py-1.5 rounded-lg bg-white text-slate-800 border border-slate-300 font-bold hover:bg-slate-100">↻ Rotate 90°</button>
                     <button type="button" id="cv-contrast-btn" class="px-2.5 py-1.5 rounded-lg bg-white text-slate-800 border border-slate-300 font-bold hover:bg-slate-100">Boost Contrast</button>
                     <button type="button" id="cv-zoom-btn" class="px-2.5 py-1.5 rounded-lg bg-white text-slate-800 border border-slate-300 font-bold hover:bg-slate-100">Zoom Photo</button>
-                    <button type="button" id="cv-detect-btn" class="px-3 py-1.5 rounded-lg bg-emerald-700 text-white font-bold hover:bg-emerald-800">Auto-Read Photo</button>
+                    <button type="button" id="cv-detect-btn" class="px-3 py-1.5 rounded-lg bg-emerald-700 text-white font-bold hover:bg-emerald-800">Re-read Photo</button>
                     <button type="button" id="cv-sample-btn" class="px-2.5 py-1.5 rounded-lg bg-white text-slate-800 border border-slate-300 font-bold hover:bg-slate-100">Load Sample CV</button>
                   </div>
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 items-start">
@@ -2224,9 +2339,45 @@
       `;
     }
 
+    // v68: Work Path = jobs you can apply for NOW. Kept separate from Study Path (courses) and Career Path (what you can become).
+    const JOB_KINDS = { gov: 'Government post', learn: 'Learnership / internship', private: 'Private / local employer' };
+    function jobKindOf(w) {
+      const blob = `${w.employer || ''} ${w.url || ''} ${w.title || ''}`.toLowerCase();
+      if (/learnership|internship|apprentic|trainee|\byouth\b|sayouth|\bintern\b/.test(blob)) return 'learn';
+      if (/gov\.za|\.gov\.|dpsa|department|municipal|provincial|public service|dpme|saps/.test(blob)) return 'gov';
+      return 'private';
+    }
+    const JOB_KIND_HELP = {
+      gov: 'Usually Grade 12 for entry posts. Send a completed Z83 form and certified copies, quoting the reference number. Never pay to apply.',
+      learn: 'Often Grade 9-12 (depends on the NQF level), sometimes Maths or Maths Lit, and age/unemployed rules. You earn a stipend while learning.',
+      private: 'Read the advert for the exact minimum (often Grade 12 plus experience). A real employer never charges you to apply.'
+    };
+    function workReadinessRows() {
+      const n = evaluateNsc(getActiveSubjects());
+      const have = n.complete && n.passLevel !== 'Did Not Meet Minimum NSC Pass';
+      const g12 = n.complete ? (have ? { t: 'You have a Grade 12 pass', c: 'text-emerald-300' } : { t: 'Grade 12 pass not reached yet', c: 'text-rose-300' }) : { t: 'Enter all 7 subjects to check', c: 'text-slate-300' };
+      const mathsOk = (() => { const m = state.subjects.find(x => x.name === 'Mathematics' || x.name === 'Mathematical Literacy'); return m && Number(m.mark) >= 40; })();
+      return [
+        ['Public Service entry posts (clerk, admin, data capturer)', 'Grade 12 (NSC) for most entry levels. Higher posts need a diploma or degree.', g12],
+        ['Learnerships (paid training with a qualification)', 'Grade 9 to 12, depends on the NQF level. Many want Maths or Maths Lit.', n.complete ? (have && mathsOk ? { t: 'You likely meet the usual minimum', c: 'text-emerald-300' } : { t: have ? 'Check the Maths/Maths Lit requirement' : 'Lower-level learnerships may still accept you', c: 'text-amber-300' }) : { t: 'Enter all 7 subjects to check', c: 'text-slate-300' }],
+        ['Apprenticeships / artisan (diesel, electrical, fitting)', 'N2 or NC(V) Level 3-4, or Grade 12 with Maths and technical subjects, plus an employer.', { t: 'Study Path: TVET NC(V) or N1-N3 first', c: 'text-amber-300' }],
+        ['Graduate internships / traineeships', 'A completed diploma or degree.', { t: 'Needs a finished qualification: see Study Path', c: 'text-slate-300' }],
+        ['Retail, call centre, hospitality, security', 'Grade 12 helps; security needs PSIRA registration.', g12]
+      ];
+    }
     function renderWork() {
+      const wr = workReadinessRows();
+      const wk = state.workKind || 'all';
       return `
         <div class="space-y-4">
+          <section class="rounded-2xl bg-slate-900 text-white p-5 space-y-3">
+            <div class="text-[11px] font-extrabold uppercase tracking-wide text-slate-300">Work Path · jobs you can apply for now</div>
+            <h1 class="text-xl font-extrabold">Which jobs can I apply for?</h1>
+            <p class="text-xs text-slate-300 leading-relaxed">This page is about <strong>jobs, learnerships and internships</strong>. Courses are on the <strong>Study Paths</strong> tab and careers are on <strong>Career Paths</strong>.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">${wr.map(r => `<div class="p-2.5 rounded-xl bg-white/10 text-xs space-y-0.5"><div class="font-extrabold">${escapeHtml(r[0])}</div><div class="text-slate-300">${escapeHtml(r[1])}</div><div class="font-bold ${r[2].c}">${escapeHtml(r[2].t)}</div></div>`).join('')}</div>
+            <div class="text-[11px] text-slate-400">Typical minimums only. The advert always has the final word.</div>
+            <div class="flex flex-wrap gap-1.5 text-[11px] font-extrabold" id="work-kind-chips">${[['all', 'All jobs'], ['gov', 'Government posts'], ['learn', 'Learnerships & internships'], ['private', 'Private & local']].map(([k, l]) => `<button type="button" data-work-kind="${k}" class="px-3 py-1.5 rounded-full border ${wk === k ? 'bg-white text-slate-900 border-white' : 'bg-transparent text-white border-slate-500'}">${l}</button>`).join('')}</div>
+          </section>
           <div id="legal-free-jobs-card" class="rounded-2xl bg-white border border-slate-200 border-l-4 border-l-slate-900 p-4 shadow-sm space-y-2.5 text-xs">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <div>
@@ -2271,7 +2422,8 @@
               const q = (state.jobSearchQuery || '').trim().toLowerCase();
               const savedSet = new Set(state.savedOpenJobs || []);
               const provFilter = state.jobProvinceFilter || 'ALL';
-              let items = SAMPLE_WORK.map(w => ({ ...w, jobKey: `${w.title}|${w.employer}|${w.url}`, matchScore: scoreJobMatch(w), freshness: getJobFreshness(w.closing) })).filter(w => !w.freshness.expired);
+              let items = SAMPLE_WORK.map(w => ({ ...w, jobKey: `${w.title}|${w.employer}|${w.url}`, matchScore: scoreJobMatch(w), freshness: getJobFreshness(w.closing), kind: jobKindOf(w) })).filter(w => !w.freshness.expired);
+              if ((state.workKind || 'all') !== 'all') items = items.filter(w => w.kind === state.workKind);
               if (provFilter !== 'ALL') items = items.filter(w => `${w.province} ${w.town}`.toLowerCase().includes(provFilter.toLowerCase()) || String(w.province || '').toLowerCase() === 'south africa');
               if (q) items = items.filter(w => `${w.title} ${w.employer} ${w.town} ${w.province}`.toLowerCase().includes(q));
               if (state.savedJobsOnly) items = items.filter(w => savedSet.has(w.jobKey));
@@ -2307,7 +2459,9 @@
                   </div>
                 </div>
                 <h2 class="text-base font-extrabold text-slate-900">${escapeHtml(w.title)}</h2>
+                <div class="flex flex-wrap items-center gap-1.5"><span class="px-2 py-0.5 rounded-full bg-slate-900 text-white text-[10px] font-extrabold">${escapeHtml(JOB_KINDS[w.kind] || 'Job')}</span></div>
                 <div class="text-slate-600">${escapeHtml(w.town)}, ${escapeHtml(w.province)} · ${escapeHtml(w.salary)} · Closes ${escapeHtml(w.closing)}</div>
+                <div class="p-2 rounded-xl bg-blue-50 border border-blue-200 text-[11px] text-blue-950"><strong>Minimum to apply (typical):</strong> ${escapeHtml(JOB_KIND_HELP[w.kind] || '')}</div>
                 <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] space-y-0.5">
                   <div><strong>Employer Identity:</strong> ${escapeHtml(w.trust.id)}</div>
                   <div><strong>Source Check:</strong> ${escapeHtml(w.trust.source)}</div>
@@ -2356,6 +2510,63 @@
               <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200"><strong>CAS Placement Support:</strong> Official government WhatsApp <span class="font-mono font-bold">081 308 4196</span> (replaced CACH from 2026).</div>
             </div>
           </section>
+          ${renderMultiUniApsComparison(getActiveSubjects())}
+          <section id="qcto-verify-wizard" class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3 text-xs">
+            <div>
+              <h2 class="text-sm font-extrabold text-slate-900">Verify a QCTO / Private Training Provider (Anti-Scam &amp; Legacy SAQA Check)</h2>
+              <p class="text-slate-600 mt-0.5">QCTO accreditation is <strong>qualification-specific AND campus-site-specific</strong>. Never pay a private college before completing all 4 checks:</p>
+            </div>
+            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-[11px]">
+              <strong>Legacy Qualification Warning:</strong> Retired IT qualifications like <em>National Certificate: IT Technical Support</em> (<strong>SAQA 24293</strong>) and <em>FETC: IT Technical Support</em> (<strong>SAQA 78964</strong>) have passed their registration end dates. Prefer current occupational certificates such as <strong>SAQA 101408</strong> (Computer Technician, NQF 5, 282 credits), <strong>SAQA 119438</strong> (Software Tester, NQF 5, 70 credits), or <strong>SAQA 122661</strong> (Database Administrator, MICT SETA).
+            </div>
+            <ol class="list-decimal pl-5 space-y-1 text-slate-700">
+              <li>Look up the exact SAQA Qualification ID and active registration status on <a href="https://allqs.saqa.org.za/" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-700 hover:underline">SAQA Qualification Search ↗</a>.</li>
+              <li>Verify the provider is listed on <a href="https://www.qcto.org.za/" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-700 hover:underline">QCTO Accredited SDPs ↗</a> for that exact qualification and physical campus site.</li>
+              <li>Ask the provider for their written QCTO/SETA accreditation certificate number and confirm whether they are an accredited training site vs. assessment/trade-test centre.</li>
+              <li>Never pay upfront registration fees to personal bank accounts or eWallet/CashSend, and distrust any provider promising a "guaranteed job".</li>
+            </ol>
+            <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+              <div class="font-bold text-slate-900">Quick Offline DHET Private College Registration Format Checker</div>
+              <div class="flex flex-wrap gap-2">
+                <input id="dhet-reg-check-input" type="text" placeholder="e.g. 2023/FE07/003 or 2008/HE07/004" class="flex-1 min-w-[200px] px-3 py-2 rounded-lg bg-white border border-slate-300 text-xs font-mono" />
+                <button type="button" id="dhet-reg-check-btn" class="px-3.5 py-2 rounded-lg bg-slate-900 text-white font-bold hover:bg-slate-800">Check Format</button>
+              </div>
+              <div id="dhet-reg-check-out" class="text-[11px] font-semibold text-slate-700">Note: NATED Report 191 N1–N3 was phased out from 1 Jan 2024 (Gazette 49518); private colleges may not enrol new N1–N3 learners.</div>
+            </div>
+          </section>
+          <section id="next-90-days-card" class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3 text-xs">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <h2 class="text-sm font-extrabold text-slate-900">Next 90 Days: Key SA 2026/2027 Dates &amp; What Now?</h2>
+                <p class="text-slate-600 mt-0.5">NSFAS 2027 closed 31 Oct 2026 (no extensions; helpline 0800 067 327). Missed a window? Check May/June 2027 rewrites, TVET July intakes, SETA learnerships, or early 2028 openings.</p>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+              ${NEXT_90_DAYS_EVENTS.map(ev => {
+                const d = getDaysUntilIso(ev.date);
+                const badge = d === null ? 'Check Date' : (d < 0 ? 'Passed' : (d === 0 ? 'Today' : `${d} day${d === 1 ? '' : 's'} left`));
+                const cls = d !== null && d >= 0 && d <= 7 ? 'bg-amber-50 text-amber-900 border-amber-200' : (d !== null && d < 0 ? 'bg-rose-50 text-rose-900 border-rose-200' : 'bg-blue-50 text-blue-900 border-blue-200');
+                return `<div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-2"><div><a href="${escapeHtml(ev.url)}" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-700 hover:underline">${escapeHtml(ev.title)} ↗</a><div class="text-[11px] text-slate-500">Date: <strong>${escapeHtml(ev.date)}</strong></div></div><span class="px-2 py-0.5 rounded border text-[10px] font-bold whitespace-nowrap ${cls}">${escapeHtml(badge)}</span></div>`;
+              }).join('')}
+            </div>
+            <div id="mpumalanga-reality-banner" class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-700">
+              <strong>Mpumalanga Career Reality (DHET LMI 2024):</strong> Provincial job growth has lagged the national average since 2019, and heavily subscribed trades/clerical roles carry an oversupply caution (<code>*</code>). Build demonstrable skills, verify every employer, and apply across multiple routes.
+            </div>
+            <details id="missed-deadline-tree" class="p-3 rounded-xl bg-blue-50 border border-blue-200 text-[11px] text-blue-950">
+              <summary class="font-extrabold cursor-pointer">Missed a 2027 Application Deadline? View 5 Legal Next Steps</summary>
+              <ol class="list-decimal pl-5 mt-2 space-y-1">
+                <li><strong>Wait for Jan 2027 NSC results:</strong> Check official institution portals for space or second-round openings (note: institutions like CUT explicitly do not accept walk-ins or late applications).</li>
+                <li><strong>Improve your marks:</strong> Register for the <strong>May/June 2027 Second-Chance NSC Rewrite</strong> before <strong>5 Feb 2027</strong> (manual/official registration; no late applications).</li>
+                <li><strong>Public TVET July intake:</strong> Check Mpumalanga's 3 public TVET colleges (Nkangala, Gert Sibande, Ehlanzeni) for mid-year NC(V), NATED N4–N6, or QCTO intakes.</li>
+                <li><strong>Zero-fee SETA learnerships &amp; apprenticeships:</strong> Apply directly on official SETA sites (MICT SETA, merSETA, CETA) and Friday DPSA Circulars.</li>
+                <li><strong>Apply early for 2028:</strong> Most SA universities open 2028 applications between March and June 2027.</li>
+              </ol>
+            </details>
+            <div class="flex flex-wrap items-center justify-between gap-2 pt-1 text-[11px] text-slate-500">
+              <span>Spotted a changed closing date, fee, or APS rule?</span>
+              <a id="creator-studio-link" href="./creator_studio.html" target="_blank" rel="noopener noreferrer" class="font-bold text-emerald-700 hover:underline mr-3">Open Creator Studio ↗</a><a id="report-data-issue-link" href="https://github.com/pmech1987/mzansi-pathways/issues/new" target="_blank" rel="noopener noreferrer" class="font-bold text-blue-700 hover:underline">Report an error / prospectus update ↗</a>
+            </div>
+          </section>
           <section id="gov-watchlist-card" class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-3 text-xs">
             <div>
               ${(() => { const overdueCount = (state.govWatchlist || []).filter(w => getPortalCheckStatus(w.lastChecked).overdue).length; return `<div class="flex flex-wrap items-center justify-between gap-2"><h2 class="text-sm font-extrabold text-slate-900">Personal Official Portal &amp; Municipal Check Tracker</h2><span class="px-2 py-0.5 rounded border text-[10px] font-bold ${overdueCount > 0 ? 'bg-amber-50 text-amber-900 border-amber-200' : 'bg-emerald-50 text-emerald-900 border-emerald-200'}">${overdueCount > 0 ? `${overdueCount} Due for Check` : 'All Up to Date'}</span>${overdueCount > 0 ? '<button type="button" id="mark-all-portals-checked-btn" class="px-2.5 py-1 rounded-lg bg-slate-900 text-white text-[10px] font-bold hover:bg-slate-800">Mark All Checked</button>' : ''}</div>`; })()}
@@ -2400,7 +2611,7 @@
               </label>
               <button type="button" id="flyer-rotate-btn" class="px-2.5 py-1.5 rounded-lg bg-white text-slate-800 border border-slate-300 font-bold hover:bg-slate-100">↻ Rotate 90°</button>
               <button type="button" id="flyer-contrast-btn" class="px-2.5 py-1.5 rounded-lg bg-white text-slate-800 border border-slate-300 font-bold hover:bg-slate-100">Boost Contrast</button>
-              <button type="button" id="flyer-detect-btn" class="px-3 py-1.5 rounded-lg bg-emerald-700 text-white font-bold hover:bg-emerald-800">Auto-Read Flyer</button>
+              <button type="button" id="flyer-detect-btn" class="px-3 py-1.5 rounded-lg bg-emerald-700 text-white font-bold hover:bg-emerald-800">Re-read Flyer</button>
               <button type="button" id="flyer-sample-btn" class="px-3 py-1.5 rounded-lg bg-slate-100 text-slate-800 border border-slate-300 font-bold hover:bg-slate-200">Load Sample Local Flyer</button>
               <button type="button" id="export-flyer-jobs-btn" class="px-3 py-1.5 rounded-lg bg-white text-slate-800 border border-slate-300 font-bold hover:bg-slate-100">Export Saved Jobs (.json)</button>
             </div>
@@ -2497,6 +2708,7 @@
         else if (state.tab === 'vault') m.innerHTML = renderVault();
         else m.innerHTML = renderWork();
         bindEvents();
+        if (state.tab === 'study' && window.MZCAT) MZCAT.bindStudy(state, saveState, render, showToast);
       } catch (err) {
         state.tab = 'results';
         try { document.getElementById('app-main').innerHTML = renderResults(); bindEvents(); showToast('Recovered view safely'); }
@@ -2673,6 +2885,14 @@
       if (pf) pf.addEventListener('change', e => { state.provFilter = e.target.value; state.routeLimit = 20; saveState(); render(); });
       const smr = document.getElementById('show-more-routes');
       if (smr) smr.addEventListener('click', () => { state.routeLimit = (state.routeLimit || 20) + 20; render(); });
+      // v68: photos are read AUTOMATICALLY right after upload (no extra tap needed). The button stays as "Re-read".
+      const autoReadAfterLoad = (btnId, statusId, what) => {
+        const btn = document.getElementById(btnId);
+        const st = document.getElementById(statusId);
+        if (!btn) return;
+        if (st) st.textContent = 'Photo loaded. Reading ' + what + ' automatically, this can take 10-30 seconds...';
+        setTimeout(() => { try { btn.click(); } catch (e) {} }, 60);
+      };
       const loadScan = async f => {
         if (!f) return;
         const canvas = document.getElementById('scan-canvas');
@@ -2680,7 +2900,8 @@
         try {
           await MZOCR.fileToCanvas(f, canvas);
           const st = document.getElementById('scan-canvas-status');
-          if (st) st.textContent = `Loaded ${canvas.width}x${canvas.height}px on this device. Crop to the text area if you can, then tap Auto-Read.`;
+          if (st) st.textContent = `Loaded ${canvas.width}x${canvas.height}px on this device.`;
+          autoReadAfterLoad('scan-detect-btn', 'scan-canvas-status', 'your marks');
         } catch (err) { showToast(MZOCR.friendlyError(err)); }
       };
       ['scan-image-input','scan-camera-input'].forEach(id => {
@@ -2784,6 +3005,7 @@
         if (!window._scanArmed) { window._scanArmed = true; showToast('Check every mark against your report card, then tap Confirm again. Photos can be misread.'); return; }
         window._scanArmed = false;
         pushSubjectUndo(); state.subjects = chosen;
+        state.marksVerified = true; state.marksSig = marksSignature();
         state.scannerOpen = false;
         saveState(); render();
         showToast(`Applied ${chosen.length} scanned subjects to your profile!`);
@@ -2986,7 +3208,8 @@
         try {
           await MZOCR.fileToCanvas(f, canvas);
           const st = document.getElementById('cv-canvas-status');
-          if (st) st.textContent = `Loaded ${canvas.width}x${canvas.height}px on this device. Crop to the text area if you can, then tap Auto-Read.`;
+          if (st) st.textContent = `Loaded ${canvas.width}x${canvas.height}px on this device.`;
+          autoReadAfterLoad('cv-detect-btn', 'cv-canvas-status', 'your CV');
         } catch (err) { showToast(MZOCR.friendlyError(err)); }
       };
       ['cv-image-input','cv-camera-input'].forEach(id => {
@@ -3170,6 +3393,23 @@
           showToast('Use Official Link ↗ to open this job directly.');
         }
       }));
+      const sdts = document.getElementById('scan-doc-type-select');
+      if (sdts) sdts.addEventListener('change', e => { state.scanDocType = e.target.value; saveState(); render(); });
+      const drb = document.getElementById('dhet-reg-check-btn');
+      if (drb) drb.addEventListener('click', () => {
+        const inp = (document.getElementById('dhet-reg-check-input')?.value || '').trim().toUpperCase();
+        const out = document.getElementById('dhet-reg-check-out');
+        if (!out) return;
+        if (/^(19|20)\d{2}\/(HE07|HE08|HE10|FE07)\/\d{3}$/.test(inp)) {
+          out.textContent = `Valid DHET format (${inp}). Next: confirm the exact qualification AND physical campus address on the official monthly DHET Register PDF at dhet.gov.za or call 0800 87 2222.`;
+          out.className = 'text-[11px] font-bold text-emerald-800';
+        } else {
+          out.textContent = `Invalid DHET registration format ("${inp || 'empty'}"). Official numbers look like YYYY/HE07/NNN (Private HEI) or YYYY/FE07/NNN (Private College). Do not pay fees before calling 0800 87 2222.`;
+          out.className = 'text-[11px] font-bold text-rose-700';
+        }
+      });
+      const scc = document.getElementById('scan-confirm-check');
+      if (scc) scc.addEventListener('change', e => { state.scanConfirmed = !!e.target.checked; saveState(); render(); });
       const sjo = document.getElementById('saved-jobs-only-btn');
       if (sjo) sjo.addEventListener('click', () => { state.savedJobsOnly = !state.savedJobsOnly; saveState(); render(); });
       const csj = document.getElementById('closing-soon-jobs-btn');
@@ -3204,7 +3444,8 @@
         try {
           await MZOCR.fileToCanvas(f, canvas);
           const st = document.getElementById('flyer-canvas-status');
-          if (st) st.textContent = `Loaded ${canvas.width}x${canvas.height}px on this device. Crop to the text area if you can, then tap Auto-Read.`;
+          if (st) st.textContent = `Loaded ${canvas.width}x${canvas.height}px on this device.`;
+          autoReadAfterLoad('flyer-detect-btn', 'flyer-canvas-status', 'the job flyer');
         } catch (err) { showToast(MZOCR.friendlyError(err)); }
       };
       ['flyer-image-input','flyer-camera-input'].forEach(id => {
@@ -3333,8 +3574,22 @@
     }
 
     document.addEventListener('click', e =>{
+      const pg = e.target.closest && e.target.closest('[data-path-go]');
+      if (pg) { goPath(pg.dataset.pathGo); return; }
+      const ov = e.target.closest && e.target.closest('[data-open-verify]');
+      if (ov) { openVerifyModal(() => { render(); }); return; }
       const tb = e.target.closest && e.target.closest('[data-tab]');
       if (tb) { state.tab = tb.dataset.tab; saveState(); render(); return; }
+      const us = e.target.closest && e.target.closest('[data-unsave-study]');
+      if (us) { state.studyPlanPicks = (state.studyPlanPicks || []).filter(x => x !== us.dataset.unsaveStudy); saveState(); render(); return; }
+      const si = e.target.closest && e.target.closest('[data-study-inst]');
+      if (si) { state.studyF = { inst: si.dataset.studyInst, show: 'all' }; saveState(); render(); window.scrollTo(0, 0); return; }
+      const wkb = e.target.closest && e.target.closest('[data-work-kind]');
+      if (wkb) { state.workKind = wkb.dataset.workKind; saveState(); render(); return; }
+      const cs = e.target.closest && e.target.closest('[data-career-study]');
+      if (cs) { state.studyF = { field: cs.dataset.careerStudy || 'all', show: 'all' }; state.tab = 'study'; saveState(); render(); window.scrollTo(0, 0); return; }
+      const cj = e.target.closest && e.target.closest('[data-career-jobs]');
+      if (cj) { state.jobSearchQuery = cj.dataset.careerJobs || ''; state.jobProvinceFilter = 'ALL'; state.tab = 'work'; saveState(); render(); window.scrollTo(0, 0); return; }
       const pc = e.target.closest && e.target.closest('[data-pick-career]');
       if (pc) { state.selectedCareerId = pc.dataset.pickCareer; saveState(); render(); return; }
       const wp = e.target.closest && e.target.closest('[data-why-prog]');

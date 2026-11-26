@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "gateCount": 92,
+  "gateCount": 110,
   "sha256": {
     "01_verify_secrets_and_keys.py": "fd5d23b7768fa63684dd727fe6066d14aa2311f558f26cb67b59f4b7a6a7bac4",
     "02_verify_auth_and_session_policy.py": "7922473ee1e311308785856242769305a788c2bb6cd52878004b7b8c9fa51956",
@@ -63,7 +63,7 @@
     "59_verify_auto_job_search_and_live_feed_loader.py": "a43e080422b16448647615cf1eda8caa0da3cba4860d154e01fa1b452cd4c859",
     "60_verify_lever_ats_and_sixty_gate_milestone.py": "90516ab9ef8652eebd4f27312ff472cc52817eb15ad0743eba6651202766b8e2",
     "61_verify_legal_and_popia_compliance_charter.py": "299b5b36d7a23589bb01099fca854c32644d21b17e352b29f9b1915ff7f990d2",
-    "62_verify_multi_check_gate_attestation.py": "4409baa41f44ad163526da03350abec8778e7ce0fe3999814fbf54e281fcc5f4",
+    "62_verify_multi_check_gate_attestation.py": "4ede88401084d27d4fa8207cde3f98f80737072a5a7a493ee064bc31522f91b4",
     "63_verify_anti_bypass_gate_audit_and_career_filter.py": "07b535373a404c63a241ff0e3f95aa48a6931c0e1bf7748d5b6dba75687aa923",
     "64_verify_route_type_pills_plan_progress_and_tamper_tests.py": "4cec25f2ef8164a0b4626fecc880d105780c1f02f8232fbc51bc8c45fa1cabb4",
     "65_verify_filter_reset_why_checklist_and_stage1_tests.py": "9a8837f1944411d3ebe237eac207086b598f1e0bf56b8ece1d017005419480fe",
@@ -93,6 +93,24 @@
     "89_verify_setup_guide_and_preflight.py": "b7839c29c58a688f1f9d4690bfb1d68e5c9cf80d604812661c9917dc883a6c27",
     "90_verify_v63_hardening.py": "7cd95d7604098856bfe412ecdf7463f8adf2eb0ebb23f5444ef27600edac3a5c",
     "91_verify_github_publish_failsafes.py": "77841528fe8a20e48757ad10ba277221b25ffdce23042371220759cd2fcc80bd",
-    "92_verify_v67_publish_and_backup_hardening.py": "d0f0a924d12c0dbefba99ce730e88cbc8763d77fde543c334fde796d107567f2"
+    "92_verify_v67_publish_and_backup_hardening.py": "d0f0a924d12c0dbefba99ce730e88cbc8763d77fde543c334fde796d107567f2",
+    "93_verify_best_six_no_guess_and_ump_aps.py": "6206cb85cd9fa03f66ff39662400513c9481c94b596278d0a2aaeb61a4de46a7",
+    "94_verify_v69_events_timeline_and_dhet_demand.py": "c0cb66d447c2c178daef5eedf343e62e4bc17655bbe28a954fd18db652c5048c",
+    "95_verify_qcto_wizard_and_legacy_saqa_warnings.py": "521f73bcb2e21860b9f500843c1582825444a94befcb6720464ab14b9c2be734",
+    "96_verify_v70_multi_uni_aps_compare.py": "f59df74976f79089f7a2810c84b99788bf3278d5a0f90d410f0a37086d54680a",
+    "97_verify_scanner_popia_id_mask_and_doc_types.py": "8637f92f32c6236ba07b23411cbc89b1a328f4f9c5fccfbbe3f712bcb3e8a202",
+    "98_verify_v71_provisional_banner_and_sw_sync.py": "243e11c526702eac393581e5913a2c3a2c975e41f3c2c586816a4151dc5ab8f3",
+    "99_verify_missed_deadline_tree_and_mpumalanga_reality.py": "0f1f15496cc0f82e32b207eefb60124a5d5458c4adacae8d9a6f1ef6c41db8f5",
+    "100_verify_hundred_gate_milestone_and_v72_release.py": "c9e78dcfc16eeb124e9356b161d5bf4ef4bebecad8fd9ab8999e84820d938ad4",
+    "101_verify_26_uni_aps_engine_node_parity.py": "35a0fc24c2d0335f01535834a50a274fbf472637766962cde1af5a695f7eed66",
+    "102_verify_legal_multi_ats_and_dpsa_dhet_scripts.py": "bc5000cde727a2bd901f90d42f328209fdbc887bd093db5ad5fa13724c0ae175",
+    "103_verify_creator_studio_and_civic_modules.py": "8711cc5f360ecb2d08a6da06b12ff29b9049deb3fc9088b45aa52df3871f0694",
+    "104_verify_v73_blueprint_overhaul_and_sw.py": "e10bdc5adcd63711112e89d6bf9018a6d953974d0ddf66f76c3dab0f3c7d79e4",
+    "105_verify_end_to_end_legal_automation_pipeline.py": "51dfc2ba5c4298c50331df401a8b0b26b1d275b326705a2276889984ee26d583",
+    "106_verify_v74_automation_workflows_and_sw.py": "6945245ba29408b8292d3f5f8886021d6d0b6695a24c455651078fcff484749a",
+    "107_verify_national_pset_registry_counts.py": "eaa10d258e5d5af7b560d4e64eb87f4bd674e27670325193544f7c1c8c242433",
+    "108_verify_v75_cloudflare_headers_and_dhet_reg_checker.py": "782ee6d259a69202d3b02230783e92c1a0576dd6522b73d30c3c0e46e9f91f9c",
+    "109_verify_csv_to_programmes_validator.py": "8584f4ada10a98a69af3d2d0df2dfd4dbd6c90c0b8de3782c366255a258bf21c",
+    "110_verify_110_gate_milestone_e2e_and_creator_v76.py": "8400ab9ccffd75ea9ac6ca70aa147c4777461bebde7aa6a8181ee8993b216f44"
   }
 }
