@@ -43,7 +43,9 @@ jobs:
         env:
           ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
           ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
-        run: python3 scripts/fetch_legal_public_jobs.py
+        run: |
+          python3 scripts/fetch_legal_public_jobs.py
+          python3 scripts/run_legal_automation_pipeline.py
       - name: Validate the refreshed job feed (a damaged feed is replaced by the last committed one, never published)
         run: |
           python3 - <<'PY'

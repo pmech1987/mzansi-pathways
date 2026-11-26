@@ -1,0 +1,35 @@
+name: Verify & Deploy Mzansi Pathways to Cloudflare Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  verify-and-deploy-cloudflare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run 4-Stage Release Verification & Node 26-Uni Parity Tests
+        run: |
+          python3 scripts/verify_release.py
+          python3 scripts/verify_attestation_seal.py
+          node --test tests/test_aps_parity.mjs
+      - name: Refresh Legal Automation Pipeline
+        run: python3 scripts/run_legal_automation_pipeline.py
+      - name: Deploy to Cloudflare Pages (Native _headers Enforcement)
+        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy . --project-name=mzansi-pathways
