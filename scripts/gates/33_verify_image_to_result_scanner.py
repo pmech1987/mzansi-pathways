@@ -20,7 +20,7 @@ def main() -> int:
         'id="scan-apply-btn"',
         "parseStatementText",
         "URL.revokeObjectURL",
-        "maxW = 1400",
+        "MZOCR.fileToCanvas",
     ]:
         if token not in html:
             errors.append(f"Missing Image-to-Result scanner element or failsafe: {token}")

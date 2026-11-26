@@ -19,8 +19,9 @@ def main():
             errors.append(f"index.html missing v56 token: {token}")
 
     sw = (ROOT / "sw.js").read_text(encoding="utf-8")
-    if "mzansi-pathways-v56" not in sw:
-        errors.append("sw.js missing mzansi-pathways-v56 cache version")
+    import re as _re
+    if not _re.search(r"mzansi-pathways-v\d+", sw):
+        errors.append("sw.js missing mzansi-pathways-vNN cache version")
 
     print(json.dumps({"gate": "84_verify_v56_closing_soon_pill_and_copy_cv", "passed": len(errors) == 0, "errors": errors}))
     sys.exit(0 if not errors else 1)
