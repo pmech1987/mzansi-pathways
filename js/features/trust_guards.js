@@ -1,5 +1,5 @@
-/* js/features/trust_guards.js — Offline DHET Register, QCTO/SAQA & Job-Flyer Scam Shield */
-export const MZ_TRUST = (() => {
+/* js/features/trust_guards.js — Offline DHET Register, QCTO/SAQA & Job-Flyer Scam Shield (classic script, sets window.MZ_TRUST) */
+window.MZ_TRUST = (() => {
   'use strict';
   const DHET_REG_RE = /^(19|20)\d{2}\/(HE07|HE08|HE10|FE07)\/\d{3}$/i;
   const RETIRED_SAQA_IDS = {
