@@ -1,0 +1,46 @@
+{
+ "schemaVersion": 1,
+ "note": "Names and general nature only. No amounts, deadlines or criteria until verified from the funder's own site.",
+ "bursaries": [
+  {
+   "id": "nsfas",
+   "name": "NSFAS",
+   "type": "Government",
+   "summary": "Funding for eligible students at public universities and public TVET colleges.",
+   "note": "Apply through the official NSFAS channels only. It is free.",
+   "verificationStatus": "pending_review"
+  },
+  {
+   "id": "funza_lushaka",
+   "name": "Funza Lushaka (DBE)",
+   "type": "Government",
+   "summary": "Bursary for people training to become teachers.",
+   "note": "Service obligation applies.",
+   "verificationStatus": "pending_review"
+  },
+  {
+   "id": "seta_learnerships",
+   "name": "SETA learnerships and bursaries",
+   "type": "SETA",
+   "summary": "Sector bodies (e.g. merSETA, MICT SETA, CETA) fund learnerships, apprenticeships and some bursaries.",
+   "note": "Each SETA has its own rules and calendar.",
+   "verificationStatus": "pending_review"
+  },
+  {
+   "id": "employer_bursaries",
+   "name": "Employer and corporate bursaries",
+   "type": "Employer",
+   "summary": "Companies fund study in scarce skills, often with work-back conditions.",
+   "note": "Check each company's own careers page.",
+   "verificationStatus": "pending_review"
+  },
+  {
+   "id": "university_funds",
+   "name": "University and faculty bursaries",
+   "type": "Institution",
+   "summary": "Many institutions have their own merit and need-based funds.",
+   "note": "Ask the institution's financial aid office.",
+   "verificationStatus": "pending_review"
+  }
+ ]
+}

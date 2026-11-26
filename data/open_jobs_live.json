@@ -32,5 +32,6 @@
       "sourceType": "gov_portal",
       "officialUrl": "https://sayouth.mobi/"
     }
-  ]
+  ],
+  "fetchStatus": "ok"
 }
