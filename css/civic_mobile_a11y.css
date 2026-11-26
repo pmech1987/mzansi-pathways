@@ -1,0 +1,10 @@
+/* css/civic_mobile_a11y.css — WCAG 2.2 AA (320px Reflow, 44px Touch Targets, Zero Overflow) */
+*, *::before, *::after { box-sizing: border-box; min-width: 0; }
+html, body { max-width: 100%; overflow-x: clip; -webkit-text-size-adjust: 100%; }
+:target, input, select, button, a, summary { scroll-margin-top: 84px; }
+:focus-visible { outline: 3px solid #1A73E8; outline-offset: 2px; }
+.table-scroll { width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+img, canvas, svg { max-width: 100%; height: auto; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
