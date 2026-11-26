@@ -35,5 +35,7 @@ def stage_candidates(existing_path: Path, incoming_programmes: List[dict], out_p
         "conflictsDetected": conflicts,
         "items": staged,
     }
-    out_path.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
+    tmp = out_path.with_suffix(".tmp")
+    tmp.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
+    tmp.replace(out_path)
     return report

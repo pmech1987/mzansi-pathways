@@ -1,20 +1,15 @@
 #!/usr/bin/env python3
-"""Mzansi Pathways — Data Health, 5-Tier Source Authority & Rule Conflict Detection Engine."""
+"""Mzansi Pathways v11 — Failsafe Data Health, 5-Tier Source Authority & Rule Conflict Detection."""
 import json
 import sys
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from typing import List
 
 SAST = timezone(timedelta(hours=2))
+VALID_STATUSES = {"verified", "pending_review", "outdated", "warning", "unavailable"}
 
 
 def detect_rule_conflicts(existing_prog: dict, incoming_prog: dict) -> dict:
-    """
-    Compares an incoming programme update against an existing verified record.
-    Enforces 5-Tier Source Authority (Tier 1 = Official Regulator/Institution > Tier 5 = Community Report):
-    Lower-authority sources NEVER silently overwrite higher-authority records.
-    """
     ex_tier = int(existing_prog.get("sourceTier") or 5)
     in_tier = int(incoming_prog.get("sourceTier") or 5)
     diffs = []
@@ -42,16 +37,36 @@ def detect_rule_conflicts(existing_prog: dict, incoming_prog: dict) -> dict:
 def audit_data_health(data_path: Path = Path("data/programmes_2027.json")) -> dict:
     if not data_path.exists():
         return {"gate": "data_health", "passed": False, "errors": [f"Missing {data_path}"]}
-    payload = json.loads(data_path.read_text(encoding="utf-8"))
-    progs = payload.get("programmes") or []
+    try:
+        payload = json.loads(data_path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        return {"gate": "data_health", "passed": False, "errors": [f"Malformed JSON in {data_path.name}: {exc}"]}
+
+    progs = payload.get("programmes")
+    if not isinstance(progs, list):
+        return {"gate": "data_health", "passed": False, "errors": ["programmes must be a list"]}
+
     now = datetime.now(SAST).date()
     fresh, due, outdated, pending = 0, 0, 0, 0
     errors = []
 
     for p in progs:
+        if not isinstance(p, dict):
+            errors.append("Non-object programme entry detected")
+            continue
+        pid = p.get("id") or "(missing id)"
         status = str(p.get("verificationStatus") or "pending_review")
+        if status not in VALID_STATUSES:
+            errors.append(f"{pid}: invalid verificationStatus '{status}'")
         if status == "pending_review":
             pending += 1
+        tier = p.get("sourceTier")
+        if not isinstance(tier, int) or not (1 <= tier <= 5):
+            errors.append(f"{pid}: invalid sourceTier {tier!r}")
+        iy = p.get("intakeYear")
+        if iy is not None and (not isinstance(iy, int) or iy < 2026):
+            errors.append(f"{pid}: invalid intakeYear {iy!r}")
+
         lv = str(p.get("lastVerifiedAt") or "")
         if not lv:
             outdated += 1
@@ -65,7 +80,7 @@ def audit_data_health(data_path: Path = Path("data/programmes_2027.json")) -> di
             else:
                 fresh += 1
         except Exception:
-            errors.append(f"{p.get('id')}: invalid lastVerifiedAt '{lv}'")
+            errors.append(f"{pid}: invalid lastVerifiedAt '{lv}'")
 
     return {
         "gate": "data_health",
