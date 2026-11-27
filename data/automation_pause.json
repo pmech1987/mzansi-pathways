@@ -1,5 +1,0 @@
-{
- "paused": false,
- "reason": "",
- "note": "Kill switch. Set paused to true and commit to stop every bot from publishing changes (they still run their checks). Set it back to false to resume."
-}

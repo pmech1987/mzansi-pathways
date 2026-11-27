@@ -1,6 +1,0 @@
-{
- "schemaVersion": 3,
- "intakeYear": 2027,
- "notice": "Empty on purpose. Add rows via scripts/csv_to_programmes_json.py after checking each against the official prospectus.",
- "programmes": []
-}
