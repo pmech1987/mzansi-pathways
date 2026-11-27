@@ -39,7 +39,9 @@ STEPS = [('data files are valid and safe', ['scripts/validate_data.py']),
          ('v125 Turn 1 B4/B8/B9 fixes (explicit checkboxes, docked Jump/Help, 2-screen Top, stacked Plan cards)', ['scripts/test_v125_b4_b8_b9_quick_wins.py']),
          ('v126 Turn 2 single sources of truth (B5 counts/fees, B6 getTrust, B10 81-pair province matrix, B11 sample honesty)', ['scripts/test_v126_single_sources_of_truth.py']),
          ('v127 Turn 3 final convergence (B1/B3 deterministic data_manifest, B2 config/contract, B7 single mount, B12 tokens)', ['scripts/test_v127_final_b1_b2_b3_b7_b12.py']),
-         ('v128 E5 local diagnostics & zero-PII copyable support report', ['scripts/test_v128_local_diagnostics.py'])]
+         ('v128 E5 local diagnostics & zero-PII copyable support report', ['scripts/test_v128_local_diagnostics.py']),
+         ('v131 clean learner headings (no v103/v104 tags) & Plan-tab single home for Toolkit', ['scripts/test_v131_clean_headings_and_single_home.py']),
+         ('v132 disambiguated Plan progress label & estimator official-source attribution', ['scripts/test_v132_plan_label_and_estimator_source.py'])]
 
 
 def main():

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAtSAST": "2026-11-27T21:17:59.534483+02:00",
-  "buildTag": "fa2882f9ac00",
+  "generatedAtSAST": "2026-11-27T21:37:10.677852+02:00",
+  "buildTag": "7894431883e3",
   "assetCount": 42,
   "assets": {
     "css/civic_mobile_a11y.css": {
@@ -61,8 +61,8 @@
       "bytes": 235338
     },
     "js/checklist.js": {
-      "sri": "sha384-g5JJsXWj10gvbHaGI4DvqDokoMQxDEUoUEC0QnRCwreTiclKO/gEa01UlGTDiHH2",
-      "bytes": 6914
+      "sri": "sha384-Hz8MbidjzeFar8HiRgbZiiH/2W4u5/qj8f4ngcySMap3ZtwJ2zqREa2I2zwncJpI",
+      "bytes": 6907
     },
     "js/clean_layout.js": {
       "sri": "sha384-R0vBqbQSOVlvZBm68JRskFuH804HN3s6Y6p05gw3uj6y3YaFvhXM17NytSXsSj9P",
@@ -129,8 +129,8 @@
       "bytes": 5879
     },
     "js/modules/study.js": {
-      "sri": "sha384-vqTi0LgvMEcjPBiMNX6lsXAGcRO/usbpLkM+qTfAyqIkK+CHF44ml9GKkxaxxmMJ",
-      "bytes": 5586
+      "sri": "sha384-P2yosu2NRaoI/sRykMVEdY4KB2XKCcDPH3XmeQLHkVBrV9X97AQX0YSTBmOejrpX",
+      "bytes": 5602
     },
     "js/modules/ui.js": {
       "sri": "sha384-duk5TDm/1TE4hJ6UIDD2U5qaWqdP2VkDc1IV3ilsr/tqfgDS3lXDnGlPY4qFsjZ7",
@@ -161,15 +161,15 @@
       "bytes": 2054
     },
     "js/toolkit.js": {
-      "sri": "sha384-7AhNjzEFeTwU9lXG/eQ5HTlSjvEIGzMes0867+CK3dAvmKV/AvZyX+71djrDuPu9",
-      "bytes": 17164
+      "sri": "sha384-7NS7opImqu2fCfGaHA/xG6es3aEqO8ccasDINUR4VD+P90Alx2D9gpZIG2/upgyj",
+      "bytes": 18297
     },
     "js/work_tools.js": {
       "sri": "sha384-E0XF8EDNmGBEDutpy70KqBI9YR+u42SGkF/WL23uY8xCs6+GZEUO8zcPsgq+GHlm",
       "bytes": 9309
     },
     "sw.js": {
-      "sri": "sha384-ZYyHdu2qYxBrqIksdcxst72QDwCDqj9KIj+ea3Rw6ZubjUoWgKrXLxHyzPO2MbSF",
+      "sri": "sha384-6zFPmwyr6j+cKWOlT4lzhLTQScZ1jKt2grs5F3iRfkyL0MsoZUNMlpkyWm6vf5HK",
       "bytes": 6373
     }
   }

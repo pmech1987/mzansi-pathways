@@ -85,7 +85,7 @@
 
     var state = loadState();
     var box = el('div', { id: 'v104-doc-box', className: 'v97-backup-box v101-mt8' });
-    box.appendChild(el('div', { className: 'v97-backup-title' }, 'SA Application Document Readiness Checklist (v104)'));
+    box.appendChild(el('div', { className: 'v97-backup-title' }, 'SA Application Document Readiness Checklist'));
     box.appendChild(el('p', { className: 'v97-backup-desc' }, 'Track certified documents needed for Universities, TVETs, CAS, and NSFAS. SAPS certification is free — never pay to certify copies.'));
 
     var progText = el('div', { id: 'v104-doc-progress', className: 'v104-prog-text', role: 'status', 'aria-live': 'polite' }, '');

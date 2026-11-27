@@ -29,7 +29,7 @@
     var st = (state && state.planStatus) || {};
     var done = ['A', 'B', 'C'].filter(function (k) { return st[k] === 'Submitted' || st[k] === 'Accepted'; }).length;
     var ready = ['A', 'B', 'C'].filter(function (k) { return st[k] === 'Docs Ready'; }).length;
-    return { done: done, ready: ready, summary: done + '/3 Submitted/Accepted · ' + ready + ' Docs Ready' };
+    return { done: done, ready: ready, summary: done + '/3 Plans Submitted/Accepted · ' + ready + '/3 Plans Marked Ready' };
   }
 
   function prevYearNote(p, sampleProgrammes) {

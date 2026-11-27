@@ -261,6 +261,7 @@
     } else {
       advice = 'Budget for upfront registration fees first; compare lower-cost TVET/UoT Plan B & C routes near home and apply to merit/corporate bursaries before closing dates.';
     }
+    advice += ' [Illustrative planning range only — verify official 2027 fee booklets on each institution website, nsfas.org.za, and dhet.gov.za; reviewed 2026-11-27.]';
 
     return {
       routeLabel: b.label,
@@ -280,7 +281,7 @@
     }
 
     var box = el('div', { id: 'v103-cost-box', className: 'v97-backup-box v101-mt8' });
-    box.appendChild(el('div', { className: 'v97-backup-title' }, 'Indicative SA Annual Study Cost & Funding Estimator (v103)'));
+    box.appendChild(el('div', { className: 'v97-backup-title' }, 'Indicative SA Annual Study Cost & Funding Estimator'));
     box.appendChild(el('p', { className: 'v97-backup-desc' }, 'Compare rough annual costs (tuition, books, and living) across public routes. Always verify exact 2027 fee booklets on the institution website.'));
 
     var row = el('div', { className: 'v94-inline-row' });
@@ -324,4 +325,20 @@
   window.mzCostEstimator = { estimateStudyCost: estimateStudyCost, fmtZar: fmtZar };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountEstimator);
   else mountEstimator();
+
+  /* v131 Single-Home Guard (B7): keep #v94-smart-tools visible ONLY on the Plan tab so it never duplicates under Work or Study */
+  function syncToolkitVisibility() {
+    var host = document.getElementById('v94-smart-tools');
+    if (!host) return;
+    var active = document.querySelector('#mz-dock .tab-btn.active, nav .tab-btn.active');
+    var tab = active ? (active.getAttribute('data-tab') || '') : '';
+    var show = (tab === 'plan');
+    host.classList.toggle('hidden', !show);
+  }
+  document.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('[data-tab], [data-home]')) setTimeout(syncToolkitVisibility, 60);
+  }, true);
+  window.addEventListener('hashchange', function () { setTimeout(syncToolkitVisibility, 60); });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(syncToolkitVisibility, 120); });
+  else setTimeout(syncToolkitVisibility, 120);
 })();
