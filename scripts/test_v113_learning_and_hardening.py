@@ -39,7 +39,7 @@ class TestV113LearningAndHardening(unittest.TestCase):
         self.assertIn('wa\\.me', pc)
 
     def test_sw_v113(self):
-        self.assertRegex(read('sw.js'), r"const CACHE = 'mzansi-pathways-v11[3-9]'")
+        self.assertRegex(read('sw.js'), r"const CACHE = 'mzansi-pathways-v(11[2-9]|1[2-9]\d|[2-9]\d\d)'")
 
 
 if __name__ == '__main__':

@@ -30,7 +30,16 @@ STEPS = [('data files are valid and safe', ['scripts/validate_data.py']),
          ('v115 adversarial security (NFKC/zero-width bypasses & post-wipe pagehide guard)', ['scripts/test_v115_adversarial_security.py']),
          ('v117 performance & architecture (defer scripts, catalogue cache, i18n fast-path, rAF slider)', ['scripts/test_v117_perf_and_arch.py']),
          ('v118 accessibility & SA language coverage (WCAG labels/dialogs + zu/ss/ts home/nav i18n)', ['scripts/test_v118_a11y_and_i18n.py']),
-         ('v119 CI safety, strict CSP zero inline styles & release hardening', ['scripts/test_v119_ci_csp_and_release.py'])]
+         ('v119 CI safety, strict CSP zero inline styles & release hardening', ['scripts/test_v119_ci_csp_and_release.py']),
+         ('v120 mobile numeric inputs, null-safe marks, subject aria-labels & WhatsApp OG preview', ['scripts/test_v120_ux_polish_and_convergence.py']),
+         ('v121 Shared PC / Class Mode, marksSignature fix & 7 SA languages (Sesotho + isiXhosa)', ['scripts/test_v121_class_mode_and_languages.py']),
+         ('v122 real-phone screenshot fixes (light-mode select contrast, real counts, auto SA job URLs, compact dock)', ['scripts/test_v122_real_phone_ux_fixes.py']),
+         ('v123 live per-university qualifying course counts & match-sorted institutions', ['scripts/test_v123_uni_match_counts.py']),
+         ('v124 all 11 written SA languages, Only-Where-I-Match filter & clean print CSS', ['scripts/test_v124_all_11_languages_and_match_filter.py']),
+         ('v125 Turn 1 B4/B8/B9 fixes (explicit checkboxes, docked Jump/Help, 2-screen Top, stacked Plan cards)', ['scripts/test_v125_b4_b8_b9_quick_wins.py']),
+         ('v126 Turn 2 single sources of truth (B5 counts/fees, B6 getTrust, B10 81-pair province matrix, B11 sample honesty)', ['scripts/test_v126_single_sources_of_truth.py']),
+         ('v127 Turn 3 final convergence (B1/B3 deterministic data_manifest, B2 config/contract, B7 single mount, B12 tokens)', ['scripts/test_v127_final_b1_b2_b3_b7_b12.py']),
+         ('v128 E5 local diagnostics & zero-PII copyable support report', ['scripts/test_v128_local_diagnostics.py'])]
 
 
 def main():
@@ -50,6 +59,9 @@ def main():
         r3 = subprocess.run(['node', '--test', 'tests/test_core_logic_edge_cases.mjs'], cwd=ROOT, capture_output=True, text=True)
         print('%-4s %s' % ('PASS' if r3.returncode == 0 else 'FAIL', 'core logic edge cases (APS, Maths Lit vs Maths, UMP LO/2, NCV/TVET)'))
         bad += bool(r3.returncode)
+        r4 = subprocess.run(['node', '--test', 'tests/test_eligibility_characterization_50plus.mjs'], cwd=ROOT, capture_output=True, text=True)
+        print('%-4s %s' % ('PASS' if r4.returncode == 0 else 'FAIL', 'E2 eligibility characterization suite (55 mark sets)'))
+        bad += bool(r4.returncode)
     else:
         print('SKIP site tests (node is not installed)')
     print('\nALL CHECKS PASSED' if not bad else '\n%d STEP(S) FAILED' % bad)

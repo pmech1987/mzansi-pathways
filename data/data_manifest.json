@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "contentHash": "f1b9058d0f97a59e",
+  "institutionsTotal": 76,
+  "institutionsWithProgrammes": 27,
+  "institutionsWithoutProgrammes": 49,
+  "programmesTotal": 586,
+  "programmesByStatus": {
+    "indicative": 586
+  },
+  "institutions": [
+    {
+      "id": "cput",
+      "name": "Cape Peninsula University of Technology",
+      "programmeCount": 23,
+      "verifiedCount": 0,
+      "indicativeCount": 23,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "cut",
+      "name": "Central University of Technology",
+      "programmeCount": 21,
+      "verifiedCount": 0,
+      "indicativeCount": 21,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "dut",
+      "name": "Durban University of Technology",
+      "programmeCount": 21,
+      "verifiedCount": 0,
+      "indicativeCount": 21,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "mut",
+      "name": "Mangosuthu University of Technology",
+      "programmeCount": 17,
+      "verifiedCount": 0,
+      "indicativeCount": 17,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "nmu",
+      "name": "Nelson Mandela University",
+      "programmeCount": 32,
+      "verifiedCount": 0,
+      "indicativeCount": 32,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "nwu",
+      "name": "North-West University",
+      "programmeCount": 28,
+      "verifiedCount": 0,
+      "indicativeCount": 28,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "ru",
+      "name": "Rhodes University",
+      "programmeCount": 15,
+      "verifiedCount": 0,
+      "indicativeCount": 15,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "smu",
+      "name": "Sefako Makgatho Health Sciences University",
+      "programmeCount": 8,
+      "verifiedCount": 0,
+      "indicativeCount": 8,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "spu",
+      "name": "Sol Plaatje University",
+      "programmeCount": 8,
+      "verifiedCount": 0,
+      "indicativeCount": 8,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "su",
+      "name": "Stellenbosch University",
+      "programmeCount": 28,
+      "verifiedCount": 0,
+      "indicativeCount": 28,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "tut",
+      "name": "Tshwane University of Technology",
+      "programmeCount": 29,
+      "verifiedCount": 0,
+      "indicativeCount": 29,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "tvet_national",
+      "name": "Public TVET Colleges (national programme list)",
+      "programmeCount": 16,
+      "verifiedCount": 0,
+      "indicativeCount": 16,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "uct",
+      "name": "University of Cape Town",
+      "programmeCount": 24,
+      "verifiedCount": 0,
+      "indicativeCount": 24,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "ufh",
+      "name": "University of Fort Hare",
+      "programmeCount": 15,
+      "verifiedCount": 0,
+      "indicativeCount": 15,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "ufs",
+      "name": "University of the Free State",
+      "programmeCount": 25,
+      "verifiedCount": 0,
+      "indicativeCount": 25,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "uj",
+      "name": "University of Johannesburg",
+      "programmeCount": 43,
+      "verifiedCount": 0,
+      "indicativeCount": 43,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "ukzn",
+      "name": "University of KwaZulu-Natal",
+      "programmeCount": 31,
+      "verifiedCount": 0,
+      "indicativeCount": 31,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "ul",
+      "name": "University of Limpopo",
+      "programmeCount": 19,
+      "verifiedCount": 0,
+      "indicativeCount": 19,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "ump",
+      "name": "University of Mpumalanga",
+      "programmeCount": 10,
+      "verifiedCount": 0,
+      "indicativeCount": 10,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "unisa",
+      "name": "University of South Africa",
+      "programmeCount": 22,
+      "verifiedCount": 0,
+      "indicativeCount": 22,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "univen",
+      "name": "University of Venda",
+      "programmeCount": 15,
+      "verifiedCount": 0,
+      "indicativeCount": 15,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "unizulu",
+      "name": "University of Zululand",
+      "programmeCount": 15,
+      "verifiedCount": 0,
+      "indicativeCount": 15,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "up",
+      "name": "University of Pretoria",
+      "programmeCount": 34,
+      "verifiedCount": 0,
+      "indicativeCount": 34,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "uwc",
+      "name": "University of the Western Cape",
+      "programmeCount": 18,
+      "verifiedCount": 0,
+      "indicativeCount": 18,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "vut",
+      "name": "Vaal University of Technology",
+      "programmeCount": 16,
+      "verifiedCount": 0,
+      "indicativeCount": 16,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "wits",
+      "name": "University of the Witwatersrand",
+      "programmeCount": 30,
+      "verifiedCount": 0,
+      "indicativeCount": 30,
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "wsu",
+      "name": "Walter Sisulu University",
+      "programmeCount": 23,
+      "verifiedCount": 0,
+      "indicativeCount": 23,
+      "lastVerifiedAt": "2026-11-27"
+    }
+  ]
+}

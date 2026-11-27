@@ -226,7 +226,7 @@
       ticking = true;
       window.requestAnimationFrame(function () {
         var y = window.scrollY || document.documentElement.scrollTop || 0;
-        if (y > 420) btn.classList.remove('is-hidden');
+        if (y > Math.max(700, (window.innerHeight || 640) * 1.8)) btn.classList.remove('is-hidden');
         else btn.classList.add('is-hidden');
         ticking = false;
       });

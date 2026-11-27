@@ -231,3 +231,26 @@ body.dark-mode .mz-fold-sum { color: #f1f4fb; }
 #app-main details.mz-course > summary::after { margin-top: 8px; }
 #app-main details.mz-offer > summary { min-height: 44px; padding-top: 6px; padding-bottom: 6px; }
 #app-main details.mz-offer > summary::after { margin-right: 2px; }
+
+/* v122 Compact floating pills so they never block cards or headings on 360px screens */
+.v98-jump-btn {
+  padding: 6px 11px !important;
+  font-size: 0.72rem !important;
+  min-height: 36px !important;
+  opacity: 0.9 !important;
+  bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important;
+  left: 10px !important;
+}
+.v97-scroll-top {
+  padding: 6px 10px !important;
+  font-size: 0.72rem !important;
+  min-height: 36px !important;
+  opacity: 0.9 !important;
+  bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important;
+  right: 10px !important;
+}
+
+@media print {
+  #shared-pc-banner, .mz-sub, #inst-search, #inst-prov, #inst-type, #inst-match-only { display: none !important; }
+  #app-main { padding-bottom: 12px !important; }
+}

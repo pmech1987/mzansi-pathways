@@ -44,7 +44,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
       {
         id: 'up_bsc_cs', careerFamily: 'tech', institution: 'University of Pretoria (UP)', campus: 'Hatfield, Pretoria (Gauteng)', province: 'Gauteng', distanceKmFromMp: 135,
         route: 'University', isUniversity: true, name: 'BSc Computer Science', nqf: 'NQF 7', duration: '3 Years Full-Time',
-        estAnnualCost: 'Est. R55k–R70k tuition + R45k+ accomm. (Verify 2027 UP fees)', costLevel: 'High (Relocation)',
+        estAnnualCost: 'Verify 2027 tuition & residence fees on up.ac.za', costLevel: 'Public University Fees',
         funding: ['NSFAS (Subject to Criteria)', 'Corporate Tech Bursaries'], deadline: '2026-06-30',
         verifiedRules: false, verificationStatus: 'pending_review', apsMethod: 'nsc_best6_noLO', sourceTier: 'Verify 2027 UP Prospectus (Maths L6 = 70%)', legitStatus: 'Public University (DHET)',
         minPassLevel: "Bachelor's Pass", minAps: 30, requiresSelection: true,
@@ -54,7 +54,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
       {
         id: 'ump_dip_ict', careerFamily: 'tech', institution: 'University of Mpumalanga (UMP)', campus: 'Mbombela, Mpumalanga', province: 'Mpumalanga', distanceKmFromMp: 0,
         route: 'University', isUniversity: true, name: 'Diploma in ICT (Application Development)', nqf: 'NQF 6', duration: '3 Years Full-Time',
-        estAnnualCost: 'Est. R35k–R48k tuition (Verify 2027 UMP fees)', costLevel: 'Moderate (In-Province)',
+        estAnnualCost: 'Verify 2027 tuition fees on ump.ac.za', costLevel: 'Public University Fees',
         funding: ['NSFAS (Subject to Criteria)', 'MICT SETA'], deadline: '2026-11-30',
         verifiedRules: false, verificationStatus: 'conflict', apsMethod: 'ump_lo_half', sourceTier: 'Conflict (APS 24 vs 26 — Verify on ump.ac.za)', legitStatus: 'Public University (DHET)',
         minPassLevel: 'Diploma Pass', minAps: 24, requiresSelection: true,
@@ -64,7 +64,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
       {
         id: 'tut_hc_it', careerFamily: 'tech', institution: 'Tshwane University of Technology (TUT)', campus: 'eMalahleni Campus, Mpumalanga', province: 'Mpumalanga', distanceKmFromMp: 0,
         route: 'Diploma / UoT (Extended)', isUniversity: false, name: 'Diploma in Computer Science (Extended) — eMalahleni', nqf: 'NQF 6', duration: '4 Years Full-Time',
-        estAnnualCost: 'Verify 2027 TUT fee schedule (Near home)', costLevel: 'Lower (Near Home)',
+        estAnnualCost: 'Verify 2027 TUT fee schedule on tut.ac.za', costLevel: 'UoT Fees (NSFAS Eligible)',
         funding: ['NSFAS (Subject to Criteria)'], deadline: '2026-09-30',
         verifiedRules: false, verificationStatus: 'pending_review', apsMethod: 'nsc_best6_noLO', sourceTier: 'Verify 2027 TUT eMalahleni Prospectus', legitStatus: 'Public UoT (DHET)',
         minPassLevel: 'Diploma Pass', minAps: 23, requiresSelection: true,
@@ -147,7 +147,6 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
       ],
       whatIfActive: false,
       whatIfMaths: 60,
-      whatIfSubject: 'Mathematics',
       grade9Goal: 'eng',
       scannerOpen: false,
       scanRawText: '',
@@ -622,7 +621,19 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
 
     function syncYearLabels() { try { document.querySelectorAll('.mz-yr').forEach(e => { e.textContent = String(state.intakeYear || MZDATA.defaultYear()); }); } catch (e) {} }
     // Failsafe save: keeps the last good copy (at most every 30 s), retries once after freeing the extra copies, and TELLS the learner if saving fails.
+    function isSharedPcMode() { try { return sessionStorage.getItem('mz_shared_pc_mode') === '1'; } catch (e) { return false; } }
+    function syncSharedPcUi() {
+      const on = isSharedPcMode();
+      const b = document.getElementById('shared-pc-banner');
+      if (b) b.classList.toggle('hidden', !on);
+      const btn = document.getElementById('shared-pc-btn');
+      if (btn) {
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        btn.textContent = on ? 'Shared PC / Class Mode: ON (No Save)' : 'Shared PC / Class Mode: OFF';
+      }
+    }
     function saveState() {
+      if (isSharedPcMode()) return;
       justWiped = false;
       try {
         repairState(state);
@@ -649,7 +660,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
 
     // v68: "Have you checked your marks?" gate. A verification only counts for the exact marks that were confirmed;
     // change any mark and it resets, so results are never built on marks the learner has not looked at.
-    function marksSignature() { return JSON.stringify((state.subjects || []).map(x => [x.name, Number(x.mark)])); }
+    function marksSignature() { return JSON.stringify((state.subjects || []).map(x => [x.name, typeof parseMark === 'function' ? parseMark(x.mark) : (x.mark === null || x.mark === '' ? null : Number(x.mark))])); }
     function marksAreVerified() { return !!state.marksVerified && state.marksSig === marksSignature(); }
     function openVerifyModal(next) {
       let m = document.getElementById('verify-marks-modal');
@@ -915,8 +926,9 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
           ${(() =>{
             const strongN = SAMPLE_PROGRAMMES.filter(p =>{ const s = evaluateProgramme(subs, p).status; return s === 'Meets Minimums' || s === 'Conditional'; }).length;
             const noUniN = SAMPLE_PROGRAMMES.filter(p =>!p.isUniversity).length;
-            const docsDone = Object.values(state.docChecklist || {}).filter(Boolean).length;
-            const docsTot = Object.keys(state.docChecklist || {}).length;
+            const _cnt = window.MZSelectors ? window.MZSelectors.getCounts(state) : { docsReady: Object.values(state.docChecklist || {}).filter(Boolean).length, docsTotal: Object.keys(state.docChecklist || {}).length };
+            const docsDone = _cnt.docsReady;
+            const docsTot = _cnt.docsTotal;
             return `<div class="flex flex-wrap gap-2 text-xs font-extrabold">
               <button type="button" data-quick-route="all" class="px-3.5 py-2 rounded-2xl bg-emerald-50 text-emerald-900 border border-emerald-200 hover:bg-emerald-100">${strongN} Matching Routes Ready</button>
               <button type="button" data-quick-route="nouni" class="px-3.5 py-2 rounded-2xl bg-teal-50 text-teal-900 border border-teal-200 hover:bg-teal-100">${noUniN} Non-University Routes (TVET / QCTO / Work)</button>
@@ -1032,7 +1044,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
                           <div class="grid grid-cols-12 gap-2 items-center p-1.5 rounded-lg bg-slate-50 border border-slate-200">
                             <div class="col-span-1 text-center"><input type="checkbox" data-scan-inc="${idx}" ${sp.include !== false ? 'checked' : ''} aria-label="Include subject" class="w-4 h-4 accent-emerald-700" /></div>
                             <div class="col-span-6 font-bold text-slate-800">${escapeHtml(sp.name)}</div>
-                            <div class="col-span-3"><input type="number" min="0" max="100" data-scan-mark="${idx}" value="${sp.mark ?? ''}" placeholder="type mark" aria-label="Detected mark" class="w-full px-2 py-1 rounded bg-white border border-slate-300 text-center font-extrabold" /></div>
+                            <div class="col-span-3"><input type="number" min="0" max="100" step="any" inputmode="decimal" data-scan-mark="${idx}" value="${sp.mark ?? ''}" placeholder="type mark" aria-label="Detected mark" class="w-full px-2 py-1 rounded bg-white border border-slate-300 text-center font-extrabold" /></div>
                             <div class="col-span-2 text-center"><span class="px-1.5 py-0.5 rounded text-[10px] font-black ${sp.confidence === 'high' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-900'}">${sp.confidence === 'high' ? 'High' : 'Review'}</span></div>
                           </div>
                         `).join('')}
@@ -1069,7 +1081,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
                       <button type="button" data-toggle-lo="${i}" title="Toggle Life Orientation" class="px-1.5 py-1 rounded text-[10px] font-black border ${s.isLifeOrientation ? 'bg-indigo-700 text-white border-indigo-700' : 'bg-white text-slate-500 border-slate-200'}">LO</button>
                     </div>
                     <div class="col-span-3 flex items-center gap-1">
-                      <input data-sub-mark="${i}" type="number" min="0" max="100" value="${s.mark}" aria-label="Mark" class="w-full px-2 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-extrabold text-center" />
+                      <input data-sub-mark="${i}" type="number" min="0" max="100" step="any" inputmode="decimal" value="${s.mark ?? ''}" aria-label="${esc(s.name || 'Subject')} mark percentage" class="w-full px-2 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-extrabold text-center" />
                       <span class="text-xs font-bold text-slate-500">%</span>
                     </div>
                     <div class="col-span-2 flex items-center justify-center gap-1"><span class="text-xs font-extrabold ${s.isHomeLanguage && Number(s.mark) < 40 ? 'text-rose-800 bg-rose-100' : 'text-blue-800 bg-blue-50'} px-2 py-1.5 rounded-lg">${s.isHomeLanguage && Number(s.mark) < 40 ? 'HL &lt; 40%' : 'Lvl ' + markToLevel(s.mark)}</span>${state.subjects.length >6 ? `<button type="button" data-del-sub="${i}" aria-label="Remove subject" class="text-rose-600 font-bold text-xs px-1">✕</button>` : ''}</div>
@@ -1297,7 +1309,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
             return `
               <section class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm overflow-x-auto space-y-2">
                 <h2 class="text-sm font-extrabold text-slate-900">Side-by-Side Route Comparison (${cmp.length} selected)</h2>
-                <table class="w-full text-xs text-left border-collapse">
+                <table class="mz-plan-table w-full text-xs text-left border-collapse">
                   <thead><tr class="border-b border-slate-200 text-slate-500"><th class="py-2 pr-3">Criteria</th>${cmp.map(p =>`<th class="py-2 px-3 font-extrabold text-slate-900">${escapeHtml(p.name)}</th>`).join('')}</tr></thead>
                   <tbody class="divide-y divide-slate-100">
                     <tr><td class="py-2 pr-3 font-bold">Route</td>${cmp.map(p =>`<td class="py-2 px-3">${escapeHtml(p.route)} (${escapeHtml(p.nqf)})</td>`).join('')}</tr>
@@ -1393,12 +1405,12 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
                   const ev = evaluateProgramme(subs, prog);
                   return `
                     <tr>
-                      <td class="py-3 pr-3 font-black text-blue-800">Plan ${slot}</td>
-                      <td class="py-3 px-3"><button type="button" data-why-prog="${escapeHtml(prog.id)}" class="font-extrabold text-blue-800 hover:underline text-left">${escapeHtml(prog.name)} </button><div class="text-[11px] text-slate-500">${escapeHtml(prog.institution)} (${escapeHtml(prog.route)})</div></td>
-                      <td class="py-3 px-3"><span class="px-2 py-0.5 rounded-full font-bold border ${ev.badge}">${escapeHtml(ev.status)}</span></td>
-                      <td class="py-3 px-3"><div>${escapeHtml(prog.costLevel)}</div><div class="text-[11px] text-slate-500">${prog.province === state.province ? 'Near home (0 relocation)' : `Relocation (${escapeHtml(prog.province)})`}</div></td>
-                      <td class="py-3 px-3 font-semibold">${escapeHtml(prog.legitStatus)}</td>
-                      <td class="py-3 px-3">
+                      <td data-label="Plan" class="py-3 pr-3 font-black text-blue-800">Plan ${slot}</td>
+                      <td data-label="Programme & Institution" class="py-3 px-3"><button type="button" data-why-prog="${escapeHtml(prog.id)}" class="font-extrabold text-blue-800 hover:underline text-left">${escapeHtml(prog.name)} </button><div class="text-[11px] text-slate-500">${escapeHtml(prog.institution)} (${escapeHtml(prog.route)})</div></td>
+                      <td data-label="Academic" class="py-3 px-3"><span class="px-2 py-0.5 rounded-full font-bold border ${ev.badge}">${escapeHtml(ev.status)}</span></td>
+                      <td data-label="Affordability & Distance" class="py-3 px-3"><div>${escapeHtml(prog.costLevel)}</div><div class="text-[11px] text-slate-500">${escapeHtml(window.MZSelectors ? window.MZSelectors.computeDistanceLabel(prog.province, window.MZSelectors.getHome(state)).label : (prog.province === state.province ? 'Near home (0 relocation)' : 'Relocation (' + prog.province + ')'))}</div></td>
+                      <td data-label="Legitimacy" class="py-3 px-3 font-semibold">${escapeHtml(prog.legitStatus)}</td>
+                      <td data-label="Deadline" class="py-3 px-3">
                         ${(() =>{ const db = getDeadlineBadge(prog.deadline); return `<span class="inline-block mb-1 px-2 py-0.5 rounded-full text-[10px] font-black border ${db.cls}">${db.label}</span>`; })()}
                         <div class="font-semibold">${escapeHtml(prog.deadline)}</div>
                         <select data-plan-st="${slot}" aria-label="Plan ${slot} status" class="mt-1 px-2 py-1 rounded-lg bg-slate-50 border border-slate-200 text-[11px] font-bold">
@@ -1442,20 +1454,20 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
                   <div class="p-3.5 rounded-2xl bg-blue-50 border border-blue-200 space-y-2">
                     <div class="font-extrabold text-blue-950">Option A (e.g. Away University)</div>
                     <div class="grid grid-cols-2 gap-2">
-                      <label>Tuition (R/yr)<input data-aff="A|tuition" type="number" min="0" value="${a.tuition}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-blue-200 font-bold" /></label>
-                      <label>Accomm. (R/yr)<input data-aff="A|accomm" type="number" min="0" value="${a.accomm}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-blue-200 font-bold" /></label>
-                      <label>Transport (R/yr)<input data-aff="A|transport" type="number" min="0" value="${a.transport}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-blue-200 font-bold" /></label>
-                      <label>Funding/NSFAS (R)<input data-aff="A|funding" type="number" min="0" value="${a.funding}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-blue-200 font-bold" /></label>
+                      <label>Tuition (R/yr)<input data-aff="A|tuition" type="number" min="0" inputmode="numeric" value="${a.tuition}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-blue-200 font-bold" /></label>
+                      <label>Accomm. (R/yr)<input data-aff="A|accomm" type="number" min="0" inputmode="numeric" value="${a.accomm}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-blue-200 font-bold" /></label>
+                      <label>Transport (R/yr)<input data-aff="A|transport" type="number" min="0" inputmode="numeric" value="${a.transport}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-blue-200 font-bold" /></label>
+                      <label>Funding/NSFAS (R)<input data-aff="A|funding" type="number" min="0" inputmode="numeric" value="${a.funding}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-blue-200 font-bold" /></label>
                     </div>
                     <div class="font-black text-sm text-blue-950">Est. Family Out-of-Pocket: R${netA.toLocaleString()}/yr</div>
                   </div>
                   <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2">
                     <div class="font-extrabold text-emerald-950">Option C (e.g. Near-Home TVET / Higher Cert)</div>
                     <div class="grid grid-cols-2 gap-2">
-                      <label>Tuition (R/yr)<input data-aff="C|tuition" type="number" min="0" value="${c.tuition}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-emerald-200 font-bold" /></label>
-                      <label>Accomm. (R/yr)<input data-aff="C|accomm" type="number" min="0" value="${c.accomm}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-emerald-200 font-bold" /></label>
-                      <label>Transport (R/yr)<input data-aff="C|transport" type="number" min="0" value="${c.transport}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-emerald-200 font-bold" /></label>
-                      <label>Funding/NSFAS (R)<input data-aff="C|funding" type="number" min="0" value="${c.funding}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-emerald-200 font-bold" /></label>
+                      <label>Tuition (R/yr)<input data-aff="C|tuition" type="number" min="0" inputmode="numeric" value="${c.tuition}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-emerald-200 font-bold" /></label>
+                      <label>Accomm. (R/yr)<input data-aff="C|accomm" type="number" min="0" inputmode="numeric" value="${c.accomm}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-emerald-200 font-bold" /></label>
+                      <label>Transport (R/yr)<input data-aff="C|transport" type="number" min="0" inputmode="numeric" value="${c.transport}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-emerald-200 font-bold" /></label>
+                      <label>Funding/NSFAS (R)<input data-aff="C|funding" type="number" min="0" inputmode="numeric" value="${c.funding}" class="w-full mt-0.5 px-2 py-1 rounded-lg bg-white border border-emerald-200 font-bold" /></label>
                     </div>
                     <div class="font-black text-sm text-emerald-950">Est. Family Out-of-Pocket: R${netC.toLocaleString()}/yr</div>
                   </div>
@@ -1851,19 +1863,14 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
                 <div class="flex flex-wrap items-center justify-between gap-1.5">
                   <div class="font-bold text-teal-700">${escapeHtml(w.employer)}</div>
                   <div class="flex flex-wrap items-center gap-1">
-                    <span class="px-2 py-0.5 rounded border text-[10px] font-bold ${w.freshness.badgeClass}">${escapeHtml(w.freshness.label)}</span>
-                    ${w.matchScore > 0 ? `<span class="px-2 py-0.5 rounded bg-blue-50 text-blue-900 border border-blue-200 text-[10px] font-bold">Profile Match ${w.matchScore}%</span>` : ''}
+                    ${(() => { const _smp = window.MZSelectors && window.MZSelectors.isSampleJob(w); return _smp ? '<span class="px-2 py-0.5 rounded border text-[10px] font-bold bg-amber-50 text-amber-900 border-amber-300">Sample Example (Not Live)</span>' : `<span class="px-2 py-0.5 rounded border text-[10px] font-bold ${w.freshness.badgeClass}">${escapeHtml(w.freshness.label)}</span>${w.matchScore > 0 ? `<span class="px-2 py-0.5 rounded bg-blue-50 text-blue-900 border border-blue-200 text-[10px] font-bold">Profile Match ${w.matchScore}%</span>` : ''}`; })()}
                   </div>
                 </div>
                 <h2 class="text-base font-extrabold text-slate-900">${escapeHtml(w.title)}</h2>
                 <div class="flex flex-wrap items-center gap-1.5"><span class="px-2 py-0.5 rounded-full bg-slate-900 text-white text-[10px] font-extrabold">${escapeHtml(JOB_KINDS[w.kind] || 'Job')}</span>${window.MZWORK ? (() => { const q = MZWORK.jobQual(w), f = MZWORK.fits(state.qualLevel, w); return `<span class="wq-badge r${q.rank === null ? 'x' : q.rank}">${escapeHtml(q.label)}${q.inferred ? ' (guess)' : ''}</span>` + (q.rank >= 1 && f === true ? '<span class="wq-badge you">You have this level ✓</span>' : (q.rank >= 1 && f === false ? '<span class="wq-badge no">Above your level</span>' : '')) + (MZWORK.fieldFit(state.qualField, w) ? '<span class="wq-badge you">In your field</span>' : ''); })() : ''}</div>
-                <div class="text-slate-600">${escapeHtml(w.town)}, ${escapeHtml(w.province)} · ${escapeHtml(w.salary)} · Closes ${escapeHtml(w.closing)}</div>
+                <div class="text-slate-600">${escapeHtml(w.town)}, ${escapeHtml(w.province)}${(window.MZSelectors && window.MZSelectors.isSampleJob(w)) ? ' · Sample listing (check official portals below for live vacancies)' : ` · ${escapeHtml(w.salary)} · Closes ${escapeHtml(w.closing)}`}</div>
                 <div class="p-2 rounded-xl bg-blue-50 border border-blue-200 text-[11px] text-blue-950"><strong>Minimum to apply (typical):</strong> ${escapeHtml(JOB_KIND_HELP[w.kind] || '')}</div>
-                <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] space-y-0.5">
-                  <div><strong>Employer Identity:</strong> ${escapeHtml(w.trust.id)}</div>
-                  <div><strong>Source Check:</strong> ${escapeHtml(w.trust.source)}</div>
-                  <div><strong>Scam Check:</strong> ${escapeHtml(w.trust.scam)}</div>
-                </div>
+                ${(() => { const _tr = window.MZSelectors ? window.MZSelectors.getTrust(w) : w.trust; return `<div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 text-[11px] space-y-0.5"><div><strong>Trust Status:</strong> ${escapeHtml(_tr.label || _tr.id || 'Not verified yet')}</div><div><strong>Source Check:</strong> ${escapeHtml(_tr.source || 'Not checked yet')}</div><div><strong>Scam Check:</strong> ${escapeHtml(_tr.scam || 'Not checked yet')}</div></div>`; })()}
                 <div class="flex flex-wrap items-center gap-2 pt-1">
                   <a href="${escapeHtml(w.url)}" target="_blank" rel="noopener noreferrer" class="inline-block px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold">Official Link ↗</a>
                   <button type="button" data-verify-job-employer="${escapeHtml(w.employer)}" data-verify-job-url="${escapeHtml(w.url)}" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-300 font-bold">Verify Employer</button>
@@ -1986,9 +1993,17 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
                 </div>
               `; }).join('')}
             </div>
+            <div class="flex flex-wrap gap-1.5 pt-1">
+              <span class="text-[11px] font-bold text-slate-600 self-center">Quick add:</span>
+              <button type="button" data-quick-muni="DPSA Public Service Vacancies|https://www.dpsa.gov.za/newsroom/psvc/" class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-800 border border-slate-300 text-[11px] font-bold">+ DPSA Vacancies</button>
+              <button type="button" data-quick-muni="Mpumalanga Provincial Govt|https://www.mpumalanga.gov.za/" class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-800 border border-slate-300 text-[11px] font-bold">+ Mpumalanga Govt</button>
+              <button type="button" data-quick-muni="Thembisile Hani Local Municipality|https://www.thembisilehanilm.gov.za/" class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-800 border border-slate-300 text-[11px] font-bold">+ Thembisile Hani</button>
+              <button type="button" data-quick-muni="eMalahleni Local Municipality|https://www.emalahleni.gov.za/" class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-800 border border-slate-300 text-[11px] font-bold">+ eMalahleni</button>
+              <button type="button" data-quick-muni="City of Tshwane|https://www.tshwane.gov.za/" class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-800 border border-slate-300 text-[11px] font-bold">+ Tshwane</button>
+            </div>
             <form id="add-muni-form" class="grid grid-cols-1 sm:grid-cols-12 gap-2 pt-1">
-              <input id="muni-name" required type="text" placeholder="Local Municipality / Dept (e.g. eMalahleni Local Municipality)" class="sm:col-span-5 px-3 py-2 rounded-lg bg-slate-50 border border-slate-300 text-xs font-semibold" />
-              <input id="muni-url" required type="url" placeholder="Official https://...gov.za URL" class="sm:col-span-5 px-3 py-2 rounded-lg bg-slate-50 border border-slate-300 text-xs" />
+              <input id="muni-name" required type="text" placeholder="Type town, municipality or dept (e.g. Thembisile, eMalahleni, SAPS)" class="sm:col-span-5 px-3 py-2 rounded-lg bg-slate-50 border border-slate-300 text-xs font-semibold" />
+              <input id="muni-url" type="url" placeholder="Official URL (optional — auto-found for SA gov/municipalities)" class="sm:col-span-5 px-3 py-2 rounded-lg bg-slate-50 border border-slate-300 text-xs" />
               <button type="submit" class="sm:col-span-2 py-2 rounded-lg bg-slate-900 text-white text-xs font-bold hover:bg-slate-800">+ Track</button>
             </form>
           </section>
@@ -2316,6 +2331,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
       if (isr) isr.addEventListener('input', e => { state.instQ = e.target.value; state.instOpen = true; clearTimeout(window._isT); window._isT = setTimeout(() => { saveState(); render(); const el = document.getElementById('inst-search'); if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); } }, 180); });
       const ipv = document.getElementById('inst-prov'); if (ipv) ipv.addEventListener('change', e => { state.instProv = e.target.value; state.instOpen = true; saveState(); render(); });
       const ity = document.getElementById('inst-type'); if (ity) ity.addEventListener('change', e => { state.instType = e.target.value; state.instOpen = true; saveState(); render(); });
+      const imo = document.getElementById('inst-match-only'); if (imo) imo.addEventListener('click', () => { state.instMatchOnly = !state.instMatchOnly; state.instOpen = true; saveState(); render(); });
       const pf = document.getElementById('prov-filter');
       if (pf) pf.addEventListener('change', e => { state.provFilter = e.target.value; state.routeLimit = 20; saveState(); render(); });
       const smr = document.getElementById('show-more-routes');
@@ -2422,7 +2438,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
       document.querySelectorAll('[data-scan-mark]').forEach(inp =>inp.addEventListener('input', e =>{
         const idx = Number(inp.dataset.scanMark);
         if (state.scanParsed[idx]) {
-          const v = e.target.value === '' ? null : Math.max(0, Math.min(100, Math.round(Number(e.target.value))));
+          const rawV = String(e.target.value || '').trim(); const parsedV = rawV === '' ? null : (typeof parseMark === 'function' ? parseMark(rawV) : Number(rawV.replace(',', '.'))); const v = (parsedV !== null && Number.isFinite(parsedV)) ? Math.max(0, Math.min(100, parsedV)) : null;
           state.scanParsed[idx].mark = v; saveState();
           const lp = document.getElementById('scan-live-preview');
           if (lp) { const pn = evaluateNsc(state.scanParsed.filter(s => s.include !== false && hasMark(s))); lp.textContent = `${pn.passLevel} · APS ${pn.aps ?? 'n/a'} (excl. LO)`; }
@@ -2547,17 +2563,50 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
         saveState(); render();
       }));
 
+      document.querySelectorAll('[data-quick-muni]').forEach(btn => btn.addEventListener('click', () => {
+        const [qName, qUrl] = String(btn.dataset.quickMuni || '').split('|');
+        if (!qName || !qUrl) return;
+        if (!Array.isArray(state.govWatchlist)) state.govWatchlist = [];
+        if (state.govWatchlist.some(x => x.url === qUrl)) { showToast(`"${qName}" is already in your tracker.`); return; }
+        state.govWatchlist.push({ name: qName, url: qUrl, cadence: 'Check weekly', lastChecked: 'Not checked yet' });
+        saveState(); render();
+        showToast(`Added "${qName}" automatically!`);
+      }));
+      const SA_AUTO_PORTALS = [
+        [/thembisile/i, 'https://www.thembisilehanilm.gov.za/'],
+        [/emalahleni|witbank/i, 'https://www.emalahleni.gov.za/'],
+        [/steve\s*tshwete|middelburg/i, 'https://www.stlm.gov.za/'],
+        [/mbombela|nelspruit/i, 'https://www.mbombela.gov.za/'],
+        [/nkangala/i, 'https://www.nkangaladm.gov.za/'],
+        [/mpumalanga/i, 'https://www.mpumalanga.gov.za/'],
+        [/tshwane|pretoria/i, 'https://www.tshwane.gov.za/'],
+        [/johannesburg|joburg/i, 'https://www.joburg.org.za/'],
+        [/ekurhuleni/i, 'https://www.ekurhuleni.gov.za/'],
+        [/cape\s*town/i, 'https://www.capetown.gov.za/'],
+        [/ethekwini|durban/i, 'https://www.durban.gov.za/'],
+        [/dpsa|public\s*service/i, 'https://www.dpsa.gov.za/newsroom/psvc/'],
+        [/saps|police/i, 'https://www.saps.gov.za/careers/'],
+        [/sandf|defence|army/i, 'https://www.dod.mil.za/'],
+        [/nsfas/i, 'https://www.nsfas.org.za/'],
+        [/sayouth|sa\s*youth/i, 'https://sayouth.mobi/'],
+        [/labour|essa/i, 'https://www.labour.gov.za/']
+      ];
       const amf = document.getElementById('add-muni-form');
       if (amf) amf.addEventListener('submit', e => {
         e.preventDefault();
         const nm = (document.getElementById('muni-name')?.value || '').trim();
-        const u = (document.getElementById('muni-url')?.value || '').trim();
-        const okHost = u.startsWith('https://') && /(?:\.gov\.za|\.org\.za|\.ac\.za|\.edu\.za|sayouth\.mobi)(?:\/|$)/i.test(u);
+        let u = (document.getElementById('muni-url')?.value || '').trim();
+        if (!nm) { showToast('Type a town, municipality or department name first.'); return; }
+        if (!u) {
+          const hit = SA_AUTO_PORTALS.find(([rx]) => rx.test(nm));
+          u = hit ? hit[1] : ('https://www.gov.za/search?search_api_fulltext=' + encodeURIComponent(nm + ' vacancies'));
+        }
+        const okHost = u.startsWith('https://') && /(?:\.gov\.za|\.org\.za|\.ac\.za|\.edu\.za|\.mil\.za|sayouth\.mobi)(?:\/|$)/i.test(u);
         if (!okHost) { showToast('Only official HTTPS .gov.za / .org.za / .ac.za / sayouth.mobi portals allowed.'); return; }
         if (!Array.isArray(state.govWatchlist)) state.govWatchlist = [];
         state.govWatchlist.push({ name: nm, url: u, cadence: 'Check weekly', lastChecked: 'Not checked yet' });
         saveState(); render();
-        showToast(`Added "${nm}" to your official portal tracker!`);
+        showToast(`Added "${nm}" automatically to your official portal tracker!`);
       });
 
       const djtBtn = document.getElementById('dl-jobs-template-btn');
@@ -3394,6 +3443,50 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
 
     window.mzWipeAllData = wipeLocalProfile;
     const wipeBtn = document.getElementById('btn-wipe-device'); if (wipeBtn) wipeBtn.addEventListener('click', wipeLocalProfile);
+    const spBtn = document.getElementById('shared-pc-btn');
+    if (spBtn) spBtn.addEventListener('click', () => {
+      const next = !isSharedPcMode();
+      try { if (next) sessionStorage.setItem('mz_shared_pc_mode', '1'); else sessionStorage.removeItem('mz_shared_pc_mode'); } catch (e) {}
+      if (next) wipeLocalProfile();
+      syncSharedPcUi();
+    function buildDiagnosticsReport() {
+      let lsBytes = 0, lsKeys = 0;
+      try {
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (k) { lsKeys++; lsBytes += k.length + (localStorage.getItem(k) || '').length; }
+        }
+      } catch (e) {}
+      const cat = window.MZCAT && window.MZCAT.load ? window.MZCAT.load() : null;
+      const errLog = (() => { try { return JSON.parse(localStorage.getItem('mz_err_log') || '[]'); } catch (e) { return []; } })();
+      return [
+        'Mzansi Pathways Diagnostics (No Personal Data)',
+        'Online: ' + (navigator.onLine ? 'Yes' : 'Offline'),
+        'Shared PC / Class Mode: ' + (isSharedPcMode() ? 'ON' : 'OFF'),
+        'Catalogue: ' + (cat ? (cat.flat.length + ' courses / ' + cat.institutions.length + ' institutions') : 'Unavailable'),
+        'Local Storage: ' + lsKeys + ' keys (~' + Math.round(lsBytes / 1024) + ' KB)',
+        'Recent Errors: ' + (errLog.length ? errLog.slice(-3).join(' | ') : 'None'),
+        'Generated: ' + new Date().toISOString()
+      ].join('\n');
+    }
+    const diagRef = document.getElementById('diag-refresh-btn');
+    const diagCopy = document.getElementById('diag-copy-btn');
+    const diagOut = document.getElementById('diag-report-out');
+    if (diagRef && diagOut) diagRef.addEventListener('click', () => { diagOut.textContent = buildDiagnosticsReport(); });
+    if (diagCopy && diagOut) diagCopy.addEventListener('click', () => {
+      const txt = buildDiagnosticsReport();
+      diagOut.textContent = txt;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt).then(() => showToast('Safe diagnostics report copied (no personal data)')).catch(() => showToast('Select and copy the report box above'));
+      } else { showToast('Select and copy the report box above'); }
+    });
+      showToast(next ? 'Shared PC / Class Mode ON — nothing will be saved to this device' : 'Shared PC / Class Mode OFF — marks save on this device again');
+    });
+    const spNext = document.getElementById('shared-pc-next-btn');
+    if (spNext) spNext.addEventListener('click', () => { wipeLocalProfile(); try { sessionStorage.setItem('mz_shared_pc_mode', '1'); } catch (e) {} syncSharedPcUi(); showToast('Cleared for next learner'); });
+    const spExit = document.getElementById('shared-pc-exit-btn');
+    if (spExit) spExit.addEventListener('click', () => { try { sessionStorage.removeItem('mz_shared_pc_mode'); } catch (e) {} syncSharedPcUi(); showToast('Exited Shared PC / Class Mode'); });
+    syncSharedPcUi();
         const otpForm = document.getElementById('otp-preview-form');
     if (otpForm) otpForm.addEventListener('submit', e =>{
       e.preventDefault();

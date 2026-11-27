@@ -10,7 +10,9 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Mzansi Pathways — See where you can realistically go" />
   <meta property="og:description" content="Free, private South African guide: enter your Matric marks and compare university, TVET, QCTO, funding and work options." />
-  <meta property="og:image" content="./icon-512.png" />
+  <meta property="og:url" content="https://pmech1987.github.io/mzansi-pathways/" />
+  <meta property="og:image" content="https://pmech1987.github.io/mzansi-pathways/icon-512.png" />
+  <meta name="twitter:card" content="summary" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Pathways" />
   <link rel="apple-touch-icon" href="./icon-192.png" />
@@ -102,7 +104,14 @@
     </div>
   </section>
 
-  <main id="app-main" tabindex="-1" class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4"></main>
+    <div id="shared-pc-banner" role="status" aria-live="polite" class="hidden bg-amber-100 border-b border-amber-300 text-amber-950 px-3 py-2 text-xs font-bold flex flex-wrap items-center justify-between gap-2">
+    <span>Shared PC / Class Mode ON — marks stay in memory only and are never saved to this device.</span>
+    <span class="flex items-center gap-2">
+      <button type="button" id="shared-pc-next-btn" class="px-2.5 py-1 rounded-lg bg-amber-900 text-white text-[11px] font-extrabold">Next Learner (Clear)</button>
+      <button type="button" id="shared-pc-exit-btn" class="px-2.5 py-1 rounded-lg bg-white text-amber-950 border border-amber-400 text-[11px] font-bold">Exit Class Mode</button>
+    </span>
+  </div>
+<main id="app-main" tabindex="-1" class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4"></main>
 
   <!-- Floating bottom bar (phones) -->
   <nav id="mz-dock" class="mz-dock" aria-label="Main">
@@ -208,6 +217,7 @@
             <button type="button" id="textsize-btn" title="Larger Text" aria-label="Toggle Larger Text" class="px-3 py-2 rounded-xl bg-white text-slate-800 border border-slate-200 text-xs font-bold hover:bg-slate-100">Large Text (A+)</button>
             <button type="button" id="hc-btn" title="High Contrast Mode" aria-label="Toggle High Contrast" class="px-3 py-2 rounded-xl bg-white text-slate-900 border border-slate-300 text-xs font-bold hover:bg-slate-100">High Contrast (HC)</button>
             <button type="button" id="theme-btn" aria-label="Toggle Dark Mode" class="col-span-2 px-3 py-2 rounded-xl bg-white text-slate-800 border border-slate-200 text-xs font-bold hover:bg-slate-100">Dark Mode: OFF</button>
+            <button type="button" id="shared-pc-btn" aria-pressed="false" aria-label="Toggle Shared PC or Class Mode" class="col-span-2 px-3 py-2 rounded-xl bg-amber-50 text-amber-950 border border-amber-300 text-xs font-bold hover:bg-amber-100">Shared PC / Class Mode: OFF</button>
           </div>
         </div>
         <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
@@ -228,7 +238,16 @@
         </div>
       </div>
 
-            <details id="legal-compliance-card" class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-[11px] text-slate-700">
+            <details id="diag-panel" class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-xs space-y-2 mb-2">
+        <summary class="cursor-pointer font-extrabold text-slate-900 select-none">App Diagnostics &amp; Offline Health (No Personal Data)</summary>
+        <p class="text-[11px] text-slate-600 pt-1">Check storage use, offline cache status, and recent errors. Contains zero marks, names, or IDs.</p>
+        <pre id="diag-report-out" class="p-2.5 rounded-xl bg-white border border-slate-200 text-[11px] text-slate-800 whitespace-pre-wrap overflow-x-auto">Tap Refresh Diagnostics to inspect.</pre>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" id="diag-refresh-btn" class="px-3 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-bold">Refresh Diagnostics</button>
+          <button type="button" id="diag-copy-btn" class="px-3 py-1.5 rounded-xl bg-white text-slate-800 border border-slate-300 text-xs font-bold">Copy Safe Report</button>
+        </div>
+      </details>
+      <details id="legal-compliance-card" class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-[11px] text-slate-700">
         <summary class="cursor-pointer font-extrabold text-slate-900 select-none">Legal, POPIA &amp; Zero-Scraping Charter</summary>
         <ul class="mt-2 space-y-1 list-disc pl-4">
           <li><strong>Zero Scraping &amp; Copyright-Safe:</strong> Uses only official public APIs (Greenhouse, Lever, optional Adzuna SA) and direct employer metadata link-outs — never scrapes private boards or copies advert prose.</li>
@@ -332,6 +351,7 @@
   <script src="./js/modules/results.js" defer></script>
   <script src="./js/modules/study.js" defer></script>
   <script src="./js/modules/work.js" defer></script>
+  <script src="./js/modules/selectors.js" defer></script>
   <script src="./js/app.js" defer></script>
   <script src="./js/screens.js" defer></script>
   <script src="./js/home.js" defer></script>

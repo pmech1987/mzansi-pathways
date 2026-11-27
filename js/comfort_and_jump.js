@@ -154,7 +154,7 @@
         'aria-label': 'Open Quick Jump and SA Helplines (Ctrl+K)'
       }, 'Jump / Help');
       btn.addEventListener('click', openPalette);
-      (document.body || document.documentElement).appendChild(btn);
+      var moreSheet = document.querySelector('#mz-more .mz-more-sheet'); (moreSheet || document.body || document.documentElement).appendChild(btn);
     }
 
     document.addEventListener('keydown', function (e) {

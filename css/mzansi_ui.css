@@ -1,3 +1,35 @@
+/* v127 B12: Unified Design Tokens (Light & Dark) + Tabular Numerals for APS & Marks */
+:root {
+  --mz-bg: #f4f6fb;
+  --mz-surface: #ffffff;
+  --mz-surface-alt: #f8fafc;
+  --mz-ink: #0e1b3d;
+  --mz-ink-muted: #475569;
+  --mz-border: #cbd5e1;
+  --mz-accent: #1d4ed8;
+  --mz-ok: #047857;
+  --mz-warn: #b45309;
+  --mz-danger: #be123c;
+  --mz-radius-md: 12px;
+  --mz-radius-lg: 20px;
+  --mz-shadow-sm: 0 1px 2px rgba(14, 27, 61, 0.06);
+  --mz-z-dock: 40;
+  --mz-z-modal: 50;
+}
+body.dark-mode {
+  --mz-bg: #0b1226;
+  --mz-surface: #141d38;
+  --mz-surface-alt: #0f172a;
+  --mz-ink: #f1f4fb;
+  --mz-ink-muted: #94a3b8;
+  --mz-border: #27335a;
+  --mz-accent: #3b82f6;
+  --mz-ok: #10b981;
+  --mz-warn: #f59e0b;
+  --mz-danger: #fb7185;
+}
+.mz-num, input[type="number"], td, .text-lg, .text-xl, .text-2xl { font-variant-numeric: tabular-nums; }
+
 /* Mzansi Pathways — product design layer. Loaded after utilities.css and legacy_inline.css. */
 :root{
   --ink:#0e1b3d; --ink-2:#44506b; --paper:#f5f6fa; --card:#fff; --line:#e3e7f0;
@@ -270,3 +302,114 @@ body.dark-mode #app-main details.mz-offer { background-color: #141d38 !important
 body.dark-mode #app-main details.mz-offer { background-color: #0f172a !important; }
 body.dark-mode #app-main details.mz-notes summary { color: #93c5fd !important; }
 body.dark-mode #app-main a.underline { color: #93c5fd !important; }
+
+/* v122 Real-Phone Fixes: prevent Android OS Dark Theme from painting white text on light-mode inputs/selects */
+html, body:not(.dark-mode) { color-scheme: light; }
+body.dark-mode { color-scheme: dark; }
+body:not(.dark-mode) input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+body:not(.dark-mode) select,
+body:not(.dark-mode) textarea {
+  color: #0e1b3d !important;
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color-scheme: light !important;
+}
+body:not(.dark-mode) select option {
+  color: #0e1b3d !important;
+  background-color: #ffffff !important;
+}
+body:not(.dark-mode) input::placeholder,
+body:not(.dark-mode) textarea::placeholder {
+  color: #475569 !important;
+  opacity: 1 !important;
+}
+/* v122 Sub-tab fit on 360px phones + generous bottom scroll clearance above dock & Jump/Help */
+.mz-sub { padding-right: 16px; margin-bottom: 10px; gap: 6px; }
+.mz-sub button { padding: 7px 12px; font-size: .8rem; white-space: nowrap; }
+#app-main { padding-bottom: 136px !important; }
+
+/* v125 B8: Explicit checkbox styling so Android Dark OS never draws dark filled squares for unchecked boxes */
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  border: 2px solid #475569;
+  border-radius: 5px;
+  background-color: #ffffff !important;
+  display: inline-grid;
+  place-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+input[type="checkbox"]:checked {
+  background-color: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+}
+input[type="checkbox"]:checked::after {
+  content: "";
+  width: 5px;
+  height: 10px;
+  border: solid #ffffff;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+  margin-bottom: 2px;
+}
+body.dark-mode input[type="checkbox"] {
+  background-color: #0f172a !important;
+  border-color: #94a3b8 !important;
+}
+body.dark-mode input[type="checkbox"]:checked {
+  background-color: #2563eb !important;
+  border-color: #60a5fa !important;
+}
+
+/* v125 B8: Jump / Help docked cleanly inside More menu sheet instead of floating over content */
+.mz-more-sheet .v98-jump-btn {
+  position: static !important;
+  width: 100% !important;
+  margin-top: 10px !important;
+  min-height: 44px !important;
+  font-size: 0.85rem !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+
+/* v125 B9: Plan board table converts to stacked cards below 600px — zero clipped text or sideways scroll */
+@media (max-width: 600px) {
+  .mz-plan-table thead { display: none; }
+  .mz-plan-table, .mz-plan-table tbody { display: block; width: 100%; }
+  .mz-plan-table tr {
+    display: block;
+    border: 1px solid #cbd5e1;
+    border-radius: 16px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    background: #ffffff;
+  }
+  body.dark-mode .mz-plan-table tr {
+    background: #141d38 !important;
+    border-color: #27335a !important;
+  }
+  .mz-plan-table td {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 5px 0 !important;
+    border: 0 !important;
+    white-space: normal !important;
+    word-break: break-word;
+  }
+  .mz-plan-table td[data-label]::before {
+    content: attr(data-label);
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #64748b;
+  }
+  body.dark-mode .mz-plan-table td[data-label]::before { color: #94a3b8; }
+}

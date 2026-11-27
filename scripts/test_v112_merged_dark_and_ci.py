@@ -46,7 +46,7 @@ class TestV112MergedDarkAndCi(unittest.TestCase):
         pc = read('css/prospectus_check.css')
         sw = read('sw.js')
         self.assertIn('prefers-color-scheme: dark', pc)
-        self.assertRegex(sw, r"const CACHE = 'mzansi-pathways-v11[2-9]'")
+        self.assertRegex(sw, r"const CACHE = 'mzansi-pathways-v(11[2-9]|1[2-9]\d|[2-9]\d\d)'")
 
 
 if __name__ == '__main__':

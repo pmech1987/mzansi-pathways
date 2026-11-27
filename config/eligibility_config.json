@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "notice": "Product defaults only — NOT institution admission rules. Always verify final APS, subject marks, and closing dates on each institution's official site.",
+  "CLOSE_APS_GAP": 2,
+  "CLOSE_SUBJECT_GAP_LEVELS": 1,
+  "CLOSE_SUBJECT_GAP_PCT": 10,
+  "STALE_DAYS": 365,
+  "SHRINK_BREAKER_MIN_RATIO": 0.90
+}
