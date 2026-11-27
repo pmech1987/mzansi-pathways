@@ -1,0 +1,889 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-26",
+  "notice": "Complete statutory South African PSET registry: 26 Public Universities, 50 Public TVET Colleges, 9 Provincial CET Colleges, and 21 Official SETAs. Always confirm live prospectuses on official domains.",
+  "universities": [
+    {
+      "id": "up",
+      "name": "University of Pretoria",
+      "short": "UP",
+      "province": "Gauteng",
+      "apsMethod": "nsc_best6_42",
+      "domain": "up.ac.za",
+      "officialUrl": "https://www.up.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "uj",
+      "name": "University of Johannesburg",
+      "short": "UJ",
+      "province": "Gauteng",
+      "apsMethod": "nsc_best6_42",
+      "domain": "uj.ac.za",
+      "officialUrl": "https://www.uj.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "wits",
+      "name": "University of the Witwatersrand",
+      "short": "Wits",
+      "province": "Gauteng",
+      "apsMethod": "wits_weighted_56",
+      "domain": "wits.ac.za",
+      "officialUrl": "https://www.wits.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "uct",
+      "name": "University of Cape Town",
+      "short": "UCT",
+      "province": "Western Cape",
+      "apsMethod": "uct_fps_600",
+      "domain": "uct.ac.za",
+      "officialUrl": "https://www.uct.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "su",
+      "name": "Stellenbosch University",
+      "short": "SU",
+      "province": "Western Cape",
+      "apsMethod": "stellenbosch_avg_100",
+      "domain": "sun.ac.za",
+      "officialUrl": "https://www.sun.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "uwc",
+      "name": "University of the Western Cape",
+      "short": "UWC",
+      "province": "Western Cape",
+      "apsMethod": "uwc_weighted_65",
+      "domain": "uwc.ac.za",
+      "officialUrl": "https://www.uwc.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "ukzn",
+      "name": "University of KwaZulu-Natal",
+      "short": "UKZN",
+      "province": "KwaZulu-Natal",
+      "apsMethod": "eight_pt_best6_48",
+      "domain": "ukzn.ac.za",
+      "officialUrl": "https://www.ukzn.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "nwu",
+      "name": "North-West University",
+      "short": "NWU",
+      "province": "North West",
+      "apsMethod": "eight_pt_best6_48",
+      "domain": "nwu.ac.za",
+      "officialUrl": "https://www.nwu.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "ufs",
+      "name": "University of the Free State",
+      "short": "UFS",
+      "province": "Free State",
+      "apsMethod": "ufs_ap_49",
+      "domain": "ufs.ac.za",
+      "officialUrl": "https://www.ufs.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "ru",
+      "name": "Rhodes University",
+      "short": "RU",
+      "province": "Eastern Cape",
+      "apsMethod": "pct_div10_60",
+      "domain": "ru.ac.za",
+      "officialUrl": "https://www.ru.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "nmu",
+      "name": "Nelson Mandela University",
+      "short": "NMU",
+      "province": "Eastern Cape",
+      "apsMethod": "nmu_as_600",
+      "domain": "mandela.ac.za",
+      "officialUrl": "https://www.mandela.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "unisa",
+      "name": "University of South Africa",
+      "short": "UNISA",
+      "province": "Gauteng",
+      "apsMethod": "nsc_best6_42",
+      "domain": "unisa.ac.za",
+      "officialUrl": "https://www.unisa.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "tut",
+      "name": "Tshwane University of Technology",
+      "short": "TUT",
+      "province": "Gauteng",
+      "apsMethod": "tut_best6_42",
+      "domain": "tut.ac.za",
+      "officialUrl": "https://www.tut.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "cput",
+      "name": "Cape Peninsula University of Technology",
+      "short": "CPUT",
+      "province": "Western Cape",
+      "apsMethod": "cput_methods",
+      "domain": "cput.ac.za",
+      "officialUrl": "https://www.cput.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "dut",
+      "name": "Durban University of Technology",
+      "short": "DUT",
+      "province": "KwaZulu-Natal",
+      "apsMethod": "nsc_best6_42",
+      "domain": "dut.ac.za",
+      "officialUrl": "https://www.dut.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "cut",
+      "name": "Central University of Technology",
+      "short": "CUT",
+      "province": "Free State",
+      "apsMethod": "cut_ap_49",
+      "domain": "cut.ac.za",
+      "officialUrl": "https://www.cut.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "vut",
+      "name": "Vaal University of Technology",
+      "short": "VUT",
+      "province": "Gauteng",
+      "apsMethod": "eight_pt_best6_48",
+      "domain": "vut.ac.za",
+      "officialUrl": "https://www.vut.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "mut",
+      "name": "Mangosuthu University of Technology",
+      "short": "MUT",
+      "province": "KwaZulu-Natal",
+      "apsMethod": "mut_best5_40",
+      "domain": "mut.ac.za",
+      "officialUrl": "https://www.mut.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "ump",
+      "name": "University of Mpumalanga",
+      "short": "UMP",
+      "province": "Mpumalanga",
+      "apsMethod": "ump_lo_half_45_5",
+      "domain": "ump.ac.za",
+      "officialUrl": "https://www.ump.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "spu",
+      "name": "Sol Plaatje University",
+      "short": "SPU",
+      "province": "Northern Cape",
+      "apsMethod": "spu_bonus_56",
+      "domain": "spu.ac.za",
+      "officialUrl": "https://www.spu.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "smu",
+      "name": "Sefako Makgatho Health Sciences University",
+      "short": "SMU",
+      "province": "Gauteng",
+      "apsMethod": "smu_full7_49",
+      "domain": "smu.ac.za",
+      "officialUrl": "https://www.smu.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "ul",
+      "name": "University of Limpopo",
+      "short": "UL",
+      "province": "Limpopo",
+      "apsMethod": "nsc_best6_42",
+      "domain": "ul.ac.za",
+      "officialUrl": "https://www.ul.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "univen",
+      "name": "University of Venda",
+      "short": "UNIVEN",
+      "province": "Limpopo",
+      "apsMethod": "pct_div10_60",
+      "domain": "univen.ac.za",
+      "officialUrl": "https://www.univen.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "unizulu",
+      "name": "University of Zululand",
+      "short": "UNIZULU",
+      "province": "KwaZulu-Natal",
+      "apsMethod": "eight_pt_best6_48",
+      "domain": "unizulu.ac.za",
+      "officialUrl": "https://www.unizulu.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "ufh",
+      "name": "University of Fort Hare",
+      "short": "UFH",
+      "province": "Eastern Cape",
+      "apsMethod": "ufh_conflict_guard",
+      "domain": "ufh.ac.za",
+      "officialUrl": "https://www.ufh.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    },
+    {
+      "id": "wsu",
+      "name": "Walter Sisulu University",
+      "short": "WSU",
+      "province": "Eastern Cape",
+      "apsMethod": "eight_pt_best6_48",
+      "domain": "wsu.ac.za",
+      "officialUrl": "https://www.wsu.ac.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "official_portal_linked"
+    }
+  ],
+  "tvetColleges": [
+    {
+      "name": "Coastal KZN TVET College",
+      "province": "KwaZulu-Natal",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Elangeni TVET College",
+      "province": "KwaZulu-Natal",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Esayidi TVET College",
+      "province": "KwaZulu-Natal",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Majuba TVET College",
+      "province": "KwaZulu-Natal",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Mnambithi TVET College",
+      "province": "KwaZulu-Natal",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Mthashana TVET College",
+      "province": "KwaZulu-Natal",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Thekwini TVET College",
+      "province": "KwaZulu-Natal",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "uMfolozi TVET College",
+      "province": "KwaZulu-Natal",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Umgungundlovu TVET College",
+      "province": "KwaZulu-Natal",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Central Johannesburg TVET College",
+      "province": "Gauteng",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Ekurhuleni East TVET College",
+      "province": "Gauteng",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Ekurhuleni West TVET College",
+      "province": "Gauteng",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Sedibeng TVET College",
+      "province": "Gauteng",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "South West Gauteng TVET College",
+      "province": "Gauteng",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Tshwane North TVET College",
+      "province": "Gauteng",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Tshwane South TVET College",
+      "province": "Gauteng",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Western TVET College",
+      "province": "Gauteng",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Buffalo City TVET College",
+      "province": "Eastern Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Eastcape Midlands TVET College",
+      "province": "Eastern Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Ikhala TVET College",
+      "province": "Eastern Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Ingwe TVET College",
+      "province": "Eastern Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "King Hintsa TVET College",
+      "province": "Eastern Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "King Sabata Dalindyebo TVET College",
+      "province": "Eastern Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Lovedale TVET College",
+      "province": "Eastern Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Port Elizabeth TVET College",
+      "province": "Eastern Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Capricorn TVET College",
+      "province": "Limpopo",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Lephalale TVET College",
+      "province": "Limpopo",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Letaba TVET College",
+      "province": "Limpopo",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Mopani South East TVET College",
+      "province": "Limpopo",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Sekhukhune TVET College",
+      "province": "Limpopo",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Vhembe TVET College",
+      "province": "Limpopo",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Waterberg TVET College",
+      "province": "Limpopo",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Boland TVET College",
+      "province": "Western Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "College of Cape Town for TVET",
+      "province": "Western Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "False Bay TVET College",
+      "province": "Western Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Northlink TVET College",
+      "province": "Western Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "South Cape TVET College",
+      "province": "Western Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "West Coast TVET College",
+      "province": "Western Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Flavius Mareka TVET College",
+      "province": "Free State",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Goldfields TVET College",
+      "province": "Free State",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Maluti TVET College",
+      "province": "Free State",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Motheo TVET College",
+      "province": "Free State",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Ehlanzeni TVET College",
+      "province": "Mpumalanga",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Gert Sibande TVET College",
+      "province": "Mpumalanga",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Nkangala TVET College",
+      "province": "Mpumalanga",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "ORBIT TVET College",
+      "province": "North West",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Taletso TVET College",
+      "province": "North West",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Vuselela TVET College",
+      "province": "North West",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Northern Cape Rural TVET College",
+      "province": "Northern Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Northern Cape Urban TVET College",
+      "province": "Northern Cape",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    }
+  ],
+  "cetColleges": [
+    {
+      "name": "Eastern Cape CET College",
+      "province": "Eastern Cape",
+      "headOffice": "Zwelitsha",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Free State CET College",
+      "province": "Free State",
+      "headOffice": "Bloemfontein",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Gauteng CET College",
+      "province": "Gauteng",
+      "headOffice": "Johannesburg",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "KwaZulu-Natal CET College",
+      "province": "KwaZulu-Natal",
+      "headOffice": "Pietermaritzburg",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Limpopo CET College",
+      "province": "Limpopo",
+      "headOffice": "Polokwane",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Mpumalanga CET College",
+      "province": "Mpumalanga",
+      "headOffice": "Mbombela",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "North West CET College",
+      "province": "North West",
+      "headOffice": "Mahikeng",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Northern Cape CET College",
+      "province": "Northern Cape",
+      "headOffice": "Kimberley",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "name": "Western Cape CET College",
+      "province": "Western Cape",
+      "headOffice": "Cape Town",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    }
+  ],
+  "setas": [
+    {
+      "acronym": "AgriSETA",
+      "sector": "Agriculture, farming, forestry, fisheries",
+      "domain": "agriseta.co.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "BANKSETA",
+      "sector": "Banking & microfinance",
+      "domain": "bankseta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "CATHSSETA",
+      "sector": "Culture, arts, tourism, hospitality, sport",
+      "domain": "cathsseta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "CETA",
+      "sector": "Construction & built environment",
+      "domain": "ceta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "CHIETA",
+      "sector": "Chemical industries & pharmaceuticals",
+      "domain": "chieta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "ETDP SETA",
+      "sector": "Education, training & development",
+      "domain": "etdpseta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "EWSETA",
+      "sector": "Energy & water sector",
+      "domain": "ewseta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "FASSET",
+      "sector": "Finance, accounting & tax",
+      "domain": "fasset.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "FoodBev SETA",
+      "sector": "Food & beverage manufacturing",
+      "domain": "foodbev.co.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "FP&M SETA",
+      "sector": "Fibre processing & manufacturing",
+      "domain": "fpmseta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "HWSETA",
+      "sector": "Health & welfare",
+      "domain": "hwseta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "INSETA",
+      "sector": "Insurance sector",
+      "domain": "inseta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "LGSETA",
+      "sector": "Local government (257 municipalities)",
+      "domain": "lgseta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "merSETA",
+      "sector": "Manufacturing, engineering & motor",
+      "domain": "merseta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "MICT SETA",
+      "sector": "Media, ICT, software & telecoms",
+      "domain": "mict.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "MQA",
+      "sector": "Mining & minerals",
+      "domain": "mqa.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "PSETA",
+      "sector": "Public service",
+      "domain": "pseta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "SASSETA",
+      "sector": "Safety & security",
+      "domain": "sasseta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "Services SETA",
+      "sector": "Business services, HR & marketing",
+      "domain": "servicesseta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "TETA",
+      "sector": "Transport & logistics",
+      "domain": "teta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    },
+    {
+      "acronym": "W&RSETA",
+      "sector": "Wholesale & retail",
+      "domain": "wrseta.org.za",
+      "officialUrl": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "unverified_confirm_official"
+    }
+  ]
+}

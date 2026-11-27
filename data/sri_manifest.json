@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "generatedAtSAST": "2026-11-27T13:22:11.059621+02:00",
+  "buildTag": "c973afa790f8",
+  "assetCount": 41,
+  "assets": {
+    "css/civic_mobile_a11y.css": {
+      "sri": "sha384-LFp6hFkcEdifxUjNONEIBzODZpoHARUt/LKmf87KOG+8Xq7Bo++KZBPB6aEqDAz0",
+      "bytes": 16721
+    },
+    "css/creator_studio.css": {
+      "sri": "sha384-xjkYIED0xjx010DvJF3evnW3oqwX4dgEbWCx/LWSaWxoOlBnhKj2lDseHPAw2w5e",
+      "bytes": 3671
+    },
+    "css/legacy_inline.css": {
+      "sri": "sha384-8hbrn26ZmdrptQzh1L9BxV3easGa7RznOhzLEqN7DUkUEo/LFEIpTrn6KQBay0Q0",
+      "bytes": 4671
+    },
+    "css/mzansi_ui.css": {
+      "sri": "sha384-1Q4BfcY6uy9z2KXFLzqBM2PlBBI7p2qxAfk+/AXWk1Duwg8autf6n/Yg/2ryA/4E",
+      "bytes": 19263
+    },
+    "css/prospectus_check.css": {
+      "sri": "sha384-kqEasoqwWyz+dQo7l/PWI/cgg6SPi4SpGeDus2+s0p/NZEvowpisvmdrYIRlLkBB",
+      "bytes": 1547
+    },
+    "css/utilities.css": {
+      "sri": "sha384-ksOXA1azRNQVY8+/YUkvf2AbdkQmmEICjmlEYlNn+/A/XtoQdP+558pR0XCG+t94",
+      "bytes": 14536
+    },
+    "guard.js": {
+      "sri": "sha384-n4xDeKphO7TSn2a+5QeGKcGnu3eAHtlAVmfshY9CVK17sG9hia7Et4W5opqpxp4m",
+      "bytes": 4856
+    },
+    "js/a11y.js": {
+      "sri": "sha384-WLC94NGr3sO4lNHT7gVh1edOkUnclfmvlnt6XLo55gTdvhixmcps5/Ydnhjp0OOW",
+      "bytes": 3242
+    },
+    "js/app.js": {
+      "sri": "sha384-MHfLQTBZM9mZI9KO1C7KfWOBTv5xfs7y+gtIqCQIUTRpNbdipASC6OTYEfXYPwYa",
+      "bytes": 284639
+    },
+    "js/backup.js": {
+      "sri": "sha384-mUMq5KLL82hbRoK65HeQTBbqzgUCi9BGTRSjwQ0TOlJ5NgetMp4ooqCihQsuqTw0",
+      "bytes": 22080
+    },
+    "js/boot.js": {
+      "sri": "sha384-vPwXe/mKR6Iqdjp+LMvl12AHldI5MfaNz9g62XiY+82iTweCqbwTBeQYci7M0ERo",
+      "bytes": 148
+    },
+    "js/calendar.js": {
+      "sri": "sha384-haDafwQfpkS035+Vnaoel4FRqMAdwkGswEX2zyZZSOyqVtmE1/M6BR/AyymE2KWe",
+      "bytes": 6974
+    },
+    "js/catalogue.js": {
+      "sri": "sha384-RZdqJpcgs9EF4B70j+oUTLq2nZjLEukqVFfR6RQk42EzK4H/MY09w3Ol9RUySqtr",
+      "bytes": 48031
+    },
+    "js/catalogue_data.js": {
+      "sri": "sha384-g2oNcnNnazVxEpNFxloMZwSwiGmBEa4/so3ShZZEqnggXPzE9SfRL1Ni2kUrOIo8",
+      "bytes": 235338
+    },
+    "js/checklist.js": {
+      "sri": "sha384-g5JJsXWj10gvbHaGI4DvqDokoMQxDEUoUEC0QnRCwreTiclKO/gEa01UlGTDiHH2",
+      "bytes": 6914
+    },
+    "js/clean_layout.js": {
+      "sri": "sha384-R0vBqbQSOVlvZBm68JRskFuH804HN3s6Y6p05gw3uj6y3YaFvhXM17NytSXsSj9P",
+      "bytes": 4399
+    },
+    "js/comfort_and_jump.js": {
+      "sri": "sha384-39LM7okSNFGsdUI0BjBhySSHBwsTDnGIlmUSRvNaCH86pa8j5z9MFXnbIo3IB5jL",
+      "bytes": 13310
+    },
+    "js/core/pathways_v2_engines.js": {
+      "sri": "sha384-ykm4zL40WV0HTt9oOIws5TAcA/7FqMZVC1mfB68hLi+HTJcVn9+48fs9Dto+x86x",
+      "bytes": 10052
+    },
+    "js/core/reverse_aps_solver.js": {
+      "sri": "sha384-4qnEPMulSw/o2XROddAyV1pn7BIvh43x5NSkB4u22M/RHzEruUd0rqRliqapuXFl",
+      "bytes": 2320
+    },
+    "js/core/trusted_dom.js": {
+      "sri": "sha384-37eyhoJH9sWgg4DHqgdb6vtNmoXffGRxa7RdwkMGF3GA9tHf25V/tvRY1lrhUqnu",
+      "bytes": 991
+    },
+    "js/creator_studio.js": {
+      "sri": "sha384-c514GOmXflrrQWBXwE5LMmr6zCnNKJv2qmiJcjgvrXJ3kfL9ejkOErXjxeuNGxAp",
+      "bytes": 17767
+    },
+    "js/data/bm25_shard_search.js": {
+      "sri": "sha384-vrp1ERiQZOYhFK+VjWzmaeynoCh0B0Tr0kvkw5OTEYfQeY0P+S/jyjPG1bZqqPv7",
+      "bytes": 1923
+    },
+    "js/data.js": {
+      "sri": "sha384-aqS9rJz0eZOy77rtI95KLoNXKJ0n7QdeyvDvsWnlOAlnKGqh8oooH32rtGfs1L99",
+      "bytes": 6722
+    },
+    "js/engine.js": {
+      "sri": "sha384-1WdhGP7VYNPW4qD5TWpyBSXd4JqsIm9sCVgw/yagZHknaANAxcZJsThzEWvJTg95",
+      "bytes": 22663
+    },
+    "js/features/trust_guards.js": {
+      "sri": "sha384-thqUh+rHT2bSPQWTFOQ1PPNy5+A3rGWk32Y2MWW4pWlvPAcYb3EfPn1Oggj5QpX5",
+      "bytes": 3623
+    },
+    "js/home.js": {
+      "sri": "sha384-bXNReik8kLVenqriaV4MJkAQFOFhy6gDror/kM+KmT/UB+qhshtTwtcLfUShzBpa",
+      "bytes": 4167
+    },
+    "js/i18n.js": {
+      "sri": "sha384-Bsj2Wts6Cr0w2AQYLhJalR8PYx+bc0QJMPfcOrzXAC628zQl2b+oGna9ZsfMVuIJ",
+      "bytes": 7783
+    },
+    "js/modules/funding.js": {
+      "sri": "sha384-0lvj6ANIws2e75ZWWlFCjGTYLDMW4hme9mXsTsTECGEwV0MuSnEG8o6K9QMoW2uB",
+      "bytes": 10676
+    },
+    "js/modules/results.js": {
+      "sri": "sha384-wYoQphHc+xat2y6qgJoXwFBFDmKgV+y7d2/W4PJrwel7q9MfmNWeAz3r4APyH1AL",
+      "bytes": 6267
+    },
+    "js/modules/storage.js": {
+      "sri": "sha384-M1n5Jh1jTlW01jqHPuIep7JiE44WfAzB646DeF0W7m+rFh5xApllxStNBKLnw1CO",
+      "bytes": 5879
+    },
+    "js/modules/study.js": {
+      "sri": "sha384-FKKp3CEQHTtsdPZAfHA9WrQSaAFvYTnVBoh5GQ7vG6xgiXczFI80HM6mOaXkNvy0",
+      "bytes": 5541
+    },
+    "js/modules/ui.js": {
+      "sri": "sha384-duk5TDm/1TE4hJ6UIDD2U5qaWqdP2VkDc1IV3ilsr/tqfgDS3lXDnGlPY4qFsjZ7",
+      "bytes": 4758
+    },
+    "js/modules/work.js": {
+      "sri": "sha384-Ci5AMGrfYn6Hto+5NBIsBqJS+5Xnmex6bVz5OXQEX5cvWS+/Re0OvkNXyN08TcTA",
+      "bytes": 7350
+    },
+    "js/ocr.js": {
+      "sri": "sha384-EkyrIL14EWHLDJ9LgzPuexPH427dfT2l+/d205TGafAte8ixe2DhBP2TzpkDDMmM",
+      "bytes": 19620
+    },
+    "js/prospectus_check.js": {
+      "sri": "sha384-J/SHUtY+A2c9MUk2CW9yFNm5Q/8s4WZjnuQ3I69ZpHK8DJ+PJflo/Vk/bijbLL/l",
+      "bytes": 11409
+    },
+    "js/pwa_health.js": {
+      "sri": "sha384-8uJLHCDX2yMQ1fvToPZqqdCK9NqSczq/oqt99WC7hggSDE5QO3v7KhYiBwxV8cLl",
+      "bytes": 5384
+    },
+    "js/screens.js": {
+      "sri": "sha384-3Bq+DI6uTrDZsyBGJ2msDqiQ28RGG8w9Cu+ek1vCpmcbl/Bmkqi8awftbj3BN1vd",
+      "bytes": 5416
+    },
+    "js/subjects_data.js": {
+      "sri": "sha384-KsEmIjJYj92mnUHNWamliJ5IOLxgSHauih6SmNVITIzNCd+/5+IvJKLClq+cKw+j",
+      "bytes": 2054
+    },
+    "js/toolkit.js": {
+      "sri": "sha384-7AhNjzEFeTwU9lXG/eQ5HTlSjvEIGzMes0867+CK3dAvmKV/AvZyX+71djrDuPu9",
+      "bytes": 17164
+    },
+    "js/work_tools.js": {
+      "sri": "sha384-E0XF8EDNmGBEDutpy70KqBI9YR+u42SGkF/WL23uY8xCs6+GZEUO8zcPsgq+GHlm",
+      "bytes": 9309
+    },
+    "sw.js": {
+      "sri": "sha384-tgePojepBZPQMLLxwxpR4Znt9i95lHocGHYrcbMpUt9+RJ9Qvg15pvOKCQnBAIB7",
+      "bytes": 6315
+    }
+  }
+}

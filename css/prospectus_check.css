@@ -1,0 +1,17 @@
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;background:#f8fafc;color:#0f172a;line-height:1.45}
+main{max-width:42rem;margin:0 auto;padding:1rem}
+h1{font-size:1.25rem;margin:.25rem 0 .5rem}
+h2{font-size:1rem;margin:1rem 0 .4rem}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:1rem;padding:.9rem;margin:.6rem 0}
+label{display:block;font-weight:700;font-size:.85rem;margin:.5rem 0 .2rem}
+select,input[type=file],textarea,input[type=number],input[type=text]{width:100%;box-sizing:border-box;padding:.5rem;border:1px solid #cbd5e1;border-radius:.6rem;font:inherit}
+textarea{min-height:7rem}
+button{padding:.6rem 1rem;border-radius:.7rem;border:0;background:#0f172a;color:#fff;font-weight:700;font:inherit;cursor:pointer;margin:.3rem .3rem .3rem 0}
+button.alt{background:#e2e8f0;color:#0f172a}
+button:disabled{opacity:.5;cursor:default}
+.note{font-size:.8rem;color:#475569}
+.warn{background:#fffbeb;border:1px solid #fcd34d;color:#78350f;border-radius:.7rem;padding:.5rem .7rem;font-size:.85rem}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+th,td{text-align:left;padding:.3rem;border-bottom:1px solid #e2e8f0;vertical-align:top}
+.sr{position:absolute;left:-9999px}
+@media (prefers-color-scheme:dark){body{background:#0b1220;color:#e2e8f0}.card{background:#111a2e;border-color:#243049}select,input,textarea{background:#0b1220;color:#e2e8f0;border-color:#334155}button{background:#e2e8f0;color:#0f172a}button.alt{background:#243049;color:#e2e8f0}.note{color:#94a3b8}th,td{border-color:#243049}}

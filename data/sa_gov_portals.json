@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "notice": "Official South African government and public portals only. Municipal sites post irregularly; check Friday DPSA circulars first and verify closing dates directly on the official portal.",
+  "portals": [
+    {
+      "id": "dpsa_gov_jobs",
+      "name": "SA Gov Jobs & Weekly DPSA Vacancy Circulars",
+      "scope": "National & All 9 Provinces",
+      "cadence": "Published every Friday (2–3 week open window)",
+      "includes": "National & provincial government posts + Z83 application instructions",
+      "url": "https://www.gov.za/about-government/government-jobs",
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "del_vacancies",
+      "name": "Department of Employment & Labour Vacancies",
+      "scope": "National & Provincial Centres",
+      "cadence": "Updated as departmental posts open",
+      "includes": "Public departmental vacancies & ESSA employment services",
+      "url": "https://www.labour.gov.za/vacancies",
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "sayouth_portal",
+      "name": "SA Youth (Data-Free National Youth Network)",
+      "scope": "National (Entry-Level & Matriculants)",
+      "cadence": "Rolling weekly intakes",
+      "includes": "Zero-data entry-level jobs, learnerships & work readiness",
+      "url": "https://sayouth.mobi/",
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "dhet_register",
+      "name": "DHET Official Registers & Post-School Notices",
+      "scope": "National Education & TVET",
+      "cadence": "Updated per academic cycle",
+      "includes": "Verified public/private college registers & bursary alerts",
+      "url": "https://www.dhet.gov.za/",
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "nsfas_portal",
+      "name": "NSFAS Official Funding Portal",
+      "scope": "National University & TVET Funding",
+      "cadence": "Annual application windows",
+      "includes": "Bursary & Missing Middle loan applications",
+      "url": "https://www.nsfas.org.za/",
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "cipc_bizportal",
+      "name": "CIPC BizPortal (Official Company Verification)",
+      "scope": "National Registered Companies",
+      "cadence": "Live official registry (free login required for POPIA)",
+      "includes": "Verify if a South African company is genuinely registered via BizProfile",
+      "url": "https://www.bizportal.gov.za/",
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "del_pea_tes",
+      "name": "Dept. of Employment & Labour — Registered Employment Agencies (PEA/TES)",
+      "scope": "National & Provincial Recruitment Agencies",
+      "cadence": "Official public register (Employment Services Act s.13(7))",
+      "includes": "Check whether a recruiter/agency is legally registered",
+      "url": "https://www.labour.gov.za/DocumentCenter/Pages/Private-Employment-Agencies-(PEA)-and-Temporary-Employment-Services-(TES).aspx",
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "id": "essa_online",
+      "name": "Employment Services of South Africa (ESSA)",
+      "scope": "National Free Gov Job Matching",
+      "cadence": "Ongoing public work-seeker database",
+      "includes": "Register your CV for free with the Dept. of Employment & Labour",
+      "url": "https://essa.labour.gov.za/EssaOnline/WebBeans/",
+      "lastVerifiedAt": "2026-11-27"
+    }
+  ]
+}

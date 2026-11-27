@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-11-27",
+ "notice": "Copyright-safe factual metadata only (zero scraping). Expired closing dates are automatically removed.",
+ "openCount": 2,
+ "bySourceType": {
+  "dpsa_circular": 1,
+  "gov_portal": 1
+ },
+ "jobs": [
+  {
+   "title": "Public Service Entry-Level Clerk (Weekly DPSA Circular)",
+   "employer": "South African Government (DPSA)",
+   "town": "All 9 Provinces",
+   "province": "Mpumalanga",
+   "closingDate": "Open / Rolling",
+   "daysRemaining": null,
+   "freshnessStatus": "rolling",
+   "stillOpenAfterWeek": false,
+   "sourceType": "dpsa_circular",
+   "officialUrl": "https://www.gov.za/about-government/government-jobs",
+   "lastVerifiedAt": "2026-11-27"
+  },
+  {
+   "title": "Youth Entry-Level & Learnership Opportunities",
+   "employer": "SA Youth National Network",
+   "town": "South Africa",
+   "province": "Mpumalanga",
+   "closingDate": "Open / Rolling",
+   "daysRemaining": null,
+   "freshnessStatus": "rolling",
+   "stillOpenAfterWeek": false,
+   "sourceType": "gov_portal",
+   "officialUrl": "https://sayouth.mobi/",
+   "lastVerifiedAt": "2026-11-27"
+  }
+ ],
+ "fetchStatus": "ok"
+}

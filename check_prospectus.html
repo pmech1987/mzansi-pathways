@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check a prospectus yourself - Mzansi Pathways</title>
+<link rel="stylesheet" href="./css/prospectus_check.css">
+<link rel="icon" href="./favicon.svg">
+</head>
+<body>
+<main>
+  <p><a href="./index.html">&larr; Back to the app</a></p>
+  <h1>Check a prospectus yourself</h1>
+  <p class="note">Pick the official prospectus you have. This page reads it on your phone or computer. The file is never uploaded. You get a small file with the course numbers it found, plus your own notes. Sending that file helps us compare against what our scripts read.</p>
+  <div class="warn">Nothing you send is published. Two reviewers must check a row against the official document before it is called confirmed. No names, phone numbers, emails or ID numbers are included.</div>
+
+  <section class="card">
+    <label for="inst">Institution</label>
+    <select id="inst"></select>
+    <label for="year">Intake year</label>
+    <input id="year" type="number" min="2024" max="2040" value="2027">
+    <label for="file">Prospectus file (PDF, or a text or Word file)</label>
+    <input id="file" type="file" accept=".pdf,.txt,.docx,image/*">
+    <label for="paste">Or paste text from the prospectus (one programme per block; keep the page break lines if you can)</label>
+    <textarea id="paste" spellcheck="false"></textarea>
+    <button id="read" type="button">Read it</button>
+    <span id="status" class="note" role="status" aria-live="polite"></span>
+  </section>
+
+  <section class="card" id="result" hidden>
+    <h2>What was read</h2>
+    <p class="note" id="summary"></p>
+    <div style="overflow-x:auto"><table><thead><tr><th>Course</th><th>APS</th><th>Subjects</th><th>Page</th><th>Keep</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <h2>Where can a Higher Certificate lead?</h2>
+    <ul id="prog" class="note"></ul>
+    <h2>Anything wrong in the app?</h2>
+    <label for="fbid">Course id (from the app, optional)</label>
+    <input id="fbid" type="text" maxlength="80" placeholder="e.g. up_bsc_computer_science_2027">
+    <label for="fbissue">What is wrong</label>
+    <select id="fbissue">
+      <option value="">Nothing to report</option>
+      <option value="aps_wrong">APS is different in my prospectus</option>
+      <option value="subject_wrong">Subject requirement is different</option>
+      <option value="course_missing">Course is missing</option>
+      <option value="course_closed">Course is closed</option>
+      <option value="link_broken">Link does not work</option>
+      <option value="bridge_wrong">Next-step information is wrong</option>
+      <option value="other">Something else</option>
+    </select>
+    <label for="fbnote">Short note (no personal details)</label>
+    <input id="fbnote" type="text" maxlength="140">
+    <button id="dl" type="button">Download my file</button>
+    <p class="note">Send the downloaded file to the project (the address is on the About page of the app). It goes in <code>inbox/community/</code>.</p>
+  </section>
+</main>
+<script src="./js/ocr.js"></script>
+<script src="./js/catalogue_data.js"></script>
+<script src="./js/subjects_data.js"></script>
+<script src="./js/prospectus_check.js"></script>
+</body>
+</html>

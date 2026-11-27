@@ -1,0 +1,5 @@
+{
+ "schemaVersion": 1,
+ "note": "Evidence for where qualifications can lead. Quotes from prospectuses with their sources. Status is computed by scripts/progression_ledger.py; only 2 reviewers can make an entry verified.",
+ "entries": []
+}

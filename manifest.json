@@ -1,0 +1,73 @@
+{
+  "id": "./",
+  "name": "Mzansi Pathways",
+  "short_name": "Pathways",
+  "description": "South African Opportunity Decision Engine: Results, Careers, Study, TVET, QCTO, Funding & Work.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f6fa",
+  "theme_color": "#0e1b3d",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Study Path & APS",
+      "short_name": "Study",
+      "description": "Check university, UoT, and TVET courses matching your marks",
+      "url": "./index.html#study",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Open Jobs & Learnerships",
+      "short_name": "Work",
+      "description": "Browse verified zero-fee South African jobs, learnerships, and CV builder",
+      "url": "./index.html#work",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Plan A / B / C Board",
+      "short_name": "Plan",
+      "description": "Compare your backup study and career pathways side-by-side",
+      "url": "./index.html#plan",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Creator Studio",
+      "short_name": "Studio",
+      "description": "Build and verify factual prospectus and legal job JSON batches",
+      "url": "./creator_studio.html",
+      "icons": [{ "src": "./icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ],
+  "lang": "en-ZA",
+  "orientation": "portrait-primary",
+  "categories": [
+    "education",
+    "productivity"
+  ]
+}

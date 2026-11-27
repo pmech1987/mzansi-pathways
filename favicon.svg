@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Mzansi Pathways Emblem">
+  <defs>
+    <linearGradient id="mpBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#091224"/>
+      <stop offset="55%" stop-color="#112042"/>
+      <stop offset="100%" stop-color="#172554"/>
+    </linearGradient>
+    <radialGradient id="mpGlow" cx="50%" cy="28%" r="48%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.28"/>
+      <stop offset="60%" stop-color="#10b981" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#091224" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="mpBorder" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="50%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#10b981"/>
+    </linearGradient>
+    <linearGradient id="mpSky" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="mpEmerald" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <linearGradient id="mpGold" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#fde047"/>
+    </linearGradient>
+  </defs>
+  <!-- Midnight-slate squircle shield -->
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#mpBg)" stroke="url(#mpBorder)" stroke-width="4"/>
+  <rect x="6" y="6" width="116" height="116" rx="26" fill="url(#mpGlow)"/>
+  <!-- Subtle inner orbital horizon arc -->
+  <path d="M22 92 A48 48 0 0 1 106 92" fill="none" stroke="#38bdf8" stroke-opacity="0.18" stroke-width="2" stroke-linecap="round"/>
+  <!-- Three symmetrical ascending geometric pathways (Plan A, B, C) converging cleanly to the summit compass -->
+  <path d="M28 96 C34 70, 46 54, 60 40" fill="none" stroke="url(#mpSky)" stroke-width="9.5" stroke-linecap="round"/>
+  <path d="M100 96 C94 70, 82 54, 68 40" fill="none" stroke="url(#mpGold)" stroke-width="9.5" stroke-linecap="round"/>
+  <path d="M64 102 C64 82, 64 62, 64 44" fill="none" stroke="url(#mpEmerald)" stroke-width="9.5" stroke-linecap="round"/>
+  <!-- Original 4-point rising compass star at summit -->
+  <polygon points="64,14 70.5,28.5 85,35 70.5,41.5 64,56 57.5,41.5 43,35 57.5,28.5" fill="url(#mpGold)"/>
+  <circle cx="64" cy="35" r="4.8" fill="#091224"/>
+</svg>

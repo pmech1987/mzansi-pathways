@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "notice": "Direct local employer & public circular metadata submissions only (zero scraping, zero full advert prose).",
+  "jobs": [
+    {
+      "title": "Public Service Entry-Level Clerk (Weekly DPSA Circular)",
+      "employer": "South African Government (DPSA)",
+      "town": "All 9 Provinces",
+      "province": "Mpumalanga",
+      "closingDate": "Open / Rolling",
+      "sourceType": "dpsa_circular",
+      "officialUrl": "https://www.gov.za/about-government/government-jobs",
+      "lastVerifiedAt": "2026-11-27"
+    },
+    {
+      "title": "Youth Entry-Level & Learnership Opportunities",
+      "employer": "SA Youth National Network",
+      "town": "South Africa",
+      "province": "Mpumalanga",
+      "closingDate": "Open / Rolling",
+      "sourceType": "gov_portal",
+      "officialUrl": "https://sayouth.mobi/",
+      "lastVerifiedAt": "2026-11-27"
+    }
+  ]
+}

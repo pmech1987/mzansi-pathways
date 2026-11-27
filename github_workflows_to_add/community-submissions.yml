@@ -1,0 +1,47 @@
+# Copy to .github/workflows/community-submissions.yml
+# Validates files people send in (inbox/community/), compares them with the pipeline, learns from the result, and merges progression evidence.
+# It never marks anything verified. Only two enrolled reviewers can do that.
+name: Community submissions and learning
+on:
+  push:
+    paths: ['inbox/community/*.json']
+  schedule:
+    - cron: '30 3 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: community-submissions
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: Tools for the pipeline (PDF readers and OCR)
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y poppler-utils tesseract-ocr tesseract-ocr-afr
+          pip install pypdf
+      - name: Validate and stage submissions
+        run: |
+          shopt -s nullglob
+          files=(inbox/community/*.json)
+          if [ ${#files[@]} -gt 0 ]; then python scripts/community_submissions.py "${files[@]}"; fi
+      - name: Compare, learn, merge
+        run: |
+          python scripts/compare_sources.py
+          python scripts/learn_from_feedback.py
+          python scripts/merge_progression.py
+          python scripts/build_catalogue.py
+      - name: Safety check before publishing
+        run: python scripts/validate_data.py --against HEAD
+      - name: Commit results
+        run: |
+          git config user.name "mzansi-bot"; git config user.email "bot@users.noreply.github.com"
+          git add -A data reports js/catalogue_data.js inbox
+          git diff --cached --quiet || git commit -m "Community submissions, comparison and learning run"
+          git pull --rebase && git push

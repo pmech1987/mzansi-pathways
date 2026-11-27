@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mzansi Pathways — South African Opportunity Decision Engine: Results, Careers, Study, TVET, QCTO, Funding, Plan A/B/C, Evidence Vault &amp; Work." />
+  <meta name="theme-color" content="#0e1b3d" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Mzansi Pathways — See where you can realistically go" />
+  <meta property="og:description" content="Free, private South African guide: enter your Matric marks and compare university, TVET, QCTO, funding and work options." />
+  <meta property="og:image" content="./icon-512.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-title" content="Pathways" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+  <title>Mzansi Pathways — See where you can realistically go</title>
+  <script src="./guard.js" defer></script>
+  <link rel="stylesheet" href="./css/utilities.css" />
+  <link rel="stylesheet" href="./css/legacy_inline.css" />
+  <link rel="stylesheet" href="./css/mzansi_ui.css" />
+  
+  <link rel="stylesheet" href="./css/civic_mobile_a11y.css" />
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+</head>
+<body class="min-h-screen flex flex-col">
+  <a href="#app-main" class="mz-skip">Skip to main content</a>
+  <noscript><p>Mzansi Pathways needs JavaScript. Please turn it on in your browser settings and reload.</p></noscript>
+
+  <!-- Official-Grade Institutional Notice Bar -->
+  <div id="civic-trust-bar" class="bg-slate-950 text-slate-300 text-[11px] border-b border-slate-800 px-3 sm:px-6 py-1.5">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <span><strong class="text-white">Independent guide, not a government service.</strong> Always confirm final <span class="mz-yr">2027</span> rules with the institution.</span>
+      <span class="text-slate-400">Your results stay on your phone</span>
+    </div>
+  </div>
+
+  <!-- Top Header -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5 min-w-0 mz-brand" data-home role="button" tabindex="0" aria-label="Home">
+        <img src="./icon-192.png" alt="Mzansi Pathways emblem" width="38" height="38" class="w-9 h-9 rounded-xl shadow-sm" />
+        <div class="min-w-0">
+          <div class="font-extrabold text-slate-900 text-sm sm:text-base truncate leading-tight tracking-tight">Mzansi Pathways</div>
+          <div class="text-[11px] text-slate-500 font-medium truncate">Your results. Your options. Your next step.</div>
+        </div>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center gap-1 shrink-0" aria-label="Primary navigation">
+        <button type="button" data-tab="results" class="tab-btn active whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Results</button>
+        <button type="button" data-tab="careers" class="tab-btn whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Career Paths</button>
+        <button type="button" data-tab="study" class="tab-btn whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Study Paths</button>
+        <button type="button" data-tab="plan" class="tab-btn whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Plan A/B/C</button>
+        <button type="button" data-tab="vault" class="tab-btn whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Evidence &amp; CV</button>
+        <button type="button" data-tab="work" class="tab-btn whitespace-nowrap px-3 py-2 rounded-lg text-xs xl:text-sm text-slate-600 hover:bg-slate-100">Work Paths</button>
+      </nav>
+
+      <!-- Primary Header Actions (Secondary preferences live cleanly in Settings) -->
+      <div class="flex items-center gap-1.5 shrink-0">
+        <span id="net-pill" class="hidden px-2 py-1 rounded-lg bg-amber-100 text-amber-900 border border-amber-300 text-[11px] font-extrabold">Offline</span>
+        <button type="button" id="install-pwa-btn" class="hidden px-2.5 py-1.5 rounded-lg bg-emerald-700 text-white text-xs font-bold hover:bg-emerald-800 shadow-sm">Install App</button>
+        <button type="button" id="auth-btn" aria-label="Account and Cross-Device Sync" class="px-2.5 py-1.5 rounded-lg bg-slate-900 text-white text-xs font-bold hover:bg-slate-800">Sync</button>
+        <button type="button" id="help-btn" aria-label="How to use Mzansi Pathways" class="px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-800 border border-slate-200 text-xs font-bold hover:bg-slate-200">Tour</button>
+        <button id="more-btn" type="button" data-more aria-haspopup="dialog" class="mz-hd-more px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-800 border border-slate-200 text-xs font-bold hover:bg-slate-200">More</button>
+        <button type="button" id="settings-btn" aria-label="Open Settings" class="px-2.5 py-1.5 rounded-lg bg-blue-50 text-blue-900 border border-blue-200 text-xs font-bold hover:bg-blue-100">Settings</button>
+      </div>
+    </div>
+  </header>
+
+    <!-- Print-Only Institutional Handout Header -->
+  <div class="print-only max-w-7xl mx-auto px-4 pt-2 pb-3 border-b-2 border-slate-900 mb-4">
+    <div class="text-lg font-extrabold text-slate-900">Mzansi Pathways — Independent Post-School Pathway Summary</div>
+    <div class="text-xs text-slate-600">Verify final <span class="mz-yr">2027</span> admission rules directly with DHET, QCTO, SAQA, NSFAS &amp; official institutions · Official CAS WhatsApp: 081 308 4196</div>
+  </div>
+
+  <!-- Home: product front door (shown on the Results tab only) -->
+  <section id="mz-home" aria-labelledby="mz-h1">
+    <div class="mzh-grid">
+      <div>
+        <h1 id="mz-h1" class="mzh-title">Tell us where you are.<span>We'll show you where you can realistically go.</span></h1>
+        <p class="mzh-lede">Enter your matric results. See the courses, jobs and funding you qualify for today, plus a backup plan if Plan A doesn't work out.</p>
+        <button type="button" id="mz-check" class="mzh-cta">Check my options <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <button type="button" id="mz-scan" class="mzh-ghost">Scan or paste my results</button>
+        <span class="mzh-note">Free. No sign-up. <button type="button" id="mz-tour" class="mzh-link">Take the 1-minute tour</button></span>
+      </div>
+      <ol class="mzh-ladder" aria-label="The routes we compare for you">
+        <li><b>A</b><div><strong>University</strong><small>Degree route, if your APS and subjects fit</small></div></li>
+        <li><b>B</b><div><strong>University of Technology</strong><small>Diploma route with lower entry points</small></div></li>
+        <li><b>C</b><div><strong>TVET or occupational</strong><small>Trade and skills route, often cheaper</small></div></li>
+        <li><b>D</b><div><strong>Learn and earn</strong><small>Learnerships and entry jobs while you study</small></div></li>
+      </ol>
+    </div>
+    <h2 class="mzh-ask">What do you want to figure out?</h2>
+    <div class="mzh-cards">
+      <button type="button" class="mzh-card" data-tab="study" data-k="study"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><strong>Study</strong><span>Courses and institutions you realistically qualify for.</span></button>
+      <button type="button" class="mzh-card" data-tab="work" data-k="work"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg><strong>Work</strong><span>Jobs and careers that match where you are now.</span></button>
+      <button type="button" class="mzh-card" data-tab="study" data-k="fund"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.2c-.6-.8-1.4-1.2-2.5-1.2-1.4 0-2.5.8-2.5 1.9 0 2.6 5 1.4 5 4 0 1.1-1.1 2-2.5 2-1.1 0-2-.5-2.6-1.3M12 6v2M12 16v2"/></svg><strong>Funding</strong><span>Bursaries and what each route will cost you.</span></button>
+      <button type="button" class="mzh-card" data-tab="plan" data-k="plan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg><strong>My pathway</strong><span>Build a Plan A, B and C you can act on.</span></button><button type="button" class="mzh-card" data-tab="results" data-k="marks"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><strong>My marks</strong><span>Enter your results and see where you stand.</span></button><button type="button" class="mzh-card" data-tab="careers" data-k="careers"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg><strong>Careers</strong><span>What each career needs and where it leads.</span></button><button type="button" class="mzh-card" data-tab="vault" data-k="vault"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg><strong>Evidence &amp; CV</strong><span>Keep your proof and build a CV.</span></button><button type="button" class="mzh-card" data-more data-k="more"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg><strong>More</strong><span>Settings, sync, tour and official links.</span></button></div>
+    </div>
+  </section>
+
+  <main id="app-main" tabindex="-1" class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-4"></main>
+
+  <!-- Floating bottom bar (phones) -->
+  <nav id="mz-dock" class="mz-dock" aria-label="Main">
+    <button type="button" data-home class="mz-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Home</span></button>
+    <button type="button" data-tab="study" class="tab-btn mz-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><span>Study</span></button>
+    <button type="button" data-tab="work" class="tab-btn mz-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg><span>Work</span></button>
+    <button type="button" data-tab="plan" class="tab-btn mz-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg><span>Plan</span></button>
+    <button type="button" data-more aria-haspopup="dialog" class="mz-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg><span>More</span></button>
+  </nav>
+
+  <!-- More sheet: everything that used to sit in the footer, plus the tools that are not on the dock -->
+  <div id="mz-more" class="mz-more" hidden>
+    <div class="mz-more-back" data-more-close></div>
+    <div class="mz-more-sheet" role="dialog" aria-modal="true" aria-labelledby="mz-more-t">
+      <div class="mz-more-head"><h2 id="mz-more-t">More</h2><button type="button" id="mz-more-x" data-more-close aria-label="Close">✕</button></div>
+      <div class="mz-more-grid">
+        <button type="button" data-tab="results" data-k="marks">My marks</button>
+        <button type="button" data-tab="careers">Careers</button>
+        <button type="button" data-tab="vault">Evidence &amp; CV</button>
+      </div>
+      <div class="mz-more-list">
+        <button type="button" data-proxy="settings-btn">Settings and accessibility</button>
+        <button type="button" data-proxy="auth-btn">Sync and backup</button>
+        <button type="button" data-proxy="help-btn">Take the tour</button>
+        <button type="button" data-proxy="install-pwa-btn" id="mz-more-install" hidden>Install the app</button>
+      </div>
+      <p class="mz-more-note"><strong>Mzansi Pathways</strong> is an independent South African opportunity guide, not a government service. Official CAS WhatsApp: <strong>081 308 4196</strong>. Always verify admission rules in official prospectuses, and never pay a fee to apply for a job.</p>
+      <div class="mz-more-links">
+        <a href="https://www.dhet.gov.za/" target="_blank" rel="noopener noreferrer">DHET ↗</a>
+        <a href="https://www.qcto.org.za/" target="_blank" rel="noopener noreferrer">QCTO ↗</a>
+        <a href="https://www.saqa.org.za/" target="_blank" rel="noopener noreferrer">SAQA ↗</a>
+        <a href="https://www.nsfas.org.za/" target="_blank" rel="noopener noreferrer">NSFAS ↗</a>
+        <a href="https://sayouth.mobi/" target="_blank" rel="noopener noreferrer">SA Youth ↗</a>
+        <a href="https://github.com/pmech1987/mzansi-pathways" target="_blank" rel="noopener noreferrer">Source code ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" role="status" aria-live="polite" class="hidden fixed bottom-20 lg:bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-full bg-slate-900 text-white text-xs font-bold shadow-xl"></div>
+
+  <!-- "Why am I seeing this?" Explainability & Closest Alternatives Modal -->
+  <div id="why-modal" role="dialog" aria-modal="true" aria-labelledby="why-title" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-5 shadow-2xl border border-slate-200 space-y-3">
+      <div class="flex items-start justify-between gap-2">
+        <div>
+          <div class="text-[11px] font-extrabold uppercase text-blue-700">Explainable Eligibility &amp; Source Trail</div>
+          <h2 id="why-title" class="text-base font-extrabold text-slate-900 mt-0.5">Programme</h2>
+        </div>
+        <button type="button" id="close-why" aria-label="Close explanation" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold">✕</button>
+      </div>
+      <div id="why-body" class="space-y-3 text-xs text-slate-700"></div>
+    </div>
+  </div>
+
+  <!-- Settings & Accessibility Modal -->
+  <div id="settings-modal" role="dialog" aria-modal="true" aria-labelledby="settings-title" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-5 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="text-[11px] font-bold uppercase tracking-wider text-blue-700">Preferences &amp; Accessibility</div>
+          <h2 id="settings-title" class="text-base font-extrabold text-slate-900">Settings</h2>
+        </div>
+        <button type="button" id="close-settings" aria-label="Close settings" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold">✕</button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+          <div class="font-extrabold text-slate-900">Region &amp; Language</div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label for="prov-select" class="block text-[11px] font-bold text-slate-600 mb-1">Home Province</label>
+              <select id="prov-select" aria-label="Home Province" class="w-full px-2.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-800">
+                <option value="Mpumalanga">Mpumalanga</option>
+                <option value="Gauteng">Gauteng</option>
+                <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+                <option value="Western Cape">Western Cape</option>
+                <option value="Eastern Cape">Eastern Cape</option>
+                <option value="Limpopo">Limpopo</option>
+                <option value="Free State">Free State</option>
+                <option value="North West">North West</option>
+                <option value="Northern Cape">Northern Cape</option>
+              </select>
+            </div>
+            <div>
+              <label for="lang-select" class="block text-[11px] font-bold text-slate-600 mb-1">Language</label>
+              <select id="lang-select" aria-label="Language" class="w-full px-2.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-800">
+                <option value="en">English (EN)</option>
+                <option value="zu">isiZulu</option>
+                <option value="af">Afrikaans</option>
+                <option value="ss">siSwati</option>
+                <option value="ts">Xitsonga</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+          <div class="font-extrabold text-slate-900">View &amp; Display</div>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" id="parent-btn" aria-label="Toggle Parent or Student View" class="px-3 py-2 rounded-xl bg-indigo-50 text-indigo-900 border border-indigo-200 text-xs font-bold hover:bg-indigo-100">Parent / Guardian View</button>
+            <button type="button" id="easy-btn" aria-label="Toggle Easy View" class="px-3 py-2 rounded-xl bg-emerald-50 text-emerald-900 border border-emerald-200 text-xs font-bold hover:bg-emerald-100">Easy View</button>
+            <button type="button" id="textsize-btn" title="Larger Text" aria-label="Toggle Larger Text" class="px-3 py-2 rounded-xl bg-white text-slate-800 border border-slate-200 text-xs font-bold hover:bg-slate-100">Large Text (A+)</button>
+            <button type="button" id="hc-btn" title="High Contrast Mode" aria-label="Toggle High Contrast" class="px-3 py-2 rounded-xl bg-white text-slate-900 border border-slate-300 text-xs font-bold hover:bg-slate-100">High Contrast (HC)</button>
+            <button type="button" id="theme-btn" aria-label="Toggle Dark Mode" class="col-span-2 px-3 py-2 rounded-xl bg-white text-slate-800 border border-slate-200 text-xs font-bold hover:bg-slate-100">Dark Mode: OFF</button>
+          </div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+          <div class="font-extrabold text-slate-900">Data, Rules &amp; Privacy</div>
+          <div id="settings-integrity-status" class="px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-900 border border-emerald-200 text-[11px] font-semibold">Profile Verified</div>
+          <button type="button" id="verify-local-state-btn" class="w-full px-3 py-1.5 rounded-lg bg-white text-slate-800 border border-slate-300 text-[11px] font-bold hover:bg-slate-100">Verify Local Profile &amp; Storage Now</button>
+          <div class="grid grid-cols-1 gap-2">
+            <label class="w-full text-center px-3 py-2 rounded-xl bg-white text-slate-800 border border-slate-300 text-xs font-bold cursor-pointer hover:bg-slate-100">
+              Import Custom Prospectus Rules (.json)
+              <input id="import-rules-file" type="file" accept=".json" class="hidden" />
+            </label>
+            <div class="grid grid-cols-2 gap-2">
+              <button type="button" id="settings-open-sync" class="px-3 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800">Sync &amp; Backup</button>
+              <button type="button" id="settings-open-tour" class="px-3 py-2 rounded-xl bg-white text-slate-800 border border-slate-200 text-xs font-bold hover:bg-slate-100">Replay Tour</button>
+              <button type="button" id="reset-prefs-btn" class="col-span-2 px-3 py-2 rounded-xl bg-white text-slate-700 border border-slate-200 text-xs font-bold hover:bg-slate-100">Reset Display &amp; Region Preferences</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+            <details id="legal-compliance-card" class="p-3 rounded-2xl bg-slate-50 border border-slate-200 text-[11px] text-slate-700">
+        <summary class="cursor-pointer font-extrabold text-slate-900 select-none">Legal, POPIA &amp; Zero-Scraping Charter</summary>
+        <ul class="mt-2 space-y-1 list-disc pl-4">
+          <li><strong>Zero Scraping &amp; Copyright-Safe:</strong> Uses only official public APIs (Greenhouse, Lever, optional Adzuna SA) and direct employer metadata link-outs — never scrapes private boards or copies advert prose.</li>
+          <li><strong>POPIA On-Device Privacy:</strong> Photos of report cards, CVs, and job flyers stay 100% on your device; no SA ID numbers are stored.</li>
+          <li><strong>Independent Tool:</strong> Not a government department or university; verify final admission rules and company status on official portals (DHET, QCTO, SAQA, NSFAS, CIPC BizPortal).</li>
+        </ul>
+      </details>
+
+      <button type="button" id="settings-done-btn" class="w-full py-2.5 rounded-xl bg-slate-900 text-white text-xs font-extrabold hover:bg-slate-800">Done</button>
+    </div>
+  </div>
+
+  <!-- Skippable 7-Step Interactive Onboarding Tutorial Modal -->
+  <div id="tutorial-modal" role="dialog" aria-modal="true" aria-labelledby="tut-title" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-5 sm:p-6 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-start justify-between gap-3">
+        <div>
+          <span id="tut-step-badge" class="inline-block px-2.5 py-0.5 rounded bg-slate-100 text-slate-800 border border-slate-300 text-[11px] font-bold uppercase tracking-wider">Step 1 of 7</span>
+          <h2 id="tut-title" class="text-base sm:text-lg font-extrabold text-slate-900 mt-1.5">Welcome to Mzansi Pathways</h2>
+        </div>
+        <button type="button" id="tut-skip-btn" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold shrink-0">Skip Tutorial ✕</button>
+      </div>
+      <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+        <div id="tut-progress-bar" class="h-full bg-slate-900 transition-all duration-200"></div>
+      </div>
+      <div id="tut-body" class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-2 leading-relaxed"></div>
+      <div id="tut-example" class="p-3.5 rounded-xl bg-white border border-slate-200 border-l-4 border-l-blue-700 text-xs text-slate-700 space-y-1"></div>
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-100">
+        <button type="button" id="tut-prev-btn" class="px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">← Back</button>
+        <div class="flex items-center gap-2">
+          <button type="button" id="tut-demo-btn" class="px-3 py-2 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 text-xs font-bold">Run Live Demo ↗</button>
+          <button type="button" id="tut-try-btn" class="hidden"></button>
+          <button type="button" id="tut-next-btn" class="px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cross-Device Account & Encrypted Transfer Modal -->
+  <div id="auth-modal" role="dialog" aria-modal="true" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[88vh] overflow-y-auto p-5 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-start justify-between gap-2">
+        <div>
+          <div class="text-[11px] font-extrabold uppercase text-blue-700">POPIA-Safe Cross-Device Access</div>
+          <h2 class="text-base font-extrabold text-slate-900">Keep Your Marks, Plans &amp; CV Across Phones</h2>
+        </div>
+        <button type="button" id="close-auth" aria-label="Close sync modal" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold">✕</button>
+      </div>
+
+      <!-- Option 1: Encrypted Phone-to-Phone Transfer (Works 100% Today) -->
+      <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2.5 text-xs">
+        <div class="font-extrabold text-emerald-950">1. Encrypted Phone-to-Phone Backup (Works Offline Today · AES-256-GCM)</div>
+        <p class="text-emerald-900">Lock your Results, Plan A/B/C, and Evidence Vault with your own passphrase (PBKDF2 120,000 rounds + AES-GCM) to move to another phone without needing an account.</p>
+        <input id="enc-pass" type="password" placeholder="Enter a strong passphrase (min 8 characters)" class="w-full px-3 py-2 rounded-xl bg-white border border-emerald-300 text-xs font-semibold" />
+        <div id="enc-pass-strength" class="text-[11px] text-slate-600">Enter at least 8 characters to lock/unlock backups</div>
+        <div id="enc-last-backup" class="text-[11px] font-semibold text-slate-700"></div>
+        <p class="text-[11px] text-amber-900">Write your passphrase down. If you forget it, nobody can open the backup, not even us. Keep the backup file in two places.</p>
+        <div class="flex flex-wrap gap-2">
+          <button type="button" id="btn-export-enc" class="flex-1 py-2 rounded-xl bg-emerald-700 text-white font-extrabold hover:bg-emerald-800">Download Encrypted Backup</button>
+          <label class="flex-1 text-center py-2 rounded-xl bg-white text-emerald-900 border border-emerald-300 font-extrabold cursor-pointer hover:bg-emerald-100">
+             Unlock on New Phone
+            <input id="in-import-enc" type="file" accept=".mzansi,.json" class="hidden" />
+          </label>
+          <button type="button" id="btn-undo-restore" class="hidden flex-1 py-2 rounded-xl bg-white text-rose-800 border border-rose-300 font-extrabold hover:bg-rose-50">Undo restore</button>
+        </div>
+      </div>
+
+      <!-- Option 2: Cloud Account with 6-Digit Email OTP (Ready for Supabase Auth) -->
+      <form id="otp-preview-form" class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5 text-xs">
+        <div class="font-extrabold text-slate-900">2. Cloud Account Sync (6-Digit Email OTP — No SA ID Required)</div>
+        <p class="text-slate-600">When your private Supabase Auth backend is connected, learners sign in with a 6-digit Email OTP (expires in 10 min, max 5 tries) — cheaper and safer than SMS OTPs.</p>
+        <input id="otp-email" type="email" required placeholder="your.email@example.com" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs" />
+        <label class="flex items-start gap-2 text-[11px] text-slate-700 cursor-pointer">
+          <input id="popia-age-chk" type="checkbox" required class="mt-0.5 w-4 h-4 accent-blue-700" />
+          <span>POPIA Notice: I confirm I am 18+ or have parent/guardian permission to store my academic profile in the cloud.</span>
+        </label>
+        <button type="submit" class="w-full py-2 rounded-xl bg-blue-700 text-white font-extrabold hover:bg-blue-800">Check Cloud Sync Readiness</button>
+      </form>
+      <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+        <span class="text-rose-900 font-semibold">Using a school PC or someone else's phone?</span>
+        <button type="button" id="btn-wipe-device" class="px-3.5 py-2 rounded-xl bg-rose-600 text-white font-extrabold hover:bg-rose-700">Wipe My Info From This Device</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="./js/work_tools.js"></script>
+  <script src="./js/engine.js"></script>
+  <script src="./js/ocr.js"></script>
+  <script src="./js/data.js"></script>
+  <script src="./js/catalogue_data.js"></script>
+  <script src="./js/catalogue.js"></script>
+  <script src="./js/i18n.js"></script>
+  <script src="./js/boot.js"></script>
+  <script src="./js/features/trust_guards.js"></script>
+  <script src="./js/modules/storage.js"></script>
+  <script src="./js/modules/funding.js"></script>
+  <script src="./js/modules/ui.js"></script>
+  <script src="./js/modules/results.js"></script>
+  <script src="./js/modules/study.js"></script>
+  <script src="./js/modules/work.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/screens.js"></script>
+  <script src="./js/home.js"></script>
+  <script src="./js/a11y.js"></script>
+  <script src="./js/toolkit.js"></script>
+  <script src="./js/backup.js"></script>
+  <script src="./js/comfort_and_jump.js"></script>
+  <script src="./js/clean_layout.js"></script>
+  <script src="./js/pwa_health.js"></script>
+  <script src="./js/calendar.js"></script>
+  <script src="./js/checklist.js"></script>
+</body>
+</html>

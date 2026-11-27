@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 2,
+  "intakeYear": 2027,
+  "notice": "Illustrative sample records showing versioned 2027 intake schema with source tiers and verification dates.",
+  "programmes": [
+    {
+      "id": "up_bsc_cs",
+      "name": "BSc Computer Science",
+      "institution": "University of Pretoria",
+      "intakeYear": 2027,
+      "sourceTier": 2,
+      "sourceDoc": "UP Undergraduate Prospectus (Sample)",
+      "sourcePage": "Verify",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "pending_review",
+      "minAps": 30,
+      "minMaths": 60,
+      "officialUrl": "https://www.up.ac.za/"
+    },
+    {
+      "id": "ump_dip_ict",
+      "name": "Diploma in ICT",
+      "institution": "University of Mpumalanga",
+      "intakeYear": 2027,
+      "sourceTier": 2,
+      "sourceDoc": "UMP Prospectus (Sample)",
+      "sourcePage": "Verify",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "pending_review",
+      "minAps": 26,
+      "minMaths": 45,
+      "officialUrl": "https://www.ump.ac.za/"
+    },
+    {
+      "id": "nkangala_tvet_eng",
+      "name": "NC(V) / Report 191 Engineering",
+      "institution": "Nkangala TVET College",
+      "intakeYear": 2027,
+      "sourceTier": 1,
+      "sourceDoc": "DHET Public TVET Register (Sample)",
+      "sourcePage": "Campus List",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "pending_review",
+      "minAps": 16,
+      "minMaths": 40,
+      "officialUrl": "https://www.dhet.gov.za/"
+    },
+    {
+      "id": "tut_hc_it",
+      "name": "Higher Certificate in IT (Bridging Pathway)",
+      "institution": "Tshwane University of Technology (eMalahleni Campus)",
+      "intakeYear": 2027,
+      "sourceTier": 2,
+      "sourceDoc": "TUT Undergraduate Prospectus (Sample)",
+      "sourcePage": "Verify",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "pending_review",
+      "minAps": 20,
+      "minMaths": 40,
+      "officialUrl": "https://www.tut.ac.za/"
+    },
+    {
+      "id": "qcto_occ_tech",
+      "name": "Occupational Certificate: Software / IT Technician (NQF 5)",
+      "institution": "QCTO-Accredited SDP (Verify Site)",
+      "intakeYear": 2027,
+      "sourceTier": 1,
+      "sourceDoc": "QCTO Occupational Qualification Register (Sample)",
+      "sourcePage": "NQF 5",
+      "lastVerifiedAt": "2026-11-27",
+      "verificationStatus": "pending_review",
+      "minAps": 18,
+      "minMaths": 40,
+      "officialUrl": "https://www.qcto.org.za/"
+    }
+  ]
+}

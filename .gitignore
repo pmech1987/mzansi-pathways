@@ -1,0 +1,10 @@
+.cache/
+__pycache__/
+backups/
+.restore_tmp/
+.env
+.env.*
+*.key
+*.pem
+*.tmp
+*.part
