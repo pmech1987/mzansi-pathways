@@ -14,18 +14,25 @@
   'use strict';
 
   // ---------------------------------------------------------------- helpers
+  function parseMark(val) {
+    if (val === null || val === undefined || typeof val === 'boolean') return null;
+    if (typeof val === 'number') return (Number.isFinite(val) && val >= 0 && val <= 100) ? val : null;
+    const cleaned = String(val).trim().replace(/%$/, '').trim().replace(',', '.');
+    if (cleaned === '') return null;
+    const n = Number(cleaned);
+    return (Number.isFinite(n) && n >= 0 && n <= 100) ? n : null;
+  }
+
   function levelFromMark(m) {
-    const n = Math.max(0, Math.min(100, Number(m) || 0));
+    const parsed = parseMark(m);
+    const n = parsed !== null ? parsed : Math.max(0, Math.min(100, Number(m) || 0));
     if (n >= 80) return 7; if (n >= 70) return 6; if (n >= 60) return 5;
     if (n >= 50) return 4; if (n >= 40) return 3; if (n >= 30) return 2; return 1;
   }
   const markToLevel = levelFromMark; // backwards-compatible alias used by index.html
 
   function hasMark(s) {
-    if (!s || s.mark === null || s.mark === undefined || typeof s.mark === 'boolean') return false;
-    if (typeof s.mark === 'string' && s.mark.trim() === '') return false;
-    const n = Number(s.mark);
-    return Number.isFinite(n) && n >= 0 && n <= 100;
+    return !!(s && parseMark(s.mark) !== null);
   }
   function validSubjects(subs) { return (Array.isArray(subs) ? subs : []).filter(hasMark); }
 
@@ -35,6 +42,7 @@
       isHL: !!(s && s.isHomeLanguage) || /\bhome language\b/i.test(name),
       isFAL: /first additional language/i.test(name),
       isMath: /^mathematics$/i.test(name.trim()),
+      isTechMath: /^technical\s+mathematics$/i.test(name.trim()),
       isMathLit: /mathematical literacy/i.test(name),
       isLO: !!(s && s.isLifeOrientation) || /^life orientation$/i.test(name.trim())
     };
@@ -59,7 +67,7 @@
     const v = validSubjects(subs);
     const hl = v.find(s => flags(s).isHL);
     const fal = v.find(s => flags(s).isFAL && s !== hl);
-    const mth = v.find(s => flags(s).isMath) || v.find(s => flags(s).isMathLit);
+    const mth = v.find(s => flags(s).isMath) || v.find(s => flags(s).isTechMath) || v.find(s => flags(s).isMathLit);
     const lo = v.find(s => flags(s).isLO);
     if (!hl || !fal || !mth || !lo) {
       return { aps: null, reason: 'UMP method needs home language, first additional language, Maths or Maths Lit, and Life Orientation' };
@@ -112,12 +120,12 @@
     const out = { complete, aps: best.aps, apsMax: 42, apsReason: best.reason || null, loltOk: null };
     if (!complete) { out.passLevel = INCOMPLETE_LABEL; return out; }
     const hl = v.filter(s => flags(s).isHL);
-    const hlMark = hl.length ? Math.max.apply(null, hl.map(s => Number(s.mark))) : -1;
-    const passed = v.filter(s => Number(s.mark) >= 30).length;
-    const n50 = nonLO.filter(s => Number(s.mark) >= 50).length;
-    const n40 = nonLO.filter(s => Number(s.mark) >= 40).length;
+    const hlMark = hl.length ? Math.max.apply(null, hl.map(s => parseMark(s.mark))) : -1;
+    const passed = v.filter(s => parseMark(s.mark) >= 30).length;
+    const n50 = nonLO.filter(s => parseMark(s.mark) >= 50).length;
+    const n40 = nonLO.filter(s => parseMark(s.mark) >= 40).length;
     out.loltOk = v.some(s => (flags(s).isHL || flags(s).isFAL) &&
-      String(s.name).toLowerCase().indexOf(String(lolt).toLowerCase()) !== -1 && Number(s.mark) >= 30);
+      String(s.name).toLowerCase().indexOf(String(lolt).toLowerCase()) !== -1 && parseMark(s.mark) >= 30);
     let level = 'Did Not Meet Minimum NSC Pass';
     if (hlMark >= 40 && passed >= 6 && out.loltOk) {
       if (n50 >= 4) level = "Bachelor's Pass";
@@ -203,7 +211,7 @@
     }
     const aps = prog.apsMethod ? computeApsFor(prog.apsMethod, subs) : computeApsFor(null, subs);
     const byName = {};
-    validSubjects(subs).forEach(s => { byName[String(s.name).trim().toLowerCase()] = Number(s.mark); });
+    validSubjects(subs).forEach(s => { byName[String(s.name).trim().toLowerCase()] = parseMark(s.mark); });
     const missing = [], reasons = [];
     let nearGap = true;
 
@@ -274,7 +282,7 @@
   }
 
   // ---- subject dictionary
-  const LANGS = ['English', 'Afrikaans', 'isiZulu', 'isiXhosa', 'isiNdebele', 'siSwati', 'Sepedi', 'Sesotho', 'Setswana', 'Tshivenda', 'Xitsonga'];
+  const LANGS = ['English', 'Afrikaans', 'isiZulu', 'isiXhosa', 'isiNdebele', 'siSwati', 'Sepedi', 'Sesotho', 'Setswana', 'Tshivenda', 'Xitsonga', 'South African Sign Language'];
   const SA_SUBJECT_ALIASES = [];
   LANGS.forEach(l => {
     const k = l.toLowerCase();
@@ -282,6 +290,8 @@
     SA_SUBJECT_ALIASES.push([l + ' First Additional Language', [k + ' first additional language', k + ' first additional', k + ' fal', k + ' first add lang']]);
   });
   [
+    ['Technical Mathematics', ['technical mathematics', 'technical maths', 'tech maths', 'tech math']],
+    ['Technical Sciences', ['technical sciences', 'technical science', 'tech sciences', 'tech science']],
     ['Mathematical Literacy', ['mathematical literacy', 'maths lit', 'math lit', 'mathematics literacy', 'mlit']],
     ['Mathematics', ['mathematics', 'pure maths', 'maths', 'math']],
     ['Physical Sciences', ['physical sciences', 'physical science', 'phys sci', 'physics']],
@@ -366,11 +376,16 @@
       let bare = null;
       if (!m) { bare = bareLanguage(namePart); if (!bare) continue; }
 
-      // ---- marks
-      const pcts = [...tail.matchAll(/\b(100|\d{1,2})\s*%/g)].map(x => Number(x[1]));
-      const nums = [...tail.replace(/%/g, ' ').matchAll(/\b(100|\d{1,2})\b/g)].map(x => Number(x[1]));
+      // ---- marks (handles decimal marks like 65.5% / 65,5% and 0-7% + level 1 pairs)
+      const pcts = [...tail.matchAll(/(?:^|[^\d.,])(100(?:[.,]0+)?|\d{1,2}(?:[.,]\d+)?)\s*%/g)]
+        .map(x => Number(String(x[1]).replace(',', '.')))
+        .filter(n => Number.isFinite(n) && n >= 0 && n <= 100);
+      const tailNoPcts = tail.replace(/(?:100(?:[.,]0+)?|\d{1,2}(?:[.,]\d+)?)\s*%/g, ' ');
+      const nums = [...tailNoPcts.matchAll(/(?:^|[^\d.,])(100(?:[.,]0+)?|\d{1,2}(?:[.,]\d+)?)(?=$|[^\d.,])/g)]
+        .map(x => Number(String(x[1]).replace(',', '.')))
+        .filter(n => Number.isFinite(n) && n >= 0 && n <= 100);
       const bigNums = nums.filter(n => n >= 8 && n <= 100);
-      const smallNums = nums.filter(n => n >= 1 && n <= 7);
+      const smallNums = nums.filter(n => Number.isInteger(n) && n >= 1 && n <= 7);
       let mark = null, level = null, confidence = 'high', reason = '';
       if (pcts.length >= 1) {
         mark = pcts[0];
@@ -383,6 +398,9 @@
         const lv = smallNums[0];
         mark = (lv && bigNums.find(n => levelFromMark(n) === lv)) || bigNums[0];
         level = lv || null; confidence = 'review'; reason = 'Several numbers on this line - check the mark';
+      } else if (nums.length >= 2 && nums[0] >= 0 && nums[0] <= 7 && nums[1] === 1) {
+        mark = nums[0]; level = 1; confidence = 'review';
+        reason = 'Low mark (0-7%) detected with level 1 - confirm it is accurate';
       } else if (smallNums.length) {
         level = smallNums[0]; confidence = 'review';
         reason = 'Only a level (1-7) was found - type your exact %';
@@ -424,7 +442,7 @@
   }
 
   const api = {
-    levelFromMark, markToLevel, hasMark, validSubjects, flags,
+    parseMark, levelFromMark, markToLevel, hasMark, validSubjects, flags,
     apsBestSixNoLO, apsUMP, computeApsFor, APS_METHODS,
     nscPass, evaluateNsc, PASS_RANK, INCOMPLETE_LABEL,
     isoToday, daysBetween, getDeadlineStatus,

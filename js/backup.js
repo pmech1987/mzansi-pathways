@@ -273,7 +273,7 @@
 
     var box = el('details', { id: 'v97-backup-box', className: 'v97-backup-box v105-settings-acc' });
     var title = el('summary', { className: 'v97-backup-title v105-acc-summary' }, 'Emergency Local Backup & Restore (v97)');
-    var desc = el('p', { className: 'v97-backup-desc' }, 'Save your marks, Plan A/B/C, and CV data to a local JSON file on your phone so browser clears never wipe your work.');
+    var desc = el('p', { className: 'v97-backup-desc' }, 'Unencrypted JSON export (SA IDs redacted). On shared phones or school PCs, prefer the AES-256-GCM Encrypted Backup below.');
     var row = el('div', { className: 'v97-backup-row' });
 
     var btnExport = el('button', { type: 'button', id: 'v97-btn-export-json', className: 'v97-btn-primary' }, 'Download Backup (.json)');
@@ -536,4 +536,51 @@
   window.mzEncryptedBackup = { encryptSnapshot: encryptSnapshot, decryptSnapshot: decryptSnapshot };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountSettingsCryptoAndDiag);
   else mountSettingsCryptoAndDiag();
+})();
+
+/* Mzansi Pathways v114 Plain-Language POPIA Learner Privacy Notice & One-Tap Device Wipe */
+(function () {
+  'use strict';
+  function el(tag, attrs, text) {
+    var n = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) { if (k === 'className') n.className = attrs[k]; else n.setAttribute(k, attrs[k]); });
+    if (text != null) n.textContent = String(text);
+    return n;
+  }
+  function mountPopiaNotice() {
+    var modal = document.getElementById('settings-modal');
+    if (!modal || document.getElementById('v114-popia-box')) return;
+    var host = modal.querySelector('.space-y-4, .space-y-3') || modal.firstElementChild || modal;
+    var box = el('details', { id: 'v114-popia-box', className: 'v97-backup-box v105-settings-acc' });
+    box.appendChild(el('summary', { className: 'v97-backup-title v105-acc-summary' }, 'Your Privacy (POPIA) & One-Tap Delete'));
+    var pts = [
+      'Stays on your phone: Your marks, subjects, Plan A/B/C, checklist, and CV details are stored only in your browser on this device. Mzansi Pathways has no tracking cookies, no ads, and no analytics server.',
+      'No SA ID numbers kept: Never type your 13-digit SA ID number. Any 13-digit number in scanned text, backups, or dossiers is automatically redacted.',
+      'Encrypted backups: When moving to a new phone, use the AES-256-GCM Encrypted Backup (600,000 PBKDF2 rounds) with a 10+ character passphrase.',
+      'Under 18: Ask a parent or guardian before saving personal contact details on a shared device.',
+      'Leaving a shared PC or phone? Tap Delete Everything below to wipe all marks, CV details, checklists, session copies, and scanned photo caches in one tap.'
+    ];
+    var ul = el('ul', { className: 'v94-list' });
+    pts.forEach(function (t) { ul.appendChild(el('li', null, t)); });
+    var row = el('div', { className: 'v97-backup-row v101-mt8' });
+    var btnWipe = el('button', { type: 'button', id: 'v114-one-tap-wipe', className: 'v97-btn-primary' }, 'Delete Everything From This Device');
+    var status = el('div', { id: 'v114-wipe-status', className: 'v97-backup-status', role: 'status', 'aria-live': 'polite' }, '');
+    btnWipe.addEventListener('click', function () {
+      try {
+        if (typeof window.mzWipeAllData === 'function') window.mzWipeAllData();
+        else { localStorage.clear(); sessionStorage.clear(); }
+        status.textContent = 'All personal marks, CV details, checklists, and cached scans have been deleted from this device.';
+        if (typeof window.mzAnnounce === 'function') window.mzAnnounce(status.textContent);
+      } catch (e) {
+        status.textContent = 'Could not clear all browser storage automatically — clear site data in browser settings.';
+      }
+    });
+    row.appendChild(btnWipe);
+    box.appendChild(ul);
+    box.appendChild(row);
+    box.appendChild(status);
+    host.appendChild(box);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mountPopiaNotice);
+  else mountPopiaNotice();
 })();

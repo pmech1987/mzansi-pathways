@@ -10,7 +10,10 @@
   const D = {
     zu: { name: 'isiZulu', reviewed: false, t: ['Imiphumela','Imisebenzi','Zonke izindlela','Uhlelo A/B/C','Izilungiselelo','Vala','Khetha kwi-Gallery / Amafayela','Thatha isithombe','Funda isithombe ngokuzenzakalelayo',
       'Ifinyelela ezidingweni eziphansi','Ngokwemibandela','Seduze nokufaneleka','Idinga ukuqinisekiswa','Okwamanje ayifaneleki','Bonisa ezingu-20 ezengeziwe','Zonke izifundazwe',
-      'Ukwamukelwa kunqunywa yisikhungo.','Izikhungo','Ulimi'] },
+      'Ukwamukelwa kunqunywa yisikhungo.','Izikhungo','Ulimi'],
+      x: { 'Career Paths':'Izindlela zemisebenzi','Study Paths':'Izindlela zokufunda','Work Paths':'Izindlela zomsebenzi','Evidence & CV':'Ubufakazi ne-CV','My marks':'Amamaki ami','My pathway':'Indlela yami','Study':'Ukufunda','Work':'Umsebenzi','Funding':'Uxhaso lwezimali','More':'Okuningi','Tour':'Uhambo','Sync':'Vumelanisa',
+        'Install App':'Faka uhlelo','Offline':'Akukho inthanethi','University':'Inyuvesi','University of Technology':'Inyuvesi Yobuchwepheshe','TVET or occupational':'I-TVET noma amakhono','Learn and earn':'Funda uthole nemali','Check my options':'Hlola izinketho zami',
+        'Scan or paste my results':'Skena noma unamathisele imiphumela','Free. No sign-up.':'Mahhala. Akudingi ukubhalisa.','Take the 1-minute tour':'Thatha uhambo lweminithi elilodwa' } },
     af: { name: 'Afrikaans', reviewed: false, t: ['Resultate','Loopbane','Alle roetes','Plan A/B/C','Instellings','Maak toe','Kies uit Galery / L\u00eaers','Neem foto','Lees foto outomaties',
       'Voldoen aan minimum','Voorwaardelik','Amper \u2019n passing','Verifikasie nodig','Tans nie geskik nie','Wys nog 20','Alle provinsies',
       'Toelating word deur die instelling besluit.','Instellings','Taal'],
@@ -23,18 +26,30 @@
         'Build a Plan A, B and C you can act on.':'Bou \u2019n Plan A, B en C waarop jy kan optree.','Take the 1-minute tour':'Doen die 1-minuut-toer' } },
     ss: { name: 'siSwati', reviewed: false, t: ['Imiphumela','Emisebenti','Tonkhe tindlela','Luhlelo A/B/C','Kulungiselela','Vala','Khetsa e-Gallery / Emafayela','Thatha sitfombe','Fundza sitfombe ngekwakho',
       'Ifinyelela kulokudzingekako','Ngemibandzela','Seduze nekufaneleka','Idzinga kucinisekiswa','Angakafaneli njengamanje','Khombisa letingu-20 letingetiwe','Tonkhe tifundza',
-      'Kwemukelwa kunqunywa sisikhungo.','Tikhungo','Lulwimi'] },
+      'Kwemukelwa kunqunywa sisikhungo.','Tikhungo','Lulwimi'],
+      x: { 'Career Paths':'Tindlela temisebenti','Study Paths':'Tindlela tekufundza','Work Paths':'Tindlela temsebenti','Evidence & CV':'Bufakazi ne-CV','My marks':'Emamaki ami','My pathway':'Indlela yami','Study':'Kufundza','Work':'Umsebenti','Funding':'Lusito lwetimali','More':'Lokunye','Tour':'Luhambo','Sync':'Vumelanisa',
+        'Install App':'Faka luhlelo','Offline':'Akukho inthanethi','University':'Inyuvesi','University of Technology':'Inyuvesi Yebuchwepheshe','TVET or occupational':'I-TVET noma emakhono','Learn and earn':'Fundza utfole nemali','Check my options':'Hlola tinkhetfo tami',
+        'Scan or paste my results':'Skena noma unamatsisele imiphumela','Free. No sign-up.':'Mahhala. Akudzingi kubhalisa.','Take the 1-minute tour':'Tsatsa luhambo lweminithi linye' } },
     ts: { name: 'Xitsonga', reviewed: false, t: ['Mimbuyelo','Mintirho','Tindlela hinkwato','Pulani A/B/C','Marungulelo','Pfala','Hlawula eka Gallery / Mafayili','Teka xifaniso','Hlaya xifaniso hi ku tiyimela',
       'Swi fikelela leswi lavekaka','Hi swiyimo','Ya tshinela','Swi lava ku tiyisisiwa','Hi nkarhi lowu a nga fanelanga','Kombisa 20 yin\'wana','Swifundzha hinkwaswo',
-      'Ku amukeriwa swi tiyisisiwa hi xikolo.','Swikolo','Ririmi'] }
+      'Ku amukeriwa swi tiyisisiwa hi xikolo.','Swikolo','Ririmi'],
+      x: { 'Career Paths':'Tindlela ta mintirho','Study Paths':'Tindlela ta ku dyondza','Work Paths':'Tindlela ta ntirho','Evidence & CV':'Vumbhoni na CV','My marks':'Timaraka ta mina','My pathway':'Ndlela ya mina','Study':'Ku dyondza','Work':'Ntirho','Funding':'Nseketelo wa timali','More':'Swin\'wana','Tour':'Riendzo','Sync':'Hlanganisa',
+        'Install App':'Nghenisa app','Offline':'A ku na inthanete','University':'Yunivhesiti','University of Technology':'Yunivhesiti ya Thekinoloji','TVET or occupational':'TVET kumbe vutshila','Learn and earn':'Dyondza u kuma mali','Check my options':'Kamba leswi ndzi nga swi endlaka',
+        'Scan or paste my results':'Sikena kumbe u namarheta mimbuyelo','Free. No sign-up.':'Mahala. A swi lavi ku tsarisa.','Take the 1-minute tour':'Teka riendzo ra minete yin\'we' } }
   };
   const DRAFT = { en: '', af: 'This is a draft Afrikaans translation not yet checked by a fluent speaker. English is always correct.', zu: 'Lokhu kuyinguqulo yokuqala engakahlolwa ngumuntu okhuluma isiZulu kahle.', ss: 'This is a draft siSwati translation not yet checked by a fluent speaker. English is always correct.', ts: 'This is a draft Xitsonga translation not yet checked by a fluent speaker. English is always correct.' };
   let lang = 'en', busy = false; const orig = new WeakMap();
   function map(l) { const m = {}; if (D[l]) { EN_KEYS.forEach((k, i) => { m[k] = D[l].t[i]; }); if (D[l].x) Object.keys(D[l].x).forEach(k => { m[k] = D[l].x[k]; }); } return m; }
   // Every English phrase that any language can translate, so a text node is only remembered when it might change.
   const KNOWN = {}; EN_KEYS.forEach(k => { KNOWN[k] = 1; }); Object.keys(D).forEach(l => { if (D[l].x) Object.keys(D[l].x).forEach(k => { KNOWN[k] = 1; }); });
+  let hasTranslated = false;
   function apply(rootEl) {
-    if (busy) return; busy = true;
+    if (busy) return;
+    if (lang === 'en' && !hasTranslated) {
+      const note = document.getElementById('lang-draft-note'); if (note && note.textContent) note.textContent = '';
+      return;
+    }
+    busy = true;
     try {
       const m = map(lang), w = document.createTreeWalker(rootEl || document.body, NodeFilter.SHOW_TEXT);
       let n; while ((n = w.nextNode())) {
@@ -45,6 +60,7 @@
         if (n.nodeValue !== to) n.nodeValue = to;
       }
       const note = document.getElementById('lang-draft-note'); if (note) note.textContent = DRAFT[lang] || '';
+      hasTranslated = (lang !== 'en');
     } finally { busy = false; }
   }
   function setLang(l) {

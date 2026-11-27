@@ -3,7 +3,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
 
     const STORAGE_KEY = 'mzansi_pathways_v2_state';
     const PREV_KEY = STORAGE_KEY + '_prev', CORRUPT_KEY = STORAGE_KEY + '_corrupt', UNDO_KEY = STORAGE_KEY + '_before_restore';
-    let saveFailed = false, lastPrevAt = 0;
+    let saveFailed = false, lastPrevAt = 0, justWiped = false;
 
     const CAREERS = [
       {
@@ -623,6 +623,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
     function syncYearLabels() { try { document.querySelectorAll('.mz-yr').forEach(e => { e.textContent = String(state.intakeYear || MZDATA.defaultYear()); }); } catch (e) {} }
     // Failsafe save: keeps the last good copy (at most every 30 s), retries once after freeing the extra copies, and TELLS the learner if saving fails.
     function saveState() {
+      justWiped = false;
       try {
         repairState(state);
         const json = JSON.stringify(state);
@@ -640,7 +641,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
         if (!saveFailed) { saveFailed = true; showToast('Could not save on this phone (storage full or blocked). Open Sync & Backup and download a backup so you do not lose your work.', 7000); }
       }
     }
-    ['pagehide', 'visibilitychange'].forEach(ev => window.addEventListener(ev, () => { if (ev === 'pagehide' || document.visibilityState === 'hidden') saveState(); }));
+    ['pagehide', 'visibilitychange'].forEach(ev => window.addEventListener(ev, () => { if (!justWiped && (ev === 'pagehide' || document.visibilityState === 'hidden')) saveState(); }));
     function escapeHtml(s) { return window.MZUI.escapeHtml(s); }
     function showToast(msg, ms) { return window.MZUI.showToast(msg, ms); }
 
@@ -844,9 +845,14 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
       state.lastBackupAt = '';
       state.subjects = DEFAULT_SUBJECTS.map(x =>({ ...x }));
       state.evidenceVault = [];
-      state.docChecklist = {}; try { window.dispatchEvent(new CustomEvent('mz-docs-synced', { detail: { source: 'wipe' } })); } catch (e) {}
+      state.docChecklist = {};
+      try { if (window.MZOCR && typeof window.MZOCR.clearStash === 'function') window.MZOCR.clearStash(); } catch (e) {}
+      try { window.dispatchEvent(new CustomEvent('mz-docs-synced', { detail: { source: 'wipe' } })); } catch (e) {}
       state.cvName = ''; state.cvPhone = ''; state.cvEmail = ''; state.starDraft = '';
+      state.savedCvs = []; state.cvQualifications = []; state.savedFlyerJobs = [];
+      if (Array.isArray(subjectHistory)) subjectHistory.length = 0;
       state.whatIfActive = false;
+      justWiped = true;
       const am = document.getElementById('auth-modal');
       if (am) am.classList.add('hidden');
       render();
@@ -2130,7 +2136,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
 
     function bindEvents() {
       document.querySelectorAll('[data-sub-name]').forEach(el =>el.addEventListener('change', e =>{ state.subjects[Number(el.dataset.subName)].name = e.target.value.trim(); saveState(); render(); }));
-      document.querySelectorAll('[data-sub-mark]').forEach(el =>el.addEventListener('change', e =>{ state.subjects[Number(el.dataset.subMark)].mark = Math.max(0, Math.min(100, Number(e.target.value) || 0)); saveState(); render(); }));
+      document.querySelectorAll('[data-sub-mark]').forEach(el =>el.addEventListener('change', e =>{ const raw = String(e.target.value || '').trim(); if (raw === '') { state.subjects[Number(el.dataset.subMark)].mark = null; } else { const parsed = typeof parseMark === 'function' ? parseMark(raw) : Number(raw.replace(',', '.')); state.subjects[Number(el.dataset.subMark)].mark = parsed !== null && Number.isFinite(parsed) ? Math.max(0, Math.min(100, parsed)) : null; } saveState(); render(); }));
       const gs = document.getElementById('grade-stage');
       if (gs) gs.addEventListener('change', e =>{ state.gradeStage = e.target.value; saveState(); render(); });
       const ql = document.getElementById('qual-level'); if (ql) ql.addEventListener('change', e => { state.qualLevel = e.target.value; if (state.qualLevel && state.workQual === 'all') state.workQual = 'mine'; saveState(); render(); });
@@ -2149,7 +2155,14 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
       if (tw) tw.addEventListener('click', () =>{ state.whatIfActive = !state.whatIfActive; saveState(); render(); });
       const ws = document.getElementById('whatif-sub-select'); if (ws) ws.addEventListener('change', e =>{ state.whatIfSubject = e.target.value; state.whatIfActive = true; saveState(); render(); });
       const wr = document.getElementById('whatif-range');
-      if (wr) wr.addEventListener('input', e =>{ state.whatIfMaths = Number(e.target.value); state.whatIfActive = true; saveState(); render(); });
+      if (wr) {
+        let wrRaf = 0;
+        wr.addEventListener('input', e => {
+          state.whatIfMaths = Number(e.target.value); state.whatIfActive = true;
+          if (!wrRaf) wrRaf = (typeof requestAnimationFrame === 'function' ? requestAnimationFrame : (fn => setTimeout(fn, 16)))(() => { wrRaf = 0; render(); });
+        });
+        wr.addEventListener('change', () => { saveState(); });
+      }
       const tn = document.getElementById('toggle-nouni');
       if (tn) tn.addEventListener('click', () =>{ state.noUniOnly = !state.noUniOnly; saveState(); render(); });
       const th = document.getElementById('toggle-nearhome');
@@ -3379,6 +3392,7 @@ const toTrustedHtml = s => (window.MZUI ? window.MZUI.toTrustedHtml(s) : String(
       r.readAsText(f);
     });
 
+    window.mzWipeAllData = wipeLocalProfile;
     const wipeBtn = document.getElementById('btn-wipe-device'); if (wipeBtn) wipeBtn.addEventListener('click', wipeLocalProfile);
         const otpForm = document.getElementById('otp-preview-form');
     if (otpForm) otpForm.addEventListener('submit', e =>{

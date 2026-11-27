@@ -7,7 +7,8 @@ export const MZ_PLANNER = (() => {
   };
   function solveMinimumMarkPlan(subjects, targetAps, scaleKey = 'nsc_42') {
     const cfg = SCALE_BOUNDS[scaleKey] || SCALE_BOUNDS.nsc_42;
-    const nonLo = subjects.filter((s) => s && !s.isLO && Number.isFinite(Number(s.mark))).map((s) => ({ name: s.name, orig: Number(s.mark), mark: Number(s.mark) })).sort((a, b) => b.mark - a.mark);
+    const parseM = (v) => { if (v === null || v === undefined || typeof v === 'boolean') return null; const c = String(v).trim().replace(/%$/, '').trim().replace(',', '.'); if (c === '') return null; const n = Number(c); return (Number.isFinite(n) && n >= 0 && n <= 100) ? n : null; };
+    const nonLo = (subjects || []).map((s) => ({ s, m: s ? parseM(s.mark) : null })).filter((x) => x.s && !x.s.isLO && !x.s.isLifeOrientation && x.m !== null).map((x) => ({ name: x.s.name, orig: x.m, mark: x.m })).sort((a, b) => b.mark - a.mark);
     if (nonLo.length < 6) return { possible: false, reason: 'Enter at least 6 non-LO subjects.' };
     if (targetAps > cfg.max) return { possible: false, reason: `Target exceeds scale maximum (${cfg.max}).` };
     const active = nonLo.slice(0, 6);

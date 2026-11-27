@@ -1,0 +1,93 @@
+name: Prospectus pipeline
+
+# Finds each institution's official prospectus PDF, reads it, verifies every row many times, and publishes only rows that hold up.
+# Runs every night. Unchanged pages cost nothing (AI answers are cached), so on a free AI tier it just works through the backlog a few pages a night.
+# A changed prospectus is picked up automatically. Also runs on demand.
+on:
+  schedule:
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+    inputs:
+      only:
+        description: 'Institution id to run alone (blank = all), e.g. up'
+        required: false
+      year:
+        description: 'Intake year (blank = all years in data/sources.json)'
+        required: false
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: mz-data-writes
+  cancel-in-progress: false
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - name: Back up the data (kept 30 days, outside git)
+        run: python3 scripts/backup_data.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: data-backup-${{ github.run_id }}
+          path: backups/
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install PDF tools
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+          pip install 'pypdf>=5,<7' 'reportlab>=4,<5'
+      - uses: actions/cache@v4
+        with:
+          path: .cache/prospectus
+          key: prospectus-${{ github.run_id }}
+          restore-keys: prospectus-
+      - name: Move the intake year on if one is due
+        run: python3 scripts/roll_year.py
+      - name: Run the pipeline
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ONLY: ${{ github.event.inputs.only }}
+          YEAR: ${{ github.event.inputs.year }}
+          MZ_MAX_ROUNDS: '20'
+        run: |
+          set -o pipefail
+          args=()
+          [ -n "$ONLY" ] && args+=(--only "$ONLY")
+          [ -n "$YEAR" ] && args+=(--year "$YEAR")
+          python3 scripts/run_pipeline.py "${args[@]}" | tee pipeline.log
+      - name: Rebuild derived files, SRI manifest and run all checks (nothing is committed if these fail)
+        run: |
+          python3 scripts/refresh_data.py
+          python3 scripts/autonomous_ops.py
+          python3 scripts/validate_data.py
+          node tests/run.mjs
+          python3 scripts/run_all_checks.py
+      - name: Summary
+        if: always()
+        run: |
+          { echo '### Prospectus pipeline'; echo '```'; cat pipeline.log 2>/dev/null; echo '```'; echo; echo 'Full row-by-row report: reports/pipeline_report.md'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit
+        run: |
+          scripts/push_data.sh "data: prospectus pipeline $(date -u +%F)" data reports
+      - name: Tell a person if this failed
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: scripts/ci_status.sh fail "Prospectus pipeline"
+      - name: Close the failure issue if we recovered
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: scripts/ci_status.sh ok "Prospectus pipeline"

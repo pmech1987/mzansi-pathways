@@ -23,7 +23,14 @@ STEPS = [('data files are valid and safe', ['scripts/validate_data.py']),
          ('v103 study cost estimator, expanded blocklist & technical NSC aliases', ['scripts/test_v103_estimator_and_common.py']),
          ('v104 SA document checklist, atomic catalogue build & edu.za verification', ['scripts/test_v104_checklist_and_atomic.py']),
          ('v106 unified v104+v105 security, POPIA, hash routing & mobile UX', ['scripts/test_v106_unified_security_and_ux.py']),
-         ('v110 OCR fallback, progression evidence, community uploads, comparison & learning', ['scripts/test_v110_progression_community.py'])]
+         ('v110 OCR fallback, progression evidence, community uploads, comparison & learning', ['scripts/test_v110_progression_community.py']),
+         ('v112 merged v107+v109+v111, full .github/ workflows & Dark Mode Courses/Fit/Marks', ['scripts/test_v112_merged_dark_and_ci.py']),
+         ('v113 hardened learning engine, community anti-scam/XSS shield & workflow gate', ['scripts/test_v113_learning_and_hardening.py']),
+         ('v114 POPIA privacy safeguards, OCR stash wipe & learner privacy notice', ['scripts/test_v114_popia_privacy.py']),
+         ('v115 adversarial security (NFKC/zero-width bypasses & post-wipe pagehide guard)', ['scripts/test_v115_adversarial_security.py']),
+         ('v117 performance & architecture (defer scripts, catalogue cache, i18n fast-path, rAF slider)', ['scripts/test_v117_perf_and_arch.py']),
+         ('v118 accessibility & SA language coverage (WCAG labels/dialogs + zu/ss/ts home/nav i18n)', ['scripts/test_v118_a11y_and_i18n.py']),
+         ('v119 CI safety, strict CSP zero inline styles & release hardening', ['scripts/test_v119_ci_csp_and_release.py'])]
 
 
 def main():

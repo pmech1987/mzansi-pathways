@@ -1,0 +1,67 @@
+# Validates files people send in (inbox/community/), compares them with the pipeline, learns from the result, and merges progression evidence.
+# It never marks anything verified. Only two enrolled reviewers can do that.
+name: Community submissions and learning
+on:
+  push:
+    paths: ['inbox/community/*.json']
+  schedule:
+    - cron: '30 3 * * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: mz-data-writes
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Back up the data (kept 30 days, outside git)
+        run: python3 scripts/backup_data.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: data-backup-${{ github.run_id }}
+          path: backups/
+          retention-days: 30
+          if-no-files-found: error
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - uses: actions/setup-node@v4
+        with: { node-version: '20' }
+      - name: Tools for the pipeline (PDF readers and OCR)
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y poppler-utils tesseract-ocr tesseract-ocr-afr
+          pip install pypdf
+      - name: Validate and stage submissions
+        run: |
+          shopt -s nullglob
+          files=(inbox/community/*.json)
+          if [ ${#files[@]} -gt 0 ]; then python3 scripts/community_submissions.py "${files[@]}"; fi
+      - name: Compare, learn, merge & rebuild SRI
+        run: |
+          python3 scripts/compare_sources.py
+          python3 scripts/learn_from_feedback.py
+          python3 scripts/merge_progression.py
+          python3 scripts/build_catalogue.py
+          python3 scripts/autonomous_ops.py
+      - name: Full verification & safety checks (nothing is committed if these fail)
+        run: |
+          python3 scripts/validate_data.py --against HEAD
+          node tests/run.mjs
+          python3 scripts/run_all_checks.py
+      - name: Publish via hardened push_data.sh gate
+        run: scripts/push_data.sh "data: community submissions and learning $(date -u +%F)" data reports js/catalogue_data.js inbox
+      - name: Tell a person if this failed
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: scripts/ci_status.sh fail "Community submissions and learning"
+      - name: Close the failure issue if we recovered
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: scripts/ci_status.sh ok "Community submissions and learning"

@@ -1,14 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-ZA">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Check a prospectus yourself - Mzansi Pathways</title>
 <link rel="stylesheet" href="./css/prospectus_check.css">
+<meta name="theme-color" content="#0e1b3d">
 <link rel="icon" href="./favicon.svg">
 </head>
 <body>
-<main>
+<a href="#main-content" class="sr-only">Skip to prospectus checker</a>
+<main id="main-content">
   <p><a href="./index.html">&larr; Back to the app</a></p>
   <h1>Check a prospectus yourself</h1>
   <p class="note">Pick the official prospectus you have. This page reads it on your phone or computer. The file is never uploaded. You get a small file with the course numbers it found, plus your own notes. Sending that file helps us compare against what our scripts read.</p>
@@ -30,7 +32,7 @@
   <section class="card" id="result" hidden>
     <h2>What was read</h2>
     <p class="note" id="summary"></p>
-    <div style="overflow-x:auto"><table><thead><tr><th>Course</th><th>APS</th><th>Subjects</th><th>Page</th><th>Keep</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="table-scroll"><table><thead><tr><th>Course</th><th>APS</th><th>Subjects</th><th>Page</th><th>Keep</th></tr></thead><tbody id="rows"></tbody></table></div>
     <h2>Where can a Higher Certificate lead?</h2>
     <ul id="prog" class="note"></ul>
     <h2>Anything wrong in the app?</h2>
@@ -53,9 +55,9 @@
     <p class="note">Send the downloaded file to the project (the address is on the About page of the app). It goes in <code>inbox/community/</code>.</p>
   </section>
 </main>
-<script src="./js/ocr.js"></script>
-<script src="./js/catalogue_data.js"></script>
-<script src="./js/subjects_data.js"></script>
-<script src="./js/prospectus_check.js"></script>
+<script src="./js/ocr.js" defer></script>
+<script src="./js/catalogue_data.js" defer></script>
+<script src="./js/subjects_data.js" defer></script>
+<script src="./js/prospectus_check.js" defer></script>
 </body>
 </html>

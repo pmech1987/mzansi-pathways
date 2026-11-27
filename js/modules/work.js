@@ -53,6 +53,7 @@
 
   function parseJobFlyerText(rawText) {
     if (typeof rawText !== 'string' || !rawText.trim()) return null;
+    rawText = rawText.normalize('NFKC').replace(/[\u200b-\u200f\u202a-\u202e\u2060\ufeff\u00ad]/g, '');
     var lines = rawText.split(/\r?\n/).map(function (l) { return l.trim(); }).filter(Boolean).slice(0, 80);
     var emailM = rawText.match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/);
     var email = emailM ? emailM[0] : '';

@@ -1,0 +1,8 @@
+# Mzansi Pathways v116 — Round 2 (Focus B: Correctness & Data Accuracy)
+
+## Fixes
+- **B-01 (High) — Locale Decimal Comma & Decimal OCR Mark Parsing:** Added `parseMark()` in `js/engine.js` (wired through `hasMark`, `levelFromMark`, `nscPass`, `evaluateProgramme`, `js/catalogue.js`, `js/app.js`, and `js/modules/results.js`) so SA/Afrikaans decimal commas (`65,5`) parse accurately, blank UI mark inputs stay `null` instead of silently coercing to `0`, and `parseStatementText()` extracts `65.5%` / `65,5%` and low `0–7` + level `1` pairs accurately instead of truncating to `5%`.
+- **B-02 (High) — Technical Mathematics, Technical Sciences & SASL HL Support:** Added `Technical Mathematics`, `Technical Sciences`, and `South African Sign Language` (HL/FAL) to `js/engine.js` so `Technical Mathematics` is never misclassified as pure `Mathematics`; tightened `reverseGapPlanner()` in `js/core/pathways_v2_engines.js` to exact subject matching and best-mark selection.
+- **B-03 (Medium) — Blank/Null Mark Guards Across NC(V) L4, Reverse APS & Results:** Fixed `Number("") === 0` coercion in `evaluateNcvL4Articulation()`, `solveMinimumMarkPlan()`, `findBottlenecks()`, and `getNextBestAction()`.
+- **B-04 (Medium) — Unified Multi-University UMP Calculation:** Delegated UMP APS in `js/modules/results.js` to `apsUMP()` in `js/engine.js` for single-source consistency and rounded floating-point gap deltas cleanly in `js/catalogue.js`.
+- **B-05 (Low) — 20-Case Core-Logic Edge-Case Suite:** Expanded `tests/test_core_logic_edge_cases.mjs` from 7 to 20 automated edge cases; bumped `sw.js` cache to `mzansi-pathways-v116`.

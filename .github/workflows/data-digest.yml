@@ -1,0 +1,44 @@
+name: Data digest
+
+# Every Monday 08:00 South African time (06:00 UTC), after the link check, and on demand.
+# Turns reports/attention.md into ONE GitHub issue: opened or updated when something needs a person, closed when all clear.
+# This workflow can open issues but cannot change code or data.
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: mz-data-digest
+  cancel-in-progress: false
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Write the digest
+        run: python3 scripts/make_digest.py
+      - name: Open, update or close the digest issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Data attention list"
+          n=$(gh issue list --state open --search "\"$title\" in:title" --json number,title --jq "[.[] | select(.title==\"$title\")][0].number // empty")
+          if python3 scripts/make_digest.py --check >/dev/null; then
+            [ -n "$n" ] && gh issue close "$n" --comment "All clear as of $(date -u +%F)."
+            echo "all clear"
+          elif [ -n "$n" ]; then
+            gh issue edit "$n" --body-file reports/attention.md
+          else
+            gh issue create --title "$title" --body-file reports/attention.md
+          fi
+          exit 0

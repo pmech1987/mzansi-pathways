@@ -47,7 +47,7 @@
     const apsEx = lv.length >= 6 ? lv.slice(0, 6).reduce((a, b) => a + b, 0) : null;
     const loLevel = lo ? E.levelFromMark(lo.mark) : null;
     const nsc = E.evaluateNsc(subs);
-    const byName = {}; valid.forEach(s => { byName[String(s.name).trim().toLowerCase()] = Number(s.mark); });
+    const byName = {}; valid.forEach(s => { byName[String(s.name).trim().toLowerCase()] = E.parseMark ? E.parseMark(s.mark) : Number(s.mark); });
     return { nsc, apsEx, loLevel, apsWithLO: (apsEx != null && loLevel != null) ? apsEx + loLevel : null, byName, count: valid.length };
   }
 
@@ -80,13 +80,13 @@
     if (p.minAps > 0) {
       if (myAps == null) { r.gaps.push('Need 6 subjects (excluding Life Orientation) to calculate APS'); near = false; }
       else if (myAps >= p.minAps) r.reasons.push('APS ' + myAps + ' meets ' + p.minAps + (inst.loPolicy === 'half' ? ' (LO ÷ 2)' : (inst.loPolicy === 'check' || inst.loPolicy === 'own_table' ? ' (generic best-6 APS)' : '')));
-      else { const g = p.minAps - myAps; r.gaps.push('APS ' + myAps + ' is ' + g + ' short of ' + p.minAps); if (g > 3) near = false; }
+      else { const g = Math.round((p.minAps - myAps) * 10) / 10; r.gaps.push('APS ' + myAps + ' is ' + g + ' short of ' + p.minAps); if (g > 3) near = false; }
     }
     (p.subjects || []).forEach(q => {
       let best = null; q.anyOf.forEach(n => { const v = me.byName[n.toLowerCase()]; if (v !== undefined) best = best === null ? v : Math.max(best, v); });
       const lbl = q.anyOf.join(' or ').replace('English Home Language or English First Additional Language', 'English').replace('Mathematics or Mathematical Literacy', 'Maths or Maths Lit');
       if (best === null) { r.gaps.push('Missing subject: ' + lbl + ' (' + q.minMark + '%+)'); near = false; }
-      else if (best < q.minMark) { const d = q.minMark - best; r.gaps.push(lbl + ': ' + best + '% (need ' + q.minMark + '%, short by ' + d + ')'); if (d > 10) near = false; }
+      else if (best < q.minMark) { const d = Math.round((q.minMark - best) * 10) / 10; r.gaps.push(lbl + ': ' + best + '% (need ' + q.minMark + '%, short by ' + d + ')'); if (d > 10) near = false; }
       else r.reasons.push(lbl + ': ' + best + '% (need ' + q.minMark + '%)');
     });
     if (!r.gaps.length) r.tier = 'qualify';
@@ -131,27 +131,62 @@
     return (allInst || []).filter(i => i.type !== 'TVET' && !have.has(i.id));
   }
 
+  // Single-entry evaluation cache: avoids re-evaluating all 586 programmes 3-4x per render for the same marks
+  let _evalCache = { key: null, flatRef: null, me: null, evaluated: null };
+  function subsCacheKey(subs) {
+    if (!Array.isArray(subs)) return '';
+    let k = '';
+    for (let i = 0; i < subs.length; i++) {
+      const s = subs[i];
+      if (!s) continue;
+      k += (s.name || '') + ':' + (s.mark === null || s.mark === undefined ? '' : s.mark) + ':' + (s.isHomeLanguage ? 1 : 0) + (s.isLifeOrientation ? 1 : 0) + '|';
+    }
+    return k;
+  }
+  function getEvaluatedAll(subs, E) {
+    const flat = load().flat;
+    const key = subsCacheKey(subs);
+    if (_evalCache.key === key && _evalCache.flatRef === flat && _evalCache.evaluated) {
+      return _evalCache;
+    }
+    const me = myNumbers(subs, E);
+    const evaluated = new Array(flat.length);
+    for (let i = 0; i < flat.length; i++) {
+      const p = flat[i];
+      const inst = p._inst;
+      if (!p._searchLow) {
+        p._searchLow = (p.name + ' ' + inst.name + ' ' + (inst.short || '') + ' ' + p.faculty + ' ' + p.qualType).toLowerCase();
+      }
+      evaluated[i] = { p, inst, ev: evaluate(subs, p, E, me) };
+    }
+    _evalCache = { key, flatRef: flat, me, evaluated };
+    return _evalCache;
+  }
+
   // filters: {inst, type, field, faculty, q, show, loOnly, maxAps}
   function query(subs, E, f) {
-    const me = myNumbers(subs, E), out = [];
-    load().flat.forEach(p => {
-      const inst = p._inst;
-      if (f.inst && f.inst !== 'all' && inst.id !== f.inst) return;
-      if (f.type && f.type !== 'all' && inst.type !== f.type) return;
-      if (f.field && f.field !== 'all' && p.field !== f.field) return;
-      if (f.route && f.route !== 'all' && routeOf(p) !== f.route) return;
-      if (f.faculty && f.faculty !== 'all' && p.faculty !== f.faculty) return;
-      if (f.province && f.province !== 'all' && inst.province !== f.province && inst.province !== 'All provinces') return;
-      if (f.q && !(p.name + ' ' + inst.name + ' ' + (inst.short || '') + ' ' + p.faculty + ' ' + p.qualType).toLowerCase().includes(f.q.toLowerCase())) return;
-      if (f.loOnly && inst.loPolicy !== 'excluded' && inst.loPolicy !== 'none') return;
-      const ev = evaluate(subs, p, E, me);
+    const cached = getEvaluatedAll(subs, E);
+    const me = cached.me, out = [];
+    const qLow = f.q ? String(f.q).toLowerCase() : '';
+    const evaluated = cached.evaluated;
+    for (let i = 0; i < evaluated.length; i++) {
+      const row = evaluated[i];
+      const p = row.p, inst = row.inst, ev = row.ev;
+      if (f.inst && f.inst !== 'all' && inst.id !== f.inst) continue;
+      if (f.type && f.type !== 'all' && inst.type !== f.type) continue;
+      if (f.field && f.field !== 'all' && p.field !== f.field) continue;
+      if (f.route && f.route !== 'all' && routeOf(p) !== f.route) continue;
+      if (f.faculty && f.faculty !== 'all' && p.faculty !== f.faculty) continue;
+      if (f.province && f.province !== 'all' && inst.province !== f.province && inst.province !== 'All provinces') continue;
+      if (qLow && !p._searchLow.includes(qLow)) continue;
+      if (f.loOnly && inst.loPolicy !== 'excluded' && inst.loPolicy !== 'none') continue;
       if (f.show && f.show !== 'all') {
-        if (f.show === 'yes' && !(ev.tier === 'qualify' || ev.tier === 'open')) return;
-        if (f.show === 'close' && ev.tier !== 'close') return;
-        if (f.show === 'yesclose' && !(ev.tier === 'qualify' || ev.tier === 'open' || ev.tier === 'close')) return;
+        if (f.show === 'yes' && !(ev.tier === 'qualify' || ev.tier === 'open')) continue;
+        if (f.show === 'close' && ev.tier !== 'close') continue;
+        if (f.show === 'yesclose' && !(ev.tier === 'qualify' || ev.tier === 'open' || ev.tier === 'close')) continue;
       }
-      out.push({ p, inst, ev });
-    });
+      out.push(row);
+    }
     const sortBy = f.sort || 'fit';
     out.sort((a, b) => {
       if (sortBy === 'aps_low') return (a.p.minAps || 0) - (b.p.minAps || 0) || a.p.name.localeCompare(b.p.name);

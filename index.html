@@ -217,7 +217,7 @@
           <div class="grid grid-cols-1 gap-2">
             <label class="w-full text-center px-3 py-2 rounded-xl bg-white text-slate-800 border border-slate-300 text-xs font-bold cursor-pointer hover:bg-slate-100">
               Import Custom Prospectus Rules (.json)
-              <input id="import-rules-file" type="file" accept=".json" class="hidden" />
+              <input id="import-rules-file" type="file" accept=".json" aria-label="Import programme rules JSON file" class="hidden" />
             </label>
             <div class="grid grid-cols-2 gap-2">
               <button type="button" id="settings-open-sync" class="px-3 py-2 rounded-xl bg-slate-900 text-white text-xs font-bold hover:bg-slate-800">Sync &amp; Backup</button>
@@ -260,7 +260,7 @@
         <button type="button" id="tut-prev-btn" class="px-3 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">← Back</button>
         <div class="flex items-center gap-2">
           <button type="button" id="tut-demo-btn" class="px-3 py-2 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200 text-xs font-bold">Run Live Demo ↗</button>
-          <button type="button" id="tut-try-btn" class="hidden"></button>
+          <button type="button" id="tut-try-btn" aria-label="Try this feature" class="hidden"></button>
           <button type="button" id="tut-next-btn" class="px-4 py-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold">Next →</button>
         </div>
       </div>
@@ -268,12 +268,12 @@
   </div>
 
   <!-- Cross-Device Account & Encrypted Transfer Modal -->
-  <div id="auth-modal" role="dialog" aria-modal="true" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
+  <div id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" class="hidden fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-lg w-full max-h-[88vh] overflow-y-auto p-5 shadow-2xl border border-slate-200 space-y-4">
       <div class="flex items-start justify-between gap-2">
         <div>
           <div class="text-[11px] font-extrabold uppercase text-blue-700">POPIA-Safe Cross-Device Access</div>
-          <h2 class="text-base font-extrabold text-slate-900">Keep Your Marks, Plans &amp; CV Across Phones</h2>
+          <h2 id="auth-modal-title" class="text-base font-extrabold text-slate-900">Keep Your Marks, Plans &amp; CV Across Phones</h2>
         </div>
         <button type="button" id="close-auth" aria-label="Close sync modal" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold">✕</button>
       </div>
@@ -282,15 +282,16 @@
       <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2.5 text-xs">
         <div class="font-extrabold text-emerald-950">1. Encrypted Phone-to-Phone Backup (Works Offline Today · AES-256-GCM)</div>
         <p class="text-emerald-900">Lock your Results, Plan A/B/C, and Evidence Vault with your own passphrase (PBKDF2 120,000 rounds + AES-GCM) to move to another phone without needing an account.</p>
-        <input id="enc-pass" type="password" placeholder="Enter a strong passphrase (min 8 characters)" class="w-full px-3 py-2 rounded-xl bg-white border border-emerald-300 text-xs font-semibold" />
-        <div id="enc-pass-strength" class="text-[11px] text-slate-600">Enter at least 8 characters to lock/unlock backups</div>
+        <label for="enc-pass" class="block text-[11px] font-bold text-emerald-950">Backup passphrase (min 8 characters)</label>
+        <input id="enc-pass" type="password" autocomplete="new-password" aria-describedby="enc-pass-strength" placeholder="Enter a strong passphrase (min 8 characters)" class="w-full px-3 py-2 rounded-xl bg-white border border-emerald-300 text-xs font-semibold" />
+        <div id="enc-pass-strength" role="status" aria-live="polite" class="text-[11px] text-slate-600">Enter at least 8 characters to lock/unlock backups</div>
         <div id="enc-last-backup" class="text-[11px] font-semibold text-slate-700"></div>
         <p class="text-[11px] text-amber-900">Write your passphrase down. If you forget it, nobody can open the backup, not even us. Keep the backup file in two places.</p>
         <div class="flex flex-wrap gap-2">
           <button type="button" id="btn-export-enc" class="flex-1 py-2 rounded-xl bg-emerald-700 text-white font-extrabold hover:bg-emerald-800">Download Encrypted Backup</button>
           <label class="flex-1 text-center py-2 rounded-xl bg-white text-emerald-900 border border-emerald-300 font-extrabold cursor-pointer hover:bg-emerald-100">
              Unlock on New Phone
-            <input id="in-import-enc" type="file" accept=".mzansi,.json" class="hidden" />
+            <input id="in-import-enc" type="file" accept=".mzansi,.json" aria-label="Choose encrypted backup file" class="hidden" />
           </label>
           <button type="button" id="btn-undo-restore" class="hidden flex-1 py-2 rounded-xl bg-white text-rose-800 border border-rose-300 font-extrabold hover:bg-rose-50">Undo restore</button>
         </div>
@@ -300,7 +301,8 @@
       <form id="otp-preview-form" class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5 text-xs">
         <div class="font-extrabold text-slate-900">2. Cloud Account Sync (6-Digit Email OTP — No SA ID Required)</div>
         <p class="text-slate-600">When your private Supabase Auth backend is connected, learners sign in with a 6-digit Email OTP (expires in 10 min, max 5 tries) — cheaper and safer than SMS OTPs.</p>
-        <input id="otp-email" type="email" required placeholder="your.email@example.com" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs" />
+        <label for="otp-email" class="block text-[11px] font-bold text-slate-800">Email address for 6-digit OTP</label>
+        <input id="otp-email" type="email" autocomplete="email" required placeholder="your.email@example.com" class="w-full px-3 py-2 rounded-xl bg-white border border-slate-200 text-xs" />
         <label class="flex items-start gap-2 text-[11px] text-slate-700 cursor-pointer">
           <input id="popia-age-chk" type="checkbox" required class="mt-0.5 w-4 h-4 accent-blue-700" />
           <span>POPIA Notice: I confirm I am 18+ or have parent/guardian permission to store my academic profile in the cloud.</span>
@@ -315,31 +317,31 @@
   </div>
 
 
-  <script src="./js/work_tools.js"></script>
-  <script src="./js/engine.js"></script>
-  <script src="./js/ocr.js"></script>
-  <script src="./js/data.js"></script>
-  <script src="./js/catalogue_data.js"></script>
-  <script src="./js/catalogue.js"></script>
-  <script src="./js/i18n.js"></script>
-  <script src="./js/boot.js"></script>
-  <script src="./js/features/trust_guards.js"></script>
-  <script src="./js/modules/storage.js"></script>
-  <script src="./js/modules/funding.js"></script>
-  <script src="./js/modules/ui.js"></script>
-  <script src="./js/modules/results.js"></script>
-  <script src="./js/modules/study.js"></script>
-  <script src="./js/modules/work.js"></script>
-  <script src="./js/app.js"></script>
-  <script src="./js/screens.js"></script>
-  <script src="./js/home.js"></script>
-  <script src="./js/a11y.js"></script>
-  <script src="./js/toolkit.js"></script>
-  <script src="./js/backup.js"></script>
-  <script src="./js/comfort_and_jump.js"></script>
-  <script src="./js/clean_layout.js"></script>
-  <script src="./js/pwa_health.js"></script>
-  <script src="./js/calendar.js"></script>
-  <script src="./js/checklist.js"></script>
+  <script src="./js/work_tools.js" defer></script>
+  <script src="./js/engine.js" defer></script>
+  <script src="./js/ocr.js" defer></script>
+  <script src="./js/data.js" defer></script>
+  <script src="./js/catalogue_data.js" defer></script>
+  <script src="./js/catalogue.js" defer></script>
+  <script src="./js/i18n.js" defer></script>
+  <script src="./js/boot.js" defer></script>
+  <script src="./js/features/trust_guards.js" defer></script>
+  <script src="./js/modules/storage.js" defer></script>
+  <script src="./js/modules/funding.js" defer></script>
+  <script src="./js/modules/ui.js" defer></script>
+  <script src="./js/modules/results.js" defer></script>
+  <script src="./js/modules/study.js" defer></script>
+  <script src="./js/modules/work.js" defer></script>
+  <script src="./js/app.js" defer></script>
+  <script src="./js/screens.js" defer></script>
+  <script src="./js/home.js" defer></script>
+  <script src="./js/a11y.js" defer></script>
+  <script src="./js/toolkit.js" defer></script>
+  <script src="./js/backup.js" defer></script>
+  <script src="./js/comfort_and_jump.js" defer></script>
+  <script src="./js/clean_layout.js" defer></script>
+  <script src="./js/pwa_health.js" defer></script>
+  <script src="./js/calendar.js" defer></script>
+  <script src="./js/checklist.js" defer></script>
 </body>
 </html>

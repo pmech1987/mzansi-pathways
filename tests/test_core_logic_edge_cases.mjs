@@ -5,6 +5,7 @@ import vm from 'node:vm';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { MZ_EVOLVED } from '../js/core/pathways_v2_engines.js';
+import { MZ_PLANNER } from '../js/core/reverse_aps_solver.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -15,10 +16,11 @@ function loadBrowserEngines() {
   vm.createContext(sandbox);
   vm.runInContext(fs.readFileSync(path.join(ROOT, 'js/engine.js'), 'utf8'), sandbox);
   vm.runInContext(fs.readFileSync(path.join(ROOT, 'js/catalogue.js'), 'utf8'), sandbox);
-  return { E: sandbox.MZENGINE || sandbox, CAT: sandbox.MZCAT };
+  vm.runInContext(fs.readFileSync(path.join(ROOT, 'js/modules/results.js'), 'utf8'), sandbox);
+  return { E: sandbox.MZENGINE || sandbox, CAT: sandbox.MZCAT, RES: sandbox.MZResults };
 }
 
-const { E, CAT } = loadBrowserEngines();
+const { E, CAT, RES } = loadBrowserEngines();
 
 const BACHELOR_MATHS = [
   { name: 'English Home Language', mark: 72, isHomeLanguage: true },
@@ -172,4 +174,141 @@ test('7. NC(V) Level 4 Gazette 32743 articulation & TVET open-entry routes', () 
   };
   assert.equal(E.evaluateProgramme(zeros, tvetCourse).status, 'Possible - Verify Rules');
   assert.equal(CAT.evaluate(zeros, tvetCourse, E).tier, 'open');
+});
+
+test('8. Locale decimal comma marks (65,5) & trailing % parse cleanly in engine and catalogue', () => {
+  assert.equal(E.parseMark('65,5'), 65.5);
+  assert.equal(E.parseMark('79,9%'), 79.9);
+  assert.equal(E.hasMark({ name: 'Mathematics', mark: '65,5' }), true);
+  assert.equal(E.levelFromMark('65,5'), 5);
+  assert.equal(E.levelFromMark('80,0'), 7);
+  const commaSubs = BACHELOR_MATHS.map(s => ({ ...s, mark: String(s.mark) + ',5' }));
+  assert.equal(E.evaluateNsc(commaSubs).passLevel, "Bachelor's Pass");
+  assert.equal(E.apsBestSixNoLO(commaSubs).aps, 31);
+});
+
+test('9. OCR parseStatementText handles decimal % (65.5% and 65,5%) without truncating to 5%', () => {
+  const dot = E.parseStatementText('Mathematics 65.5% 5');
+  assert.equal(dot.length, 1);
+  assert.equal(dot[0].name, 'Mathematics');
+  assert.equal(dot[0].mark, 65.5);
+  assert.equal(dot[0].level, 5);
+
+  const comma = E.parseStatementText('Physical Sciences 65,5% 5');
+  assert.equal(comma.length, 1);
+  assert.equal(comma[0].name, 'Physical Sciences');
+  assert.equal(comma[0].mark, 65.5);
+});
+
+test('10. OCR parseStatementText detects low 0-7% mark paired with level 1', () => {
+  const low = E.parseStatementText('Physical Sciences 5 1');
+  assert.equal(low.length, 1);
+  assert.equal(low[0].mark, 5);
+  assert.equal(low[0].level, 1);
+  assert.equal(low[0].confidence, 'review');
+});
+
+test('11. Technical Mathematics is NEVER misclassified as pure Mathematics', () => {
+  const m = E.matchSubject('Technical Mathematics');
+  assert.equal(m.name, 'Technical Mathematics');
+  assert.equal(E.flags({ name: 'Technical Mathematics' }).isTechMath, true);
+  assert.equal(E.flags({ name: 'Technical Mathematics' }).isMath, false);
+
+  const techLearner = BACHELOR_MATHS.map(s => s.name === 'Mathematics' ? { ...s, name: 'Technical Mathematics', mark: 88 } : s);
+  const pureMathProg = {
+    id: 'up_eng', name: 'BEng Mechanical', verificationStatus: 'verified', entryBasis: 'nsc',
+    apsMethod: 'nsc_best6_noLO', minPassLevel: "Bachelor's Pass", minAps: 30,
+    subjectRequirements: [{ anyOf: ['Mathematics'], minMark: 70 }],
+  };
+  assert.equal(E.evaluateProgramme(techLearner, pureMathProg).status, 'Not Currently Eligible');
+  assert.equal(E.apsUMP(techLearner).aps, 36.5);
+});
+
+test('12. Technical Sciences and South African Sign Language HL are recognized', () => {
+  assert.equal(E.matchSubject('Technical Sciences').name, 'Technical Sciences');
+  const sasl = E.matchSubject('South African Sign Language Home Language');
+  assert.equal(sasl.name, 'South African Sign Language Home Language');
+  assert.equal(E.flags({ name: sasl.name }).isHL, true);
+});
+
+test('13. reverseGapPlanner rejects Technical Mathematics for pure Mathematics & picks highest matching subject', () => {
+  const gap = MZ_EVOLVED.reverseGapPlanner(
+    { name: 'BSc CS', minAps: 30, requiredSubjects: [{ anyOf: ['Mathematics'], minMark: 65 }] },
+    [{ name: 'Technical Mathematics', mark: 90 }],
+    { score: 34 }
+  );
+  assert.equal(gap.readyNow, false);
+  assert.equal(gap.subjectGaps[0].blockerType, 'SUBJECT_SWITCH_NEEDED');
+
+  const bestOfTwo = MZ_EVOLVED.reverseGapPlanner(
+    { name: 'BA', minAps: 24, requiredSubjects: [{ anyOf: ['English Home Language', 'English First Additional Language'], minMark: 60 }] },
+    [{ name: 'English First Additional Language', mark: 45 }, { name: 'English Home Language', mark: 72 }],
+    { score: 30 }
+  );
+  assert.equal(bestOfTwo.readyNow, true);
+});
+
+test('14. NC(V) L4 rejects blank/null marks instead of treating them as 0%', () => {
+  const incomplete = MZ_EVOLVED.evaluateNcvL4Articulation({
+    fundamentals: [{ name: 'English FAL', mark: '' }, { name: 'Mathematics', mark: 65 }, { name: 'Life Orientation', mark: 68 }],
+    vocationals: [{ name: 'V1', mark: 70 }, { name: 'V2', mark: 74 }, { name: 'V3', mark: 72 }, { name: 'V4', mark: 78 }],
+  });
+  assert.equal(incomplete.tier, 'INCOMPLETE');
+});
+
+test('15. Reverse APS solver rejects blank/null marks & supports comma decimals', () => {
+  const blankSubs = BACHELOR_MATHS.map((s, i) => i === 0 ? { ...s, mark: '' } : s);
+  const resBlank = MZ_PLANNER.solveMinimumMarkPlan(blankSubs, 35);
+  assert.equal(resBlank.possible, false);
+
+  const commaSubs = BACHELOR_MATHS.map(s => ({ ...s, mark: String(s.mark) + ',5' }));
+  const resComma = MZ_PLANNER.solveMinimumMarkPlan(commaSubs, 32);
+  assert.equal(resComma.possible, true);
+  assert.equal(resComma.currentAps, 31);
+});
+
+test('16. getNextBestAction does NOT warn Home Language < 40% when mark is blank/null', () => {
+  const blankHL = BACHELOR_MATHS.map(s => s.isHomeLanguage ? { ...s, mark: null } : s);
+  const action = RES.getNextBestAction(blankHL, { evidenceVault: [{ id: 1 }], docChecklist: { a: true } }, E.evaluateNsc);
+  assert.ok(!action.title.includes('below 40%'));
+});
+
+test('17. findBottlenecks skips blank/null subjects instead of simulating 0 -> 12%', () => {
+  const blankSub = BACHELOR_MATHS.map((s, i) => i === 2 ? { ...s, mark: null } : s);
+  const out = RES.findBottlenecks(blankSub, [], E.evaluateProgramme);
+  assert.equal(out.length, 0);
+});
+
+test('18. Wits / UCT / UFS custom APS methods return null with official-calculator guidance', () => {
+  for (const method of ['wits_weighted', 'uct_fps', 'ufs_ap']) {
+    const r = E.computeApsFor(method, BACHELOR_MATHS);
+    assert.equal(r.aps, null);
+    assert.ok(/calculator/i.test(r.reason));
+  }
+});
+
+test('19. Floating-point gap display in catalogue.js rounds cleanly without IEEE-754 noise', () => {
+  const decLearner = BACHELOR_MATHS.map(s => s.name === 'Mathematics' ? { ...s, mark: '65,3' } : s);
+  const prog = {
+    name: 'BSc Maths', minPassLevel: "Bachelor's Pass", minAps: 28, status: 'verified',
+    subjects: [{ anyOf: ['Mathematics'], minMark: 70 }],
+    _inst: { id: 'up', loPolicy: 'excluded' },
+  };
+  const r = CAT.evaluate(decLearner, prog, E);
+  assert.ok(r.gaps.some(g => g.includes('short by 4.7)')), 'Expected clean 4.7, got: ' + JSON.stringify(r.gaps));
+});
+
+test('20. LOLT failure (English < 30% while HL isiZulu >= 40%) fails English-medium NSC check', () => {
+  const noEnglish = [
+    { name: 'isiZulu Home Language', mark: 78, isHomeLanguage: true },
+    { name: 'English First Additional Language', mark: 25 },
+    { name: 'Mathematics', mark: 65 },
+    { name: 'Physical Sciences', mark: 62 },
+    { name: 'Life Sciences', mark: 68 },
+    { name: 'Geography', mark: 70 },
+    { name: 'Life Orientation', mark: 80, isLifeOrientation: true },
+  ];
+  const nsc = E.nscPass(noEnglish, 'English');
+  assert.equal(nsc.loltOk, false);
+  assert.equal(nsc.passLevel, 'Did Not Meet Minimum NSC Pass');
 });

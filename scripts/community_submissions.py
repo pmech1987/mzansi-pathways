@@ -17,11 +17,12 @@ import progression_ledger as PL
 SCHEMA = 'mz-community-v1'
 MAX_BYTES = 512 * 1024
 ISSUES = {'aps_wrong', 'subject_wrong', 'course_missing', 'course_closed', 'link_broken', 'bridge_wrong', 'other'}
-BAD_TEXT = re.compile(r'https?://|www\.|@|\b\d{13}\b|(?<!\d)0\d{9}(?!\d)|\+27\d{9}', re.I)
+BAD_TEXT = re.compile(r'https?://|www\.|@|\b(?:wa\.me|t\.me|bit\.ly|tinyurl\.com|cutt\.ly|shorturl\.at)\b|<\s*/?\s*script\b|javascript:|\b\d{13}\b|(?<!\d)0\d{2}[\s-]?\d{3}[\s-]?\d{4}(?!\d)|\+27[\s-]?\d{9}', re.I)
 
 
 def _txt(v, n):
-    return re.sub(r'[\x00-\x1f\x7f]+', ' ', re.sub(r'\s+', ' ', str(v if v is not None else ''))).strip()[:n]
+    clean = C.normalize_for_security(v if v is not None else '')
+    return re.sub(r'[\x00-\x1f\x7f]+', ' ', re.sub(r'\s+', ' ', clean)).strip()[:n]
 
 
 def _num_in(quote, n):
@@ -49,7 +50,7 @@ def validate(doc, institutions):
     sha = str(d.get('sha256', '')).lower()
     if not re.fullmatch(r'[a-f0-9]{64}', sha):
         return None, ['doc.sha256 must be the 64-character SHA-256 of the file that was read']
-    if BAD_TEXT.search(str(d.get('name', ''))):
+    if BAD_TEXT.search(C.normalize_for_security(d.get('name', ''))):
         return None, ['doc.name contains a link, email, phone or ID number']
     out = {'submitter': sub, 'institutionId': iid, 'year': year, 'docSha256': sha, 'docName': _txt(d.get('name'), 120),
            'readVia': _txt(d.get('via'), 20), 'rows': [], 'progression': [], 'feedback': [], 'receivedAt': C.today().isoformat()}

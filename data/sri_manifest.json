@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAtSAST": "2026-11-27T13:22:11.059621+02:00",
-  "buildTag": "c973afa790f8",
+  "generatedAtSAST": "2026-11-27T14:34:51.623818+02:00",
+  "buildTag": "8a29ca733d52",
   "assetCount": 41,
   "assets": {
     "css/civic_mobile_a11y.css": {
@@ -17,12 +17,12 @@
       "bytes": 4671
     },
     "css/mzansi_ui.css": {
-      "sri": "sha384-1Q4BfcY6uy9z2KXFLzqBM2PlBBI7p2qxAfk+/AXWk1Duwg8autf6n/Yg/2ryA/4E",
-      "bytes": 19263
+      "sri": "sha384-LqV6HMNjw/KpUITMjsoLxF87GwircTrSBj9t3dQXPTmk4yku8Xkja9bGtyd34vJ9",
+      "bytes": 22000
     },
     "css/prospectus_check.css": {
-      "sri": "sha384-kqEasoqwWyz+dQo7l/PWI/cgg6SPi4SpGeDus2+s0p/NZEvowpisvmdrYIRlLkBB",
-      "bytes": 1547
+      "sri": "sha384-l+GIpG9YhwmzrE6yaSzKg2ZR3ZSTZj1WJVHpMxdxA8iVGlgEtSB2NcuUgkx9lKa2",
+      "bytes": 2034
     },
     "css/utilities.css": {
       "sri": "sha384-ksOXA1azRNQVY8+/YUkvf2AbdkQmmEICjmlEYlNn+/A/XtoQdP+558pR0XCG+t94",
@@ -37,12 +37,12 @@
       "bytes": 3242
     },
     "js/app.js": {
-      "sri": "sha384-MHfLQTBZM9mZI9KO1C7KfWOBTv5xfs7y+gtIqCQIUTRpNbdipASC6OTYEfXYPwYa",
-      "bytes": 284639
+      "sri": "sha384-yzLDPygJoocHze1DNOxpJmrbeM9MEWp/Bq7qjlKfUWy9m68LeYmuhCcLKGC5rIan",
+      "bytes": 285570
     },
     "js/backup.js": {
-      "sri": "sha384-mUMq5KLL82hbRoK65HeQTBbqzgUCi9BGTRSjwQ0TOlJ5NgetMp4ooqCihQsuqTw0",
-      "bytes": 22080
+      "sri": "sha384-DR6XC0b8tdboluRNWAPbIgp+xMdY+6sptabHEWhe8O6TuGPaaKBTf3+C7SCumLu4",
+      "bytes": 25123
     },
     "js/boot.js": {
       "sri": "sha384-vPwXe/mKR6Iqdjp+LMvl12AHldI5MfaNz9g62XiY+82iTweCqbwTBeQYci7M0ERo",
@@ -53,8 +53,8 @@
       "bytes": 6974
     },
     "js/catalogue.js": {
-      "sri": "sha384-RZdqJpcgs9EF4B70j+oUTLq2nZjLEukqVFfR6RQk42EzK4H/MY09w3Ol9RUySqtr",
-      "bytes": 48031
+      "sri": "sha384-xeJNHaceVZtgFi6h+1yGJBd0oW7K/e3Kp8ixURvbRJUsHcRuUiCzPbM1anwoQ8ji",
+      "bytes": 49459
     },
     "js/catalogue_data.js": {
       "sri": "sha384-g2oNcnNnazVxEpNFxloMZwSwiGmBEa4/so3ShZZEqnggXPzE9SfRL1Ni2kUrOIo8",
@@ -73,12 +73,12 @@
       "bytes": 13310
     },
     "js/core/pathways_v2_engines.js": {
-      "sri": "sha384-ykm4zL40WV0HTt9oOIws5TAcA/7FqMZVC1mfB68hLi+HTJcVn9+48fs9Dto+x86x",
-      "bytes": 10052
+      "sri": "sha384-7KM/oQg4GCcRKWVfZg2xqx5OJXI1q8DIjwIeGSwE38aUJUDYu6P0NBO+C2Inq4QN",
+      "bytes": 10951
     },
     "js/core/reverse_aps_solver.js": {
-      "sri": "sha384-4qnEPMulSw/o2XROddAyV1pn7BIvh43x5NSkB4u22M/RHzEruUd0rqRliqapuXFl",
-      "bytes": 2320
+      "sri": "sha384-9CV64UG9BGMzdgR6Qzfbq5splH5Pw4sbMFPLEvYRt42wJI0ZA7y7K7pUORomQzAC",
+      "bytes": 2655
     },
     "js/core/trusted_dom.js": {
       "sri": "sha384-37eyhoJH9sWgg4DHqgdb6vtNmoXffGRxa7RdwkMGF3GA9tHf25V/tvRY1lrhUqnu",
@@ -97,8 +97,8 @@
       "bytes": 6722
     },
     "js/engine.js": {
-      "sri": "sha384-1WdhGP7VYNPW4qD5TWpyBSXd4JqsIm9sCVgw/yagZHknaANAxcZJsThzEWvJTg95",
-      "bytes": 22663
+      "sri": "sha384-q4IoPFGnUXLXK8Y7wvTc1KSWF+0gosm/GADr5IgVm7trbLqj+T5KZBIVRmSgTfx6",
+      "bytes": 23994
     },
     "js/features/trust_guards.js": {
       "sri": "sha384-thqUh+rHT2bSPQWTFOQ1PPNy5+A3rGWk32Y2MWW4pWlvPAcYb3EfPn1Oggj5QpX5",
@@ -109,40 +109,40 @@
       "bytes": 4167
     },
     "js/i18n.js": {
-      "sri": "sha384-Bsj2Wts6Cr0w2AQYLhJalR8PYx+bc0QJMPfcOrzXAC628zQl2b+oGna9ZsfMVuIJ",
-      "bytes": 7783
+      "sri": "sha384-HR5/xSTpuQY9IB8vFc7P+l+2s6PnKNqe4A0NByI/sncWOJ3jn8mWh4g2zVZWJNhG",
+      "bytes": 10428
     },
     "js/modules/funding.js": {
       "sri": "sha384-0lvj6ANIws2e75ZWWlFCjGTYLDMW4hme9mXsTsTECGEwV0MuSnEG8o6K9QMoW2uB",
       "bytes": 10676
     },
     "js/modules/results.js": {
-      "sri": "sha384-wYoQphHc+xat2y6qgJoXwFBFDmKgV+y7d2/W4PJrwel7q9MfmNWeAz3r4APyH1AL",
-      "bytes": 6267
+      "sri": "sha384-5dPWezRCgqgQCFhb5r9ArJAx1ZglewEvKjQzt40naymqhAeGLlcgLLweRUZ5tLZO",
+      "bytes": 6884
     },
     "js/modules/storage.js": {
       "sri": "sha384-M1n5Jh1jTlW01jqHPuIep7JiE44WfAzB646DeF0W7m+rFh5xApllxStNBKLnw1CO",
       "bytes": 5879
     },
     "js/modules/study.js": {
-      "sri": "sha384-FKKp3CEQHTtsdPZAfHA9WrQSaAFvYTnVBoh5GQ7vG6xgiXczFI80HM6mOaXkNvy0",
-      "bytes": 5541
+      "sri": "sha384-vqTi0LgvMEcjPBiMNX6lsXAGcRO/usbpLkM+qTfAyqIkK+CHF44ml9GKkxaxxmMJ",
+      "bytes": 5586
     },
     "js/modules/ui.js": {
       "sri": "sha384-duk5TDm/1TE4hJ6UIDD2U5qaWqdP2VkDc1IV3ilsr/tqfgDS3lXDnGlPY4qFsjZ7",
       "bytes": 4758
     },
     "js/modules/work.js": {
-      "sri": "sha384-Ci5AMGrfYn6Hto+5NBIsBqJS+5Xnmex6bVz5OXQEX5cvWS+/Re0OvkNXyN08TcTA",
-      "bytes": 7350
+      "sri": "sha384-EutdK4doojf3o/g7fXxQCt1YFioEzTf8s0Km9IvWbCc5U/clo6yFctYgQpHRGQwx",
+      "bytes": 7454
     },
     "js/ocr.js": {
-      "sri": "sha384-EkyrIL14EWHLDJ9LgzPuexPH427dfT2l+/d205TGafAte8ixe2DhBP2TzpkDDMmM",
-      "bytes": 19620
+      "sri": "sha384-RNdYmJup8fyTUtaOfbFHUKWB6TPMFmbFzkBXaPCOUteGLbr5kxaQx+HXFezNP9Sd",
+      "bytes": 19724
     },
     "js/prospectus_check.js": {
-      "sri": "sha384-J/SHUtY+A2c9MUk2CW9yFNm5Q/8s4WZjnuQ3I69ZpHK8DJ+PJflo/Vk/bijbLL/l",
-      "bytes": 11409
+      "sri": "sha384-Nk4e5jQ8Qvauqg35Ru5u4Xzd+0dLlGFQ2/P2tC8AaULPYMMk/GUg60S6Gtah4XZ7",
+      "bytes": 11677
     },
     "js/pwa_health.js": {
       "sri": "sha384-8uJLHCDX2yMQ1fvToPZqqdCK9NqSczq/oqt99WC7hggSDE5QO3v7KhYiBwxV8cLl",
@@ -165,7 +165,7 @@
       "bytes": 9309
     },
     "sw.js": {
-      "sri": "sha384-tgePojepBZPQMLLxwxpR4Znt9i95lHocGHYrcbMpUt9+RJ9Qvg15pvOKCQnBAIB7",
+      "sri": "sha384-KW2lkIGck2uXPa1PQqMCKULsz+Spi9rxcrbu15Q0QTU239vpiygHYQI6ifWyJ2am",
       "bytes": 6315
     }
   }

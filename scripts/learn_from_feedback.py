@@ -20,6 +20,8 @@ import run_pipeline as R
 
 
 ALIAS_MAX_AGE_DAYS = 540
+ALIAS_MAX_COUNT = 500
+HINT_MAX_AGE_DAYS = 365
 
 
 def _load(name, default):
@@ -32,18 +34,29 @@ def learn():
     out = {}
     al = _load('name_aliases.json', {'schemaVersion': 1, 'aliases': []})
     have = {(a['a'], a['b']): a for a in al['aliases']}
-    for k, subs in agree.get('aliasCandidates', {}).items():
-        a, b = k.split('|')
-        if len(subs) >= 2: have[(a, b)] = {'a': a, 'b': b, 'count': len(subs), 'lastSeen': C.today().isoformat()}
+    for k, subs in (agree.get('aliasCandidates') or {}).items():
+        parts = str(k).split('|')
+        if len(parts) != 2 or not parts[0].strip() or not parts[1].strip(): continue
+        a, b = parts[0].strip(), parts[1].strip()
+        if isinstance(subs, (list, set)) and len(subs) >= 2:
+            have[(a, b)] = {'a': a, 'b': b, 'count': len(subs), 'lastSeen': C.today().isoformat()}
     cut = (C.today() - timedelta(days=ALIAS_MAX_AGE_DAYS)).isoformat()
     for v in have.values(): v.setdefault('lastSeen', C.today().isoformat())
-    al['aliases'] = sorted((v for v in have.values() if v['lastSeen'] >= cut), key=lambda x: (x['a'], x['b']))   # an alias nobody has confirmed lately is forgotten
+    al['aliases'] = sorted((v for v in have.values() if v['lastSeen'] >= cut), key=lambda x: (-x.get('count', 0), x['a'], x['b']))[:ALIAS_MAX_COUNT]   # an alias nobody has confirmed lately is forgotten
     C.save(C.path('name_aliases.json'), al); out['aliases'] = len(al['aliases'])
 
     hints = _load('extraction_hints.json', {'schemaVersion': 1, 'institutions': {}})
     tally = collections.defaultdict(collections.Counter)
-    for key, d in _load('pipeline_state.json', {'docs': {}}).get('docs', {}).items():
-        for idx, n in (d.get('fixedBy') or {}).items(): tally[key.rsplit('_', 1)[0]][int(idx)] += n
+    for key, d in (_load('pipeline_state.json', {'docs': {}}).get('docs') or {}).items():
+        for idx, n in (d.get('fixedBy') or {}).items():
+            try:
+                ii, nn = int(idx), int(n)
+            except (TypeError, ValueError):
+                continue
+            if 0 <= ii < len(R.STRATEGIES) and nn > 0:
+                tally[key.rsplit('_', 1)[0]][ii] += nn
+    hint_cut = (C.today() - timedelta(days=HINT_MAX_AGE_DAYS)).isoformat()
+    hints['institutions'] = {k: v for k, v in (hints.get('institutions') or {}).items() if isinstance(v, dict) and str(v.get('updatedAt', C.today().isoformat())) >= hint_cut}
     for iid, c in tally.items():
         if sum(c.values()) >= 3:
             hints['institutions'][iid] = {'strategyOrder': sorted(range(len(R.STRATEGIES)), key=lambda i: (-c[i], i)), 'basedOnFixes': sum(c.values()), 'updatedAt': C.today().isoformat()}
@@ -57,7 +70,7 @@ def learn():
     fb = collections.defaultdict(lambda: collections.defaultdict(set))
     for fp in glob.glob(C.path('community', '*.json')):
         for sub in C.load(fp).get('submissions', []):
-            for f in sub.get('feedback', []): fb[f['programmeId']][f['issue']].add(sub['submitter'])
+            for f in (sub.get('feedback') or []): (fb[f['programmeId']][f['issue']].add(sub['submitter']) if isinstance(f, dict) and f.get('programmeId') and f.get('issue') and sub.get('submitter') else None)
     for pid, issues in fb.items():
         who = set().union(*issues.values())
         if len(who) >= 2: stats['hotspots'].append({'programmeId': pid, 'people': len(who), 'issues': {k: len(v) for k, v in issues.items()}})

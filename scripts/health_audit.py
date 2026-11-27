@@ -106,6 +106,8 @@ def audit_hardened_scripts_csp():
         'js/pwa_health.js',
         'js/calendar.js',
         'js/checklist.js',
+        'js/prospectus_check.js',
+        'js/clean_layout.js',
         'js/modules/storage.js',
         'js/modules/funding.js',
         'js/modules/ui.js',
@@ -159,7 +161,7 @@ def audit_workflows():
     if not os.path.isdir(wf_dir):
         err('Missing .github/workflows directory')
         return
-    for name in ('data-refresh.yml', 'prospectus-pipeline.yml', 'link-health.yml'):
+    for name in ('data-refresh.yml', 'prospectus-pipeline.yml', 'link-health.yml', 'community-submissions.yml'):
         rel = '.github/workflows/' + name
         if not os.path.isfile(os.path.join(ROOT, rel)):
             err('Missing workflow: %s' % rel)

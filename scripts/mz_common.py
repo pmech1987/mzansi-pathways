@@ -1,5 +1,5 @@
 """Shared helpers for the Mzansi Pathways data scripts. Standard library only (Python 3.9+)."""
-import ipaddress, json, os, re, socket, sys, tempfile, urllib.parse, urllib.request
+import ipaddress, json, os, re, socket, sys, tempfile, unicodedata, urllib.parse, urllib.request
 from datetime import date, datetime, timedelta, timezone
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
@@ -10,6 +10,16 @@ ISO = re.compile(r'^\d{4}-\d{2}-\d{2}$')
 BLOCKED_DOMAINS = ['facebook.com', 'fb.com', 'whatsapp.com', 'chat.whatsapp.com', 'bit.ly', 'tinyurl.com', 't.co', 'rb.gy',
                    'graduates24.com', 'pnet.co.za', 'indeed.com', 'linkedin.com',
                    'wa.me', 't.me', 'cutt.ly', 'shorturl.at', 'goo.gl', 'ow.ly', 'is.gd', 'tiktok.com', 'instagram.com', 'x.com']
+
+
+
+INVISIBLE_RE = re.compile(r'[\u200b-\u200f\u202a-\u202e\u2060\ufeff\u00ad]')
+
+
+def normalize_for_security(text):
+    """Canonicalize NFKC lookalikes and strip zero-width/bidi obfuscation before security regexes."""
+    s = unicodedata.normalize('NFKC', str(text or ''))
+    return INVISIBLE_RE.sub('', s)
 
 
 def today():

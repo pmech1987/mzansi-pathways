@@ -23,6 +23,9 @@
 /icon-*.png
   Cache-Control: public, max-age=604800
 
+/check_prospectus.html
+  Cache-Control: no-cache
+
 /creator_studio.html
   Cache-Control: no-cache
   X-Robots-Tag: noindex

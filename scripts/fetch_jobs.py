@@ -50,7 +50,7 @@ def is_shortener_url(url):
 
 
 def scrub_popia_pii(text):
-    s = str(text or '')
+    s = C.normalize_for_security(text)
     s = SA_ID_RE.sub('[redacted-id]', s)
     s = EMAIL_RE.sub('[redacted-email]', s)
     s = PHONE_RE.sub('[redacted-phone]', s)

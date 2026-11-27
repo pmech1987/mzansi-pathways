@@ -233,3 +233,40 @@ body.dark-mode .bg-emerald-100 { background-color: #064e3b !important; color: #d
 body.dark-mode .bg-teal-100 { background-color: #134e4a !important; color: #ccfbf1 !important; border-color: #0d9488 !important; }
 body.dark-mode .bg-blue-100 { background-color: #1e3a8a !important; color: #dbeafe !important; border-color: #2563eb !important; }
 body.dark-mode .bg-slate-100 { background-color: #1e293b !important; color: #e2e8f0 !important; border-color: #334155 !important; }
+
+/* v112 Complete Dark-Mode Coverage: Courses (grouped mz-course/mz-offer), Fit, and My marks screens */
+body.dark-mode main .bg-slate-50,
+body.dark-mode main .bg-slate-100 { background-color: #0f172a !important; color: #e2e8f0 !important; border-color: #334155 !important; }
+body.dark-mode main .bg-blue-50 { background-color: #172554 !important; color: #dbeafe !important; border-color: #1d4ed8 !important; }
+body.dark-mode main .bg-emerald-50 { background-color: #064e3b !important; color: #d1fae5 !important; border-color: #059669 !important; }
+body.dark-mode main .bg-amber-50,
+body.dark-mode main .bg-amber-100 { background-color: #451a03 !important; color: #fef3c7 !important; border-color: #b45309 !important; }
+body.dark-mode main .bg-rose-50 { background-color: #4c0519 !important; color: #ffe4e6 !important; border-color: #be123c !important; }
+body.dark-mode main .bg-sky-50 { background-color: #0c4a6e !important; color: #e0f2fe !important; border-color: #0284c7 !important; }
+body.dark-mode #image-scanner-panel { background-color: #1e1b4b !important; color: #e0e7ff !important; border-color: #4338ca !important; }
+body.dark-mode main .text-slate-900,
+body.dark-mode main .text-slate-800 { color: #f8fafc !important; }
+body.dark-mode main .text-slate-700,
+body.dark-mode main .text-slate-600 { color: #cbd5e1 !important; }
+body.dark-mode main .text-slate-500 { color: #94a3b8 !important; }
+body.dark-mode main .text-blue-900,
+body.dark-mode main .text-indigo-950,
+body.dark-mode main .text-indigo-900 { color: #bfdbfe !important; }
+body.dark-mode main .text-emerald-900,
+body.dark-mode main .text-emerald-800 { color: #a7f3d0 !important; }
+body.dark-mode main .text-amber-950,
+body.dark-mode main .text-amber-900,
+body.dark-mode main .text-amber-800 { color: #fde68a !important; }
+body.dark-mode main .text-rose-900,
+body.dark-mode main .text-rose-700 { color: #fda4af !important; }
+body.dark-mode main .border-slate-200,
+body.dark-mode main .border-slate-300,
+body.dark-mode main .border-slate-100 { border-color: #334155 !important; }
+body.dark-mode #app-main input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+body.dark-mode #app-main select,
+body.dark-mode #app-main textarea { background-color: #0f172a !important; color: #f8fafc !important; border-color: #475569 !important; }
+body.dark-mode #app-main details.mz-course,
+body.dark-mode #app-main details.mz-offer { background-color: #141d38 !important; border-color: #27335a !important; color: #f1f4fb !important; }
+body.dark-mode #app-main details.mz-offer { background-color: #0f172a !important; }
+body.dark-mode #app-main details.mz-notes summary { color: #93c5fd !important; }
+body.dark-mode #app-main a.underline { color: #93c5fd !important; }

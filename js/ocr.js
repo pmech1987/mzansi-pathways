@@ -362,7 +362,8 @@
   // Dispatcher used by the CV importer and the report-card file picker.
   // canvas = the on-screen canvas to show images on (optional for non-images).
   function scrubSaId(s) {
-    return String(s || '').replace(/\b\d{13}\b/g, '[SA-ID-REDACTED]');
+    var clean = String(s || '').normalize('NFKC').replace(/[\u200b-\u200f\u202a-\u202e\u2060\ufeff\u00ad]/g, '');
+    return clean.replace(/\b\d{13}\b/g, '[SA-ID-REDACTED]');
   }
 
   async function readAnyFile(file, opts) {

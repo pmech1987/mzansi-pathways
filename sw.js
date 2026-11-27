@@ -1,4 +1,4 @@
-const CACHE = 'mzansi-pathways-v111';
+const CACHE = 'mzansi-pathways-v119';
 // CORE: the app cannot work offline without these. If one cannot be fetched the install fails and the old worker keeps running.
 const CORE = ['./', './index.html', './guard.js', './css/utilities.css', './css/legacy_inline.css', './css/mzansi_ui.css', './css/civic_mobile_a11y.css', './js/work_tools.js', './js/boot.js', './js/features/trust_guards.js', './js/modules/storage.js', './js/modules/funding.js', './js/modules/ui.js', './js/modules/results.js', './js/modules/study.js', './js/modules/work.js', './js/app.js', './js/home.js', './js/a11y.js', './js/toolkit.js', './js/backup.js', './js/comfort_and_jump.js', './js/clean_layout.js', './js/pwa_health.js', './js/calendar.js', './js/checklist.js', './js/screens.js', './js/engine.js', './js/data.js', './js/i18n.js', './js/ocr.js', './js/catalogue.js', './js/catalogue_data.js'];
 // NICE: saved if reachable, never blocks the install (a missing icon or data file must not break offline mode for everyone).

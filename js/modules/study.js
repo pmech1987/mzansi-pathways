@@ -74,11 +74,11 @@
       return p ? ('Plan ' + k + ' [' + st + ']: ' + p.name + ' @ ' + p.institution + ' (' + p.route + ') | ' + p.estAnnualCost) : ('Plan ' + k + ': Not selected');
     }).join('\n');
     var docsTxt = Object.entries(state.docChecklist || {}).map(function (pair) { return (pair[1] ? '[x] ' : '[ ] ') + pair[0]; }).join('\n');
-    return 'MZANSI PATHWAYS — FAMILY STUDY & CAREER DOSSIER\nProvince: ' + state.province + ' | Stage: ' + state.gradeStage +
+    return ('MZANSI PATHWAYS — FAMILY STUDY & CAREER DOSSIER\nProvince: ' + state.province + ' | Stage: ' + state.gradeStage +
       '\nNSC Summary: ' + nsc.passLevel + ' (APS ' + (nsc.aps != null ? nsc.aps : 'n/a') + ', excl. LO)\n\nPLAN A / B / C\n' +
       plansTxt + '\n\nAFFORDABILITY ESTIMATE\nOption A Net/yr: R' + netA.toLocaleString() +
       '\nOption C Net/yr: R' + netC.toLocaleString() + '\n\nDOCUMENT READINESS\n' + docsTxt +
-      '\n\nOfficial CAS WhatsApp (Gov Service): 081 308 4196';
+      '\n\nOfficial CAS WhatsApp (Gov Service): 081 308 4196').replace(/\b\d{13}\b/g, '[SA-ID-REDACTED]');
   }
 
   root.MZStudy = {

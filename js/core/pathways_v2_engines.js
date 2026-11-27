@@ -34,9 +34,17 @@ export const MZ_EVOLVED = (() => {
     };
   }
 
+  function parseStrictMark(val) {
+    if (val === null || val === undefined || typeof val === 'boolean') return null;
+    const cleaned = String(val).trim().replace(/%$/, '').trim().replace(',', '.');
+    if (cleaned === '') return null;
+    const n = Number(cleaned);
+    return (Number.isFinite(n) && n >= 0 && n <= 100) ? n : null;
+  }
+
   function evaluateNcvL4Articulation({ fundamentals = [], vocationals = [], lolt = 'English' } = {}) {
-    const fundMarks = fundamentals.filter((s) => Number.isFinite(Number(s.mark))).map((s) => ({ ...s, mark: Number(s.mark) }));
-    const vocMarks = vocationals.filter((s) => Number.isFinite(Number(s.mark))).map((s) => ({ ...s, mark: Number(s.mark) }));
+    const fundMarks = fundamentals.map((s) => ({ ...s, mark: parseStrictMark(s && s.mark) })).filter((s) => s.mark !== null);
+    const vocMarks = vocationals.map((s) => ({ ...s, mark: parseStrictMark(s && s.mark) })).filter((s) => s.mark !== null);
     if (fundMarks.length < 3 || vocMarks.length < 4) {
       return { tier: 'INCOMPLETE', label: 'Enter all 3 fundamental subjects (Language, Maths/Maths Lit, LO) and 4 vocational subjects.' };
     }
@@ -109,23 +117,34 @@ export const MZ_EVOLVED = (() => {
 
   function reverseGapPlanner(targetProgramme, currentSubjects = [], apsResult = { score: 0 }) {
     const subjectGaps = [];
+    const validSubs = (currentSubjects || [])
+      .map((s) => ({ ...s, _m: parseStrictMark(s && s.mark) }))
+      .filter((s) => s._m !== null);
     for (const req of targetProgramme.requiredSubjects || []) {
       const candidates = req.anyOf || [];
       const minMark = Number(req.minMark || 0);
-      const current = currentSubjects.find((s) => candidates.some((c) => String(s.name || '').toLowerCase().includes(c.toLowerCase())));
+      const matches = validSubs.filter((s) => {
+        const sLow = String(s.name || '').trim().toLowerCase();
+        return candidates.some((c) => {
+          const cLow = String(c || '').trim().toLowerCase();
+          if (cLow === 'mathematics') return sLow === 'mathematics';
+          return sLow === cLow || (cLow.length >= 5 && sLow.startsWith(cLow + ' '));
+        });
+      });
+      const current = matches.length ? matches.reduce((a, b) => (b._m > a._m ? b : a)) : null;
       if (!current) {
-        const hasMathLitInstead = candidates.includes('Mathematics') && currentSubjects.some((s) => s.isMathLit);
+        const hasMathLitOrTech = candidates.includes('Mathematics') && validSubs.some((s) => s.isMathLit || /mathematical literacy|technical math/i.test(String(s.name || '')));
         subjectGaps.push({
           required: candidates.join(' or '), minMark, currentMark: null, deltaPct: minMark,
-          blockerType: hasMathLitInstead ? 'SUBJECT_SWITCH_NEEDED' : 'MISSING_SUBJECT',
-          advice: hasMathLitInstead ? 'Requires pure Mathematics (not Maths Lit). Consider a Higher Certificate bridge, TVET NC(V) IT, or DBE May/June Mathematics upgrade.' : `Missing required subject: ${candidates.join(' or ')} (>= ${minMark}%).`
+          blockerType: hasMathLitOrTech ? 'SUBJECT_SWITCH_NEEDED' : 'MISSING_SUBJECT',
+          advice: hasMathLitOrTech ? 'Requires pure Mathematics (not Maths Lit or Technical Maths). Consider a Higher Certificate bridge, TVET NC(V), or DBE May/June Mathematics upgrade.' : `Missing required subject: ${candidates.join(' or ')} (>= ${minMark}%).`
         });
-      } else if (Number(current.mark) < minMark) {
-        const delta = minMark - Number(current.mark);
+      } else if (current._m < minMark) {
+        const delta = Math.round((minMark - current._m) * 10) / 10;
         subjectGaps.push({
-          required: current.name, minMark, currentMark: Number(current.mark), deltaPct: delta,
+          required: current.name, minMark, currentMark: current._m, deltaPct: delta,
           blockerType: delta <= 4 ? 'REMARK_OR_REWRITE_CANDIDATE' : 'REWRITE_NEEDED',
-          advice: delta <= 4 ? `Only ${delta}% short in ${current.name} — strong candidate for a January DBE remark check (before 25 Jan) or May/June rewrite.` : `Need +${delta}% in ${current.name} (from ${current.mark}% to ${minMark}%).`
+          advice: delta <= 4 ? `Only ${delta}% short in ${current.name} — strong candidate for a January DBE remark check (before 25 Jan) or May/June rewrite.` : `Need +${delta}% in ${current.name} (from ${current._m}% to ${minMark}%).`
         });
       }
     }

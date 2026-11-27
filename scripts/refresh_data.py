@@ -47,7 +47,7 @@ def sanitize_job_row(j):
     out = dict(j)
     for field in ('title', 'town', 'employer'):
         if isinstance(out.get(field), str):
-            s = SA_ID_RE.sub('[redacted-id]', out[field])
+            s = SA_ID_RE.sub('[redacted-id]', C.normalize_for_security(out[field]))
             s = EMAIL_RE.sub('[redacted-email]', s)
             s = PHONE_RE.sub('[redacted-phone]', s)
             out[field] = re.sub(r'\s+', ' ', s).strip()
